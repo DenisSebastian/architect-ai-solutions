@@ -5,7 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 
 export default defineConfig({
-  site: 'https://denisberroeta.com',
+  site: 'https://denissebastian.github.io',
+  base: 'architect-ai-solutions',
   integrations: [
     react(),
     mdx(),
