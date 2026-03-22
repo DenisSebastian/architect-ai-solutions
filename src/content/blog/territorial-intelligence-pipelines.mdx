@@ -1,0 +1,31 @@
+---
+title: "Building Territorial Intelligence Pipelines with R and Python"
+description: "How I design end-to-end geospatial data pipelines that connect satellite sensors to policy decisions, combining the strengths of R's spatial ecosystem with Python's deep learning toolchain."
+date: 2026-02-10
+tags: ["R", "Python", "Geospatial", "Architecture"]
+author: "Denis Berroeta"
+---
+
+# Building Territorial Intelligence Pipelines with R and Python
+
+The question I get asked most often: *R or Python?* My answer: both, and here's why.
+
+## The Two-Language Strategy
+
+R's spatial ecosystem — `sf`, `terra`, `tidyverse` — is unmatched for exploratory spatial data analysis, visualization, and statistical modeling. Python's deep learning frameworks — PyTorch, TensorFlow, GDAL bindings — dominate the computer vision side.
+
+The key is designing pipelines that use each language where it excels, connected through standardized intermediate formats (GeoParquet, Cloud-Optimized GeoTIFF).
+
+## Pipeline Architecture
+
+A territorial intelligence pipeline has five stages:
+
+1. **Ingestion** — Satellite data from Google Earth Engine, Copernicus, or STAC catalogs
+2. **Pre-processing** — Atmospheric correction, co-registration, cloud masking
+3. **Feature extraction** — Spectral indices, texture features, temporal profiles
+4. **Modeling** — Classification, change detection, anomaly detection
+5. **Output** — Maps, dashboards, policy reports
+
+## Lessons from 50,000 km²
+
+After processing over 50,000 km² of multi-temporal imagery at CIT-UAI, the most important lesson: **data quality beats model complexity every time.**

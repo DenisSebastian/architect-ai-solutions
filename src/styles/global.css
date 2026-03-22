@@ -1,0 +1,320 @@
+@import "tailwindcss";
+@source "../**/*.{astro,tsx,ts,js,jsx}";
+
+@theme {
+  --color-bg-primary: #F5F4EF;
+  --color-bg-secondary: #EEEAE4;
+  --color-bg-tertiary: #E8E5DF;
+  --color-bg-surface: #FDFCF9;
+  --color-accent: #2B5C3F;
+  --color-accent-warm: #8C4D2A;
+  --color-accent-blue: #4A6FA5;
+  --color-text-primary: #1A1917;
+  --color-text-secondary: #6B6865;
+  --color-border: #DDD9D0;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #F5F4EF;
+  color: #1A1917;
+  font-family: 'Manrope', system-ui, sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #F5F4EF;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #F5F4EF; }
+::-webkit-scrollbar-thumb { background: #2B5C3F55; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2B5C3F; }
+::selection { background: #2B5C3F20; color: #2B5C3F; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-radius, 100px)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-radius, 100px)) rotate(-360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+.font-heading { font-family: 'Manrope', system-ui, sans-serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+.glass {
+  background: rgba(253, 252, 249, 0.90);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #2B5C3F, #4E9E71);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.green-glow { box-shadow: 0 0 20px #2B5C3F22, 0 0 40px #2B5C3F0A; }
+.teal-glow { box-shadow: 0 0 20px #2B5C3F22, 0 0 40px #2B5C3F0A; }
+.teal-border-glow { box-shadow: 0 0 0 1px #2B5C3F33, 0 0 20px #2B5C3F11; }
+.blue-border-glow { box-shadow: 0 0 0 1px #4A6FA533, 0 0 20px #4A6FA511; }
+
+/* Coordinate survey grid — cartographic map paper aesthetic */
+.survey-grid {
+  background-image:
+    linear-gradient(rgba(26, 25, 23, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 25, 23, 0.055) 1px, transparent 1px),
+    linear-gradient(rgba(26, 25, 23, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 25, 23, 0.022) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}
+
+/* Legacy — keeps compatibility with untouched components */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(26, 25, 23, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 25, 23, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.hex-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%232B5C3F' fill-opacity='0.05' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.gsap-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.cursor-blink::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: #2B5C3F;
+}
+
+/* Offset for fixed navbar when navigating to anchors */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Survey grid overlay on every section */
+section[id]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(26, 25, 23, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 25, 23, 0.055) 1px, transparent 1px),
+    linear-gradient(rgba(26, 25, 23, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 25, 23, 0.022) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-attachment: fixed;
+}
+
+html[data-theme="dark"] section[id]::before {
+  background-image:
+    linear-gradient(rgba(0, 212, 170, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 170, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(0, 212, 170, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 170, 0.025) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-attachment: fixed;
+}
+
+/* Each section fills at least the full viewport and centers its content vertically */
+section[id]:not(#hero) {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Content wrapper — top-aligned with breathing room */
+section[id]:not(#hero) > .relative.z-10 {
+  padding-top: clamp(3rem, 6vh, 5rem);
+  padding-bottom: clamp(3rem, 6vh, 5rem);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Dark Mode ──────────────────────────────────────────── */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  background-color: #0D1117;
+  color: #E4E2DC;
+}
+
+html[data-theme="dark"] body {
+  background-color: #0D1117;
+}
+
+/* Scrollbar */
+html[data-theme="dark"] ::-webkit-scrollbar-track { background: #0D1117; }
+html[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #00D4AA55; }
+html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: #00D4AA; }
+html[data-theme="dark"] ::selection { background: #00D4AA22; color: #00D4AA; }
+
+/* Navbar glass */
+html[data-theme="dark"] header nav {
+  background: rgba(13, 17, 23, 0.92) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+html[data-theme="dark"] #navbar .text-\[\#1A1917\],
+html[data-theme="dark"] #navbar .text-\[\#6B6865\] {
+  color: #C8C6C0;
+}
+html[data-theme="dark"] #navbar span.text-\[\#1A1917\] {
+  color: #E4E2DC;
+}
+
+/* Section backgrounds — ID specificity beats Tailwind class */
+html[data-theme="dark"] section#hero,
+html[data-theme="dark"] section#services,
+html[data-theme="dark"] section#tech-stack,
+html[data-theme="dark"] section#contact {
+  background-color: #0D1117;
+}
+html[data-theme="dark"] section#about,
+html[data-theme="dark"] section#case-studies,
+html[data-theme="dark"] section#blog {
+  background-color: #0F1923;
+}
+
+/* Card surfaces */
+html[data-theme="dark"] .bg-\[\#FDFCF9\] {
+  background-color: #161E2B !important;
+}
+html[data-theme="dark"] .bg-\[\#EEEAE4\] {
+  background-color: #0F1923 !important;
+}
+html[data-theme="dark"] .bg-\[\#F5F4EF\] {
+  background-color: #0D1117 !important;
+}
+
+/* Text */
+html[data-theme="dark"] .text-\[\#1A1917\] {
+  color: #E4E2DC !important;
+}
+html[data-theme="dark"] .text-\[\#6B6865\] {
+  color: #8B9BB4 !important;
+}
+
+/* Accent: forest green → teal in dark mode */
+html[data-theme="dark"] .text-\[\#2B5C3F\] {
+  color: #00D4AA !important;
+}
+html[data-theme="dark"] .bg-\[\#2B5C3F\] {
+  background-color: #00D4AA !important;
+}
+html[data-theme="dark"] .bg-\[\#2B5C3F08\],
+html[data-theme="dark"] .bg-\[\#2B5C3F0D\] {
+  background-color: rgba(0, 212, 170, 0.06) !important;
+}
+html[data-theme="dark"] .border-\[\#2B5C3F\],
+html[data-theme="dark"] .border-\[\#2B5C3F33\],
+html[data-theme="dark"] .border-\[\#2B5C3F25\] {
+  border-color: rgba(0, 212, 170, 0.3) !important;
+}
+html[data-theme="dark"] .from-\[\#2B5C3F\] {
+  --tw-gradient-from: #00D4AA !important;
+}
+
+/* Borders */
+html[data-theme="dark"] .border-black\/7 {
+  border-color: rgba(255, 255, 255, 0.07) !important;
+}
+html[data-theme="dark"] .border-black\/10 {
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* Survey grid — teal tinted in dark mode */
+html[data-theme="dark"] .survey-grid {
+  background-image:
+    linear-gradient(rgba(0, 212, 170, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 170, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(0, 212, 170, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 170, 0.025) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}
+
+/* Glass component */
+html[data-theme="dark"] .glass {
+  background: rgba(13, 17, 23, 0.90);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Footer */
+html[data-theme="dark"] footer {
+  background-color: #0F1923 !important;
+}
+
+/* Blog/Work pages */
+html[data-theme="dark"] .min-h-screen.bg-\[\#F5F4EF\] {
+  background-color: #0D1117 !important;
+}
+
+/* Topo SVG overlays — lighten in dark */
+html[data-theme="dark"] .opacity-25 svg {
+  opacity: 0.15;
+}
+
+/* DB badge stays readable */
+html[data-theme="dark"] .bg-\[\#2B5C3F\].text-white {
+  background-color: #00D4AA !important;
+  color: #0D1117 !important;
+}

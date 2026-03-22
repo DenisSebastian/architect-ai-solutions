@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Astro Dev Server",
+      "runtimeExecutable": "/Users/denisberroeta/.nvm/versions/node/v22.17.0/bin/node",
+      "runtimeArgs": ["./node_modules/.bin/astro", "dev", "--port", "4321"],
+      "port": 4321
+    },
+    {
+      "name": "Astro Preview",
+      "runtimeExecutable": "/Users/denisberroeta/.nvm/versions/node/v22.17.0/bin/node",
+      "runtimeArgs": ["./node_modules/.bin/astro", "preview", "--port", "4321"],
+      "port": 4321
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+---
+title: "How I Use Deep Learning for Satellite Change Detection"
+description: "A technical walkthrough of building a U-Net pipeline for multi-temporal Sentinel-2 analysis, detecting land cover transitions at scale across the Chilean Central Valley."
+date: 2026-03-01
+tags: ["Deep Learning", "Sentinel-2", "PyTorch", "Change Detection"]
+author: "Denis Berroeta"
+---
+
+# How I Use Deep Learning for Satellite Change Detection
+
+Satellite imagery gives us an unprecedented window into how our planet changes over time. In this post, I walk through the end-to-end pipeline I built for detecting land cover transitions across the Chilean Central Valley using multi-temporal Sentinel-2 imagery and a U-Net architecture.
+
+## The Problem
+
+The Chilean Central Valley is one of South America's most productive agricultural regions — and one of its most rapidly changing. Urban expansion, agricultural intensification, and drought-driven land abandonment are reshaping the landscape at rates that traditional field surveys cannot track.
+
+## The Data Pipeline
+
+Working with Sentinel-2 time series requires careful pre-processing...
+
+## The U-Net Architecture
+
+Our model takes pairs of co-registered images as input and outputs a pixel-wise change probability map...
+
+## Results
+
+After training on 15,000 labeled patches, the model achieved **93.2% IoU** on the test set, detecting over 12,000 ha of land cover transitions with sub-field spatial resolution.

@@ -1,0 +1,176 @@
+---
+const services = [
+  {
+    icon: 'satellite',
+    title: 'Remote Sensing & Earth Observation',
+    description:
+      'Satellite image analysis, multispectral processing, and Google Earth Engine pipelines at scale. From raw pixel values to meaningful land cover classifications.',
+    tags: ['Sentinel-2', 'Landsat', 'Google Earth Engine', 'GDAL'],
+    color: '#2B5C3F',
+  },
+  {
+    icon: 'brain',
+    title: 'Deep Learning for Change Detection',
+    description:
+      'Custom CNN and transformer architectures for detecting land use change from multi-temporal satellite imagery. End-to-end pipelines from data ingestion to model deployment.',
+    tags: ['PyTorch', 'U-Net', 'Semantic Segmentation', 'Multi-temporal'],
+    color: '#4A6FA5',
+  },
+  {
+    icon: 'map',
+    title: 'Territorial Intelligence',
+    description:
+      'Spatial analysis for public policy design, urban planning, and security assessment. Turning geospatial data into evidence-based decisions.',
+    tags: ['Spatial Analysis', 'R', 'Python', 'Policy'],
+    color: '#2B5C3F',
+  },
+  {
+    icon: 'database',
+    title: 'Geospatial Data Infrastructure',
+    description:
+      'End-to-end pipelines: collection, processing, modeling, and deployment of geospatial data. PostGIS, cloud-native rasters, and scalable ETL workflows.',
+    tags: ['PostGIS', 'Docker', 'GCP/AWS', 'Apache Arrow'],
+    color: '#4A6FA5',
+  },
+  {
+    icon: 'drone',
+    title: 'Drone Mapping & Photogrammetry',
+    description:
+      'Aerial survey, 3D model reconstruction, orthomosaic generation, and digital elevation model production from UAV imagery.',
+    tags: ['DJI', 'Agisoft Metashape', 'OpenDroneMap', 'Point Cloud'],
+    color: '#8C6D3F',
+  },
+  {
+    icon: 'presentation',
+    title: 'Training & Capacity Building',
+    description:
+      'Workshops and university courses in GIS, Remote Sensing, and Spatial Data Science. Teaching 8+ courses with proven methodologies for technical and non-technical audiences.',
+    tags: ['GIS', 'Remote Sensing', 'R', 'Python', 'Workshops'],
+    color: '#2B5C3F',
+  },
+];
+
+const icons: Record<string, string> = {
+  satellite: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25L12 21m0 0l6.75-6.75M12 21V3m0 0L5.25 9.75M12 3l6.75 6.75" /><circle cx="12" cy="12" r="3" stroke-width="1.5"/></svg>`,
+  brain: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" /></svg>`,
+  map: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>`,
+  database: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" /></svg>`,
+  drone: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" /></svg>`,
+  presentation: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" /></svg>`,
+};
+---
+
+<section id="services" class="relative py-0 bg-[#F5F4EF]">
+  <!-- Contour lines -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-15">
+    <svg
+      width="100%"
+      height="100%"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <defs>
+        <pattern
+          id="topo-services"
+          x="0"
+          y="0"
+          width="200"
+          height="200"
+          patternUnits="userSpaceOnUse"
+        >
+          <ellipse cx="100" cy="100" rx="80" ry="60" fill="none" stroke="#2B5C3F" stroke-width="0.6" opacity="0.4"></ellipse>
+          <ellipse cx="100" cy="100" rx="55" ry="40" fill="none" stroke="#2B5C3F" stroke-width="0.6" opacity="0.4"></ellipse>
+          <ellipse cx="100" cy="100" rx="30" ry="20" fill="none" stroke="#2B5C3F" stroke-width="0.6" opacity="0.4"></ellipse>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#topo-services)"></rect>
+    </svg>
+  </div>
+
+  <div class="relative z-10" style="max-width:1280px;margin-left:auto;margin-right:auto;padding-left:clamp(2rem,5vw,5rem);padding-right:clamp(2rem,5vw,5rem);">
+    <!-- Header group -->
+    <div class="text-center mb-8">
+      <div class="gsap-reveal mb-3">
+        <span class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase"
+          >02 / Services</span
+        >
+      </div>
+      <div class="gsap-reveal mb-3">
+        <h2 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917]">
+          What I Do
+        </h2>
+      </div>
+      <div class="gsap-reveal">
+        <p class="text-[#6B6865] text-lg max-w-2xl mx-auto">
+          Connecting territorial problems with AI solutions
+        </p>
+      </div>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {
+        services.map((service) => (
+          <div
+            class="service-card gsap-reveal group relative p-6 rounded-2xl border border-black/7 bg-[#FDFCF9] hover:-translate-y-1.5 transition-all duration-300 cursor-default flex flex-col"
+            style={`--card-color: ${service.color};`}
+          >
+            <!-- Top accent line on hover -->
+            <div
+              class="absolute top-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"
+              style={`background: ${service.color};`}
+            />
+
+            <!-- Icon -->
+            <div
+              class="w-11 h-11 rounded-xl flex items-center justify-center mb-3 transition-all duration-300 group-hover:scale-110"
+              style={`background: ${service.color}12; color: ${service.color};`}
+              set:html={icons[service.icon]}
+            />
+
+            <!-- Content -->
+            <h3 class="font-heading font-semibold text-[#1A1917] text-base mb-2 leading-tight">
+              {service.title}
+            </h3>
+            <p class="text-[#6B6865] text-sm leading-relaxed mb-3">
+              {service.description}
+            </p>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2">
+              {service.tags.map((tag) => (
+                <span
+                  class="px-2 py-0.5 rounded text-xs font-mono border"
+                  style={`color: ${service.color}; border-color: ${service.color}25; background: ${service.color}08;`}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray<HTMLElement>('#services .gsap-reveal').forEach((el, i) => {
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      delay: (i % 3) * 0.12,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+</script>

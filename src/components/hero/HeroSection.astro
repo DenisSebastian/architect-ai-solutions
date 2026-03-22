@@ -1,0 +1,161 @@
+---
+import Globe from './Globe.tsx';
+---
+
+<section
+  id="hero"
+  class="relative min-h-screen overflow-hidden bg-[#F5F4EF]"
+>
+  <!-- Survey grid applied globally via section[id]::before in global.css -->
+
+  <!-- Subtle radial light at center -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 80% 60% at 60% 50%, rgba(43,92,63,0.04) 0%, transparent 70%);"
+  ></div>
+
+  <!-- Bottom fade to next section -->
+  <div
+    id="hero-bottom-fade"
+    class="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10"
+  ></div>
+
+  <div class="relative z-10 w-full">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center min-h-screen py-28"
+      style="max-width: 1280px; margin-left: auto; margin-right: auto; padding-left: clamp(2rem, 5vw, 5rem); padding-right: clamp(2rem, 5vw, 5rem);"
+    >
+      <!-- Text side -->
+      <div class="order-2 lg:order-1 flex flex-col gap-7 lg:pl-4">
+        <!-- Tag -->
+        <div
+          id="hero-tag"
+          class="inline-flex items-center gap-2 w-fit px-3 py-1.5 rounded-full border border-[#2B5C3F33] bg-[#2B5C3F08] text-[#2B5C3F] text-xs font-mono tracking-widest uppercase"
+          style="opacity:0;"
+        >
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-[#2B5C3F] animate-pulse"
+          ></span>
+          AI Solutions Architect
+        </div>
+
+        <!-- Name — editorial serif -->
+        <div id="hero-name" style="opacity:0;">
+          <h1 class="leading-[0.95] tracking-tight">
+            <span class="font-display font-light text-5xl md:text-6xl lg:text-[4.5rem] text-[#1A1917] block"
+              >Denis</span
+            >
+            <span
+              class="font-display font-semibold text-5xl md:text-6xl lg:text-[4.5rem] text-[#2B5C3F] block italic"
+              >Berroeta</span
+            >
+          </h1>
+        </div>
+
+        <!-- Tagline -->
+        <div id="hero-tagline" style="opacity:0;">
+          <p
+            class="text-xl md:text-2xl font-heading font-medium text-[#1A1917]/80 leading-snug"
+          >
+            Decoding Territory
+            <span class="text-[#2B5C3F] font-semibold"> with AI</span>
+          </p>
+        </div>
+
+        <!-- Description -->
+        <div id="hero-desc" style="opacity:0;">
+          <p class="text-[#6B6865] text-base md:text-lg leading-relaxed max-w-xl">
+            Architecting agentic AI systems that transform satellite imagery
+            and geospatial data into actionable territorial intelligence —
+            from field sensors to policy decisions.
+          </p>
+        </div>
+
+        <!-- Divider -->
+        <div id="hero-ctas" class="flex flex-col gap-5" style="opacity:0;">
+          <div class="w-12 h-px bg-[#2B5C3F]"></div>
+          <div class="flex flex-wrap gap-4">
+            <a
+              href="#case-studies"
+              class="group relative px-7 py-3 rounded-lg bg-[#2B5C3F] text-white font-heading font-semibold text-sm tracking-wide overflow-hidden transition-all duration-300 hover:shadow-[0_8px_24px_#2B5C3F33] hover:-translate-y-0.5"
+            >
+              <span class="relative z-10">Explore My Work</span>
+              <div
+                class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300"
+              ></div>
+            </a>
+            <a
+              href="#contact"
+              class="px-7 py-3 rounded-lg border border-[#2B5C3F] text-[#2B5C3F] font-heading font-semibold text-sm tracking-wide transition-all duration-300 hover:bg-[#2B5C3F08] hover:-translate-y-0.5"
+            >
+              Get In Touch
+            </a>
+          </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div id="hero-scroll" class="flex items-center gap-3 mt-2" style="opacity:0;">
+          <div
+            class="flex items-center gap-2 text-[#6B6865] text-xs font-mono"
+          >
+            <span>Scroll to explore</span>
+            <svg
+              class="w-3.5 h-3.5 animate-bounce"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Globe side -->
+      <div class="order-1 lg:order-2 flex items-center justify-center lg:pr-4">
+        <div
+          id="hero-globe-wrap"
+          class="relative w-full aspect-square max-w-[460px] lg:max-w-none lg:h-[580px]"
+          style="opacity:0; transform: scale(0.9);"
+        >
+          <!-- Ambient glow behind the globe -->
+          <div
+            class="absolute inset-0 rounded-full pointer-events-none"
+            style="background: radial-gradient(circle at center, rgba(43,92,63,0.08) 0%, rgba(43,92,63,0.03) 45%, transparent 70%); transform: scale(0.9);"
+          ></div>
+          <Globe client:visible />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  // Bottom fade — adapts to current theme
+  const fade = document.getElementById('hero-bottom-fade');
+  const applyFade = () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const color = isDark ? '#0D1117' : '#F5F4EF';
+    if (fade) fade.style.background = `linear-gradient(to bottom, transparent, ${color})`;
+  };
+  applyFade();
+  new MutationObserver(applyFade).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-theme'],
+  });
+
+  const tl = gsap.timeline({ delay: 0.3 });
+
+  tl.to('#hero-tag', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+    .to('#hero-name', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.2')
+    .to('#hero-tagline', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+    .to('#hero-desc', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+    .to('#hero-ctas', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2')
+    .to('#hero-scroll', { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
+    .to('#hero-globe-wrap', { opacity: 1, scale: 1, duration: 1, ease: 'power3.out' }, 0.2);
+</script>

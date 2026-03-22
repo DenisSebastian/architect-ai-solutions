@@ -1,0 +1,105 @@
+---
+import OrbitalDiagram from './OrbitalDiagram.tsx';
+---
+
+<section id="tech-stack" class="relative py-0 bg-[#F5F4EF]">
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse at 100% 50%, rgba(74,111,165,0.04) 0%, transparent 50%), radial-gradient(ellipse at 0% 50%, rgba(43,92,63,0.04) 0%, transparent 50%);"
+  ></div>
+
+  <div class="relative z-10" style="max-width:1280px;margin-left:auto;margin-right:auto;padding-left:clamp(2rem,5vw,5rem);padding-right:clamp(2rem,5vw,5rem);">
+    <!-- Header -->
+    <div class="gsap-reveal mb-3 text-center">
+      <span class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase">
+        04 / Tech
+      </span>
+    </div>
+    <div class="gsap-reveal mb-3 text-center">
+      <h2 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917]">
+        Tools & Technologies
+      </h2>
+    </div>
+    <div class="gsap-reveal mb-8 text-center">
+      <p class="text-[#6B6865] text-lg max-w-xl mx-auto">
+        The full stack of an AI territorial intelligence architect
+      </p>
+    </div>
+
+    <!-- Two-column layout: cards left, orbital right -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+
+      <!-- Left: Tech category cards -->
+      <div class="gsap-reveal grid grid-cols-2 gap-4">
+        {
+          [
+            {
+              label: 'Core Languages',
+              items: ['R', 'Python', 'SQL', 'Rust'],
+              color: '#2B5C3F',
+            },
+            {
+              label: 'AI / ML',
+              items: ['PyTorch', 'TensorFlow', 'scikit-learn', 'XGBoost'],
+              color: '#4A6FA5',
+            },
+            {
+              label: 'Geospatial',
+              items: ['GEE', 'QGIS', 'PostGIS', 'GeoPandas', 'H3', 'GDAL'],
+              color: '#8C6D3F',
+            },
+            {
+              label: 'Infrastructure',
+              items: ['Docker', 'Git', 'Linux', 'GCP', 'AWS'],
+              color: '#6B52A8',
+            },
+          ].map((cat) => (
+            <div class="p-4 rounded-xl border border-black/7 bg-[#FDFCF9]">
+              <div
+                class="text-xs font-mono mb-3 font-semibold tracking-wider uppercase"
+                style={`color: ${cat.color};`}
+              >
+                {cat.label}
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                {cat.items.map((item) => (
+                  <span class="text-[#6B6865] text-xs bg-[#EEEAE4] px-2 py-0.5 rounded font-mono">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Right: Orbital diagram -->
+      <div class="gsap-reveal hidden md:block">
+        <div class="rounded-2xl overflow-hidden border border-black/7 bg-[#1A1917]">
+          <OrbitalDiagram client:visible />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray<HTMLElement>('#tech-stack .gsap-reveal').forEach((el) => {
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+</script>

@@ -1,0 +1,219 @@
+---
+const isHome = Astro.url.pathname === '/';
+const anchor = (id: string) => isHome ? `#${id}` : `/#${id}`;
+
+const navLinks = [
+  { href: anchor('about'), label: 'About' },
+  { href: anchor('services'), label: 'Services' },
+  { href: anchor('case-studies'), label: 'Work' },
+  { href: anchor('tech-stack'), label: 'Tech' },
+  { href: '/blog', label: 'Blog' },
+  { href: anchor('contact'), label: 'Contact' },
+];
+---
+
+<header
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <nav class="glass border-b border-black/7 px-8 py-4 md:px-16 lg:px-20">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="group flex items-center gap-2.5 font-heading font-bold text-xl"
+      >
+        <div
+          class="w-9 h-9 rounded-lg bg-[#2B5C3F] flex items-center justify-center text-white font-black text-sm transition-all duration-300 group-hover:shadow-[0_4px_16px_#2B5C3F44]"
+        >
+          DB
+        </div>
+        <span class="text-[#1A1917] hidden sm:block tracking-tight">Denis Berroeta</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="hidden md:flex items-center gap-8">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-[#6B6865] hover:text-[#2B5C3F] text-sm font-medium tracking-wide transition-colors duration-200 relative group"
+              >
+                {link.label}
+                <span class="absolute -bottom-1 left-0 w-0 h-px bg-[#2B5C3F] transition-all duration-300 group-hover:w-full" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- Right side: Theme toggle + mobile menu -->
+      <div class="flex items-center gap-4">
+        <!-- Theme Toggle Switch -->
+        <button
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+          class="relative flex items-center w-14 h-7 rounded-full border border-black/10 bg-[#EEEAE4] transition-colors duration-400 focus:outline-none"
+          style="flex-shrink:0;"
+        >
+          <!-- Sun icon -->
+          <svg id="icon-sun" class="absolute left-1.5 w-3.5 h-3.5 text-[#8C6D3F] transition-opacity duration-300" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+          </svg>
+          <!-- Moon icon -->
+          <svg id="icon-moon" class="absolute right-1.5 w-3.5 h-3.5 text-[#6B6865] transition-opacity duration-300" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>
+          <!-- Sliding thumb -->
+          <span
+            id="theme-thumb"
+            class="absolute left-1 w-5 h-5 rounded-full bg-white shadow-md border border-black/10 transition-transform duration-300 ease-in-out"
+          ></span>
+        </button>
+
+        <!-- Mobile Hamburger -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden flex flex-col gap-1.5 p-2 group"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <span
+            class="w-5 h-px bg-[#6B6865] transition-all duration-300 group-[.open]:rotate-45 group-[.open]:translate-y-2"
+          ></span>
+          <span
+            class="w-5 h-px bg-[#6B6865] transition-all duration-300 group-[.open]:opacity-0"
+          ></span>
+          <span
+            class="w-5 h-px bg-[#6B6865] transition-all duration-300 group-[.open]:-rotate-45 group-[.open]:-translate-y-2"
+          ></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div
+    id="mobile-menu"
+    class="md:hidden fixed inset-0 bg-[#F5F4EF]/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-all duration-400"
+  >
+    {
+      navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="mobile-nav-link text-2xl font-display font-semibold text-[#1A1917] hover:text-[#2B5C3F] transition-colors duration-200"
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+</header>
+
+<script>
+  // ── Theme Toggle ──────────────────────────────────────
+  const html = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+  const thumb = document.getElementById('theme-thumb');
+  const iconSun = document.getElementById('icon-sun');
+  const iconMoon = document.getElementById('icon-moon');
+
+  const applyTheme = (dark: boolean) => {
+    if (dark) {
+      html.setAttribute('data-theme', 'dark');
+      thumb!.style.transform = 'translateX(28px)';
+      toggle!.style.backgroundColor = '#0F1923';
+      toggle!.style.borderColor = 'rgba(0,212,170,0.3)';
+      thumb!.style.backgroundColor = '#00D4AA';
+      thumb!.style.borderColor = 'rgba(0,212,170,0.5)';
+      iconSun!.style.opacity = '0.3';
+      iconMoon!.style.opacity = '1';
+      (iconMoon as HTMLElement).style.color = '#00D4AA';
+    } else {
+      html.removeAttribute('data-theme');
+      thumb!.style.transform = 'translateX(0)';
+      toggle!.style.backgroundColor = '';
+      toggle!.style.borderColor = '';
+      thumb!.style.backgroundColor = 'white';
+      thumb!.style.borderColor = '';
+      iconSun!.style.opacity = '1';
+      iconMoon!.style.opacity = '0.4';
+      (iconMoon as HTMLElement).style.color = '';
+    }
+  };
+
+  // Init from localStorage
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = saved === 'dark' || (!saved && prefersDark);
+  applyTheme(isDark);
+
+  // Toggle on click
+  toggle?.addEventListener('click', () => {
+    const nowDark = html.getAttribute('data-theme') === 'dark';
+    applyTheme(!nowDark);
+    localStorage.setItem('theme', !nowDark ? 'dark' : 'light');
+  });
+
+  // ── Navbar scroll ─────────────────────────────────────
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar?.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // ── Mobile menu ───────────────────────────────────────
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+  let menuOpen = false;
+
+  mobileBtn?.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileBtn.setAttribute('aria-expanded', String(menuOpen));
+    mobileMenu!.classList.toggle('opacity-0', !menuOpen);
+    mobileMenu!.classList.toggle('pointer-events-none', !menuOpen);
+    mobileMenu!.classList.toggle('opacity-100', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+  });
+
+  mobileLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      menuOpen = false;
+      mobileMenu!.classList.add('opacity-0', 'pointer-events-none');
+      mobileMenu!.classList.remove('opacity-100');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ── Active section highlight ──────────────────────────
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('nav a[href^="#"], nav a[href^="/#"]');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navAnchors.forEach((a) => {
+            a.classList.remove('text-[#2B5C3F]');
+            const href = a.getAttribute('href') || '';
+            if (href.endsWith(`#${entry.target.id}`)) {
+              a.classList.add('text-[#2B5C3F]');
+            }
+          });
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  sections.forEach((s) => observer.observe(s));
+</script>
+
+<style>
+  #navbar.scrolled nav {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  }
+</style>

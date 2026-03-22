@@ -1,0 +1,239 @@
+---
+import BeforeAfterSlider from './BeforeAfterSlider.tsx';
+
+const projects = [
+  {
+    id: 'land-use-change',
+    title: 'Land Use Change Detection',
+    subtitle: 'Chilean Central Valley',
+    description:
+      'Deep learning pipeline for multi-temporal Sentinel-2 analysis. Detected 12,000+ ha of land cover transitions over 5 years using a U-Net architecture trained on labeled time-series data.',
+    tags: ['Deep Learning', 'Sentinel-2', 'Python', 'U-Net'],
+    featured: true,
+    color: '#2B5C3F',
+    beforeLabel: '2018',
+    afterLabel: '2023',
+  },
+  {
+    id: 'urban-expansion',
+    title: 'Urban Expansion Monitoring',
+    subtitle: 'Santiago Metropolitan Area',
+    description:
+      'Google Earth Engine + ML classification for tracking urban sprawl and impervious surface growth across the Santiago metro region.',
+    tags: ['Deep Learning', 'GEE', 'R'],
+    featured: false,
+    color: '#4A6FA5',
+  },
+  {
+    id: 'territorial-security',
+    title: 'Territorial Security Analysis',
+    subtitle: 'National Crime Intelligence',
+    description:
+      'Spatio-temporal crime modeling for public policy. Hexagonal grid density mapping with predictive hotspot analysis for law enforcement resource allocation.',
+    tags: ['Geostatistics', 'R', 'H3', 'Policy'],
+    featured: false,
+    color: '#C04A2E',
+  },
+  {
+    id: 'drone-terrain',
+    title: 'Drone-Based 3D Terrain Reconstruction',
+    subtitle: 'Coastal Erosion Monitoring',
+    description:
+      'High-resolution digital elevation models from UAV photogrammetry to monitor coastal erosion rates and predict shoreline change.',
+    tags: ['Photogrammetry', 'DJI', 'OpenDroneMap', 'DEM'],
+    featured: false,
+    color: '#8C6D3F',
+  },
+  {
+    id: 'environmental-monitoring',
+    title: 'Environmental Change Monitoring',
+    subtitle: 'Patagonia Ecosystem Health',
+    description:
+      'Multi-source satellite data fusion for monitoring vegetation health, water body extent, and fire scar extent across Patagonian ecosystems.',
+    tags: ['NDVI', 'Multi-source Fusion', 'Python', 'GEE'],
+    featured: false,
+    color: '#2B5C3F',
+  },
+];
+---
+
+<section id="case-studies" class="relative py-0 bg-[#EEEAE4]">
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse at 50% 100%, rgba(43,92,63,0.04) 0%, transparent 60%);"
+  ></div>
+
+  <div class="relative z-10" style="max-width:1280px;margin-left:auto;margin-right:auto;padding-left:clamp(2rem,5vw,5rem);padding-right:clamp(2rem,5vw,5rem);">
+    <!-- Header -->
+    <div class="gsap-reveal mb-3 text-center">
+      <span class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase">
+        03 / Work
+      </span>
+    </div>
+    <div class="gsap-reveal mb-3 text-center">
+      <h2 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917]">
+        Selected Work
+      </h2>
+    </div>
+    <div class="gsap-reveal mb-8 text-center">
+      <p class="text-[#6B6865] text-lg max-w-2xl mx-auto">
+        Agentic AI systems applied to real territorial problems
+      </p>
+    </div>
+
+    <!-- Featured project -->
+    <div
+      class="gsap-reveal mb-8 group relative rounded-2xl overflow-hidden border border-black/7 bg-[#FDFCF9] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] transition-all duration-500"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[240px]">
+        <!-- Satellite imagery comparison — dark panel -->
+        <div class="relative h-48 lg:h-auto bg-[#1A1917] overflow-hidden">
+          <BeforeAfterSlider
+            client:visible
+            beforeSrc="/images/projects/before-placeholder.jpg"
+            afterSrc="/images/projects/after-placeholder.jpg"
+            beforeLabel="2018"
+            afterLabel="2023"
+          />
+          <!-- Fallback data visualization -->
+          <div
+            class="absolute inset-0 pointer-events-none"
+            style="background: linear-gradient(135deg, #0d2b1a 0%, #1a2b0d 40%, #0d1b2a 100%);"
+          ></div>
+          <div class="absolute inset-0 survey-grid opacity-30 pointer-events-none"></div>
+          <!-- Data overlay -->
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="text-center">
+              <div class="font-mono text-[#4E9E71] text-xs opacity-70 mb-2 tracking-widest uppercase">
+                Sentinel-2 Imagery
+              </div>
+              <div class="font-display font-bold text-white text-3xl opacity-60">
+                12,000+ ha
+              </div>
+              <div class="font-mono text-white/40 text-xs mt-1">
+                land cover transitions detected
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-6 md:p-8 flex flex-col justify-center">
+          <div
+            class="inline-flex items-center gap-2 w-fit px-3 py-1 rounded-full border border-[#2B5C3F33] bg-[#2B5C3F08] text-[#2B5C3F] text-xs font-mono mb-5"
+          >
+            Featured Project
+          </div>
+          <h3
+            class="font-display font-semibold text-3xl md:text-4xl text-[#1A1917] mb-2 leading-tight"
+          >
+            Land Use Change Detection
+          </h3>
+          <p class="text-[#6B6865] text-sm mb-4 font-mono">Chilean Central Valley</p>
+          <p class="text-[#6B6865] leading-relaxed mb-6">
+            Deep learning pipeline for multi-temporal Sentinel-2 analysis.
+            Detected 12,000+ ha of land cover transitions over 5 years using a
+            U-Net architecture trained on labeled time-series satellite imagery.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-7">
+            {
+              ['Deep Learning', 'Sentinel-2', 'Python', 'U-Net'].map((tag) => (
+                <span class="px-2 py-0.5 rounded text-xs font-mono text-[#2B5C3F] border border-[#2B5C3F25] bg-[#2B5C3F08]">
+                  {tag}
+                </span>
+              ))
+            }
+          </div>
+          <a
+            href="#contact"
+            class="group/link inline-flex items-center gap-2 text-[#2B5C3F] font-semibold text-sm hover:gap-3 transition-all duration-200"
+          >
+            Request Case Study
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {
+        projects
+          .filter((p) => !p.featured)
+          .map((project) => (
+            <div
+              class="project-card gsap-reveal group relative p-6 rounded-xl border border-black/7 bg-[#FDFCF9] hover:-translate-y-1.5 hover:shadow-[0_4px_20px_rgba(0,0,0,0.07)] transition-all duration-300"
+            >
+              <!-- Top accent line -->
+              <div
+                class="absolute top-0 left-0 right-0 h-0.5 rounded-t-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={`background: ${project.color};`}
+              />
+
+              <!-- Decorative data panel -->
+              <div
+                class="w-full h-28 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative bg-[#1A1917]"
+              >
+                <div class="absolute inset-0 survey-grid opacity-20" />
+                <span
+                  class="font-mono text-xs opacity-50 z-10"
+                  style={`color: ${project.color};`}
+                >
+                  {project.id.replace(/-/g, '_')}.tif
+                </span>
+              </div>
+
+              <h3 class="font-heading font-semibold text-[#1A1917] text-sm mb-1 leading-tight">
+                {project.title}
+              </h3>
+              <p class="text-[#6B6865] text-xs mb-3 font-mono">{project.subtitle}</p>
+              <p class="text-[#6B6865] text-xs leading-relaxed mb-4 line-clamp-3">
+                {project.description}
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                {project.tags.slice(0, 3).map((tag) => (
+                  <span
+                    class="px-1.5 py-0.5 rounded text-[10px] font-mono border"
+                    style={`color: ${project.color}; border-color: ${project.color}25; background: ${project.color}08;`}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray<HTMLElement>('#case-studies .gsap-reveal').forEach((el) => {
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+</script>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Page Not Found">
+  <div class="min-h-screen flex items-center justify-center bg-[#0a0e17] grid-pattern">
+    <div class="text-center px-6">
+      <div class="font-mono text-[#00d4aa] text-xs tracking-[0.3em] uppercase mb-4">404 Error</div>
+      <h1 class="font-heading font-black text-8xl text-[#f1f5f9]/10 mb-4 select-none">404</h1>
+      <p class="text-[#94a3b8] text-lg mb-8">
+        This territory hasn't been mapped yet.
+      </p>
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#00d4aa] text-[#0a0e17] font-semibold font-heading text-sm tracking-wide hover:shadow-[0_0_30px_#00d4aa55] transition-all duration-300"
+      >
+        Return to Base
+      </a>
+    </div>
+  </div>
+</BaseLayout>

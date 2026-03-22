@@ -1,0 +1,172 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const tagColors: Record<string, string> = {
+  'Deep Learning': '#C04A2E',
+  'Sentinel-2': '#2B5C3F',
+  PyTorch: '#C04A2E',
+  'Change Detection': '#2B5C3F',
+  R: '#4A6FA5',
+  Python: '#4A6FA5',
+  Geospatial: '#2B5C3F',
+  Architecture: '#6B52A8',
+  'Google Earth Engine': '#2B5C3F',
+  'Remote Sensing': '#8C6D3F',
+  GEE: '#2B5C3F',
+  Scale: '#4A6FA5',
+};
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+
+<section id="blog" class="relative py-0 bg-[#EEEAE4]">
+  <div class="relative z-10" style="max-width:1280px;margin-left:auto;margin-right:auto;padding-left:clamp(2rem,5vw,5rem);padding-right:clamp(2rem,5vw,5rem);">
+    <!-- Header -->
+    <div
+      class="gsap-reveal flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8"
+    >
+      <div>
+        <span
+          class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase block mb-3"
+        >
+          05 / Blog
+        </span>
+        <h2 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917]">
+          Latest Insights
+        </h2>
+      </div>
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 text-[#2B5C3F] font-semibold text-sm hover:gap-3 transition-all duration-200 group"
+      >
+        View All Posts
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {
+        posts.map((post, i) => (
+          <article
+            class="blog-card gsap-reveal group relative flex flex-col rounded-2xl border border-black/7 bg-[#FDFCF9] overflow-hidden hover:-translate-y-1.5 hover:shadow-[0_4px_20px_rgba(0,0,0,0.07)] transition-all duration-300"
+          >
+            <!-- Thumbnail — dark data panel -->
+            <div
+              class="relative h-44 overflow-hidden flex items-center justify-center bg-[#1A1917]"
+            >
+              <div class="absolute inset-0 survey-grid opacity-25 group-hover:opacity-40 transition-opacity duration-500" />
+              <div class="relative z-10 text-center">
+                <div
+                  class="font-mono text-[#4E9E71] text-4xl opacity-25 group-hover:opacity-50 transition-opacity duration-300"
+                >
+                  {i === 0 ? '🛰' : i === 1 ? '🗺' : '🌍'}
+                </div>
+              </div>
+              <div
+                class="absolute inset-0"
+                style="background: linear-gradient(to bottom, transparent 50%, #1A1917 100%);"
+              />
+            </div>
+
+            <!-- Content -->
+            <div class="flex flex-col flex-1 p-6">
+              <!-- Date -->
+              <time
+                class="font-mono text-[#6B6865] text-xs mb-3"
+                datetime={post.data.date.toISOString()}
+              >
+                {formatDate(post.data.date)}
+              </time>
+
+              <!-- Title -->
+              <h3 class="font-heading font-semibold text-[#1A1917] text-base leading-snug mb-3 group-hover:text-[#2B5C3F] transition-colors duration-200">
+                {post.data.title}
+              </h3>
+
+              <!-- Excerpt -->
+              <p class="text-[#6B6865] text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
+                {post.data.description}
+              </p>
+
+              <!-- Read more -->
+              <a
+                href={`/blog/${post.id}`}
+                class="inline-flex items-center gap-2 text-[#2B5C3F] text-sm font-semibold hover:gap-3 transition-all duration-200 mb-4"
+              >
+                Read More
+                <svg
+                  class="w-3.5 h-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </a>
+
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-1.5">
+                {post.data.tags.slice(0, 3).map((tag) => (
+                  <span
+                    class="px-2 py-0.5 rounded text-[10px] font-mono border"
+                    style={`color: ${tagColors[tag] || '#6B6865'}; border-color: ${tagColors[tag] || '#6B6865'}25; background: ${tagColors[tag] || '#6B6865'}08;`}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray<HTMLElement>('#blog .gsap-reveal').forEach((el, i) => {
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      delay: i * 0.1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+</script>
