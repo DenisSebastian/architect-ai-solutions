@@ -1,13 +1,14 @@
 ---
-const isHome = Astro.url.pathname === '/';
-const anchor = (id: string) => isHome ? `#${id}` : `/#${id}`;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/'); // always trailing slash
+const isHome = Astro.url.pathname === base || Astro.url.pathname + '/' === base;
+const anchor = (id: string) => isHome ? `#${id}` : `${base}#${id}`;
 
 const navLinks = [
   { href: anchor('about'), label: 'About' },
   { href: anchor('services'), label: 'Services' },
   { href: anchor('case-studies'), label: 'Work' },
   { href: anchor('tech-stack'), label: 'Tech' },
-  { href: '/blog', label: 'Blog' },
+  { href: `${base}blog`, label: 'Blog' },
   { href: anchor('contact'), label: 'Contact' },
 ];
 ---
@@ -20,7 +21,7 @@ const navLinks = [
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <!-- Logo -->
       <a
-        href="/"
+        href={base}
         class="group flex items-center gap-2.5 font-heading font-bold text-xl"
       >
         <div

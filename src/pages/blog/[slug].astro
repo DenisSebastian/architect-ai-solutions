@@ -35,7 +35,7 @@ const tagColors: Record<string, string> = {
 
       <!-- Back link -->
       <a
-        href="/blog"
+        href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}blog`}
         class="inline-flex items-center gap-2 text-[#6B6865] hover:text-[#2B5C3F] text-sm font-mono mb-10 transition-colors duration-200"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
