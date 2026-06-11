@@ -1,0 +1,41 @@
+---
+title: "GeoSAM3 in R: Prompt-Based Segmentation for High-Resolution Imagery"
+description: "A practical look at how text, point, and example prompts can accelerate object extraction from aerial and satellite imagery directly in R."
+date: 2026-02-01
+tags: ["R", "Geospatial", "Computer Vision", "Remote Sensing"]
+image: "/images/blog/geosam3/geosam.jpg"
+author: "Denis Berroeta"
+---
+
+# GeoSAM3 in R: Prompt-Based Segmentation for High-Resolution Imagery
+
+Object segmentation in high-resolution imagery usually demands labeled data, model configuration, and a workflow that can feel far from everyday geospatial analysis. The `{geosam}` package by Kyle Walker brings a different experience into R: prompt-based segmentation with SAM3 for satellite and aerial imagery.
+
+In a quick set of experiments, I tested prompts such as "boats", "roads", and "buildings" over high-resolution scenes. The interesting part is not only that the model can return masks. It is that the output can be used as geospatial data.
+
+## Why This Is Useful
+
+For R users, the value is the continuity of the workflow. A user can work with georeferenced imagery, prompt the model, and export results as `sf` polygons for later analysis.
+
+That turns segmentation into a step inside a spatial workflow rather than a separate computer vision project. It also lowers the barrier for rapid prototyping in urban analytics, infrastructure inventories, environmental monitoring, and field planning.
+
+## Interaction Patterns
+
+The package supports several prompt styles:
+
+1. Text prompts, such as "pool", "boats", or "buildings".
+2. Example prompts, where the user draws an object and searches for similar objects.
+3. Point prompts, where a click guides extraction.
+4. Confidence threshold control and direct export back to R.
+
+This is especially promising for exploratory work. An analyst can test whether a category is separable before committing to a labeled dataset or a custom model.
+
+## The Architectural Lesson
+
+Tools such as `{geosam}` show how foundation models can become practical when they are wrapped inside domain-native workflows. The model is important, but the workflow is what makes it usable.
+
+## References
+
+- [Kyle Walker, geosam](https://github.com/walkerke/geosam)
+- [Meta Segment Anything](https://ai.meta.com/sam2/)
+- [Qiusheng Wu, samgeo](https://github.com/opengeos/segment-geospatial)

@@ -1,0 +1,38 @@
+---
+title: "Paper Review: CriX, Crime, Demographics, and Explainable AI"
+description: "A review of a framework that combines hotspot detection, demographic indicators, RAG, LLMs, and explainability for localized crime analysis."
+date: 2026-01-22
+tags: ["Paper Review", "Urban Analytics", "LLM", "Public Policy"]
+image: "/images/blog/paper-review/reza-arquitectura.png"
+author: "Denis Berroeta"
+---
+
+# Paper Review: CriX, Crime, Demographics, and Explainable AI
+
+**Paper:** Reza et al. (2025), *CriX: Intersection of Crime, Demographics and Explainable AI*.
+
+CriX addresses a common weakness in crime prediction systems: they often model incidents without enough attention to demographic and local context. The paper combines spatial-temporal hotspot detection, LSTM prediction, legal-domain embeddings, FAISS retrieval, and LLM-generated explanations.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/paper-review/reza-map.png`} alt="Predicted crime hotspots map from CriX" />
+
+## Why It Matters
+
+Crime analysis is a high-stakes domain. A model that only predicts hotspots can be operationally tempting but analytically thin. Explanations, uncertainty, demographic context, and governance are essential.
+
+The CriX framework is useful as an architecture reference because it connects prediction with retrieval and explanation. It tries to move from "where is risk high?" to "what local factors may be related, and how should a human interpret the result?"
+
+## Technical Pattern
+
+The workflow uses ST-DBSCAN for hotspot identification, LSTM models for future hotspot prediction, InLegalBERT embeddings for the knowledge corpus, FAISS for retrieval, and Mixtral for textual explanations refined through zero-shot learning.
+
+The reported validation accuracy is above 82 percent for hotspot prediction, with human-rated explanation metrics for compactness, fidelity, and completeness.
+
+## Chilean Applicability
+
+For Chile, the relevant lesson is not to copy the model directly. It is to design public-safety analytics with spatial validation, demographic context, and explainability from the start.
+
+Any real deployment would require careful governance, bias auditing, institutional accountability, and strict limits on automated decision-making.
+
+## Reference
+
+- Reza, M. A. et al. (2025). [CriX: Intersection of Crime, Demographics and Explainable AI](https://www.scitepress.org/Papers/2025/133162/133162.pdf).

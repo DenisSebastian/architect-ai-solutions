@@ -22,3 +22,24 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local/raw content sources
+content_sources/
+
+# coding assistant local context and settings
+AGENTS.md
+CLAUDE.md
+CODEX.md
+agents.md
+claude.md
+codex.md
+**/AGENTS.md
+**/CLAUDE.md
+**/CODEX.md
+**/agents.md
+**/claude.md
+**/codex.md
+.claude/
+.codex/
+**/.claude/
+**/.codex/

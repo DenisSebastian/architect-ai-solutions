@@ -4,48 +4,48 @@ const services = [
     icon: 'satellite',
     title: 'Remote Sensing & Earth Observation',
     description:
-      'Satellite image analysis, multispectral processing, and Google Earth Engine pipelines at scale. From raw pixel values to meaningful land cover classifications.',
-    tags: ['Sentinel-2', 'Landsat', 'Google Earth Engine', 'GDAL'],
+      'Satellite and multi-source imagery transformed into territorial indicators for environmental monitoring, mining and industrial operations, agronomy, and urban growth analysis.',
+    tags: ['Sentinel-2', 'MODIS', 'Datacubes', 'GEE', 'GDAL'],
     color: '#2B5C3F',
   },
   {
     icon: 'brain',
-    title: 'Deep Learning for Change Detection',
+    title: 'Artificial Intelligence for Geospatial Modeling',
     description:
-      'Custom CNN and transformer architectures for detecting land use change from multi-temporal satellite imagery. End-to-end pipelines from data ingestion to model deployment.',
-    tags: ['PyTorch', 'U-Net', 'Semantic Segmentation', 'Multi-temporal'],
+      'Geospatial foundation models and custom AI workflows for land-use and land-cover classification, change detection, segmentation, and task-specific models when the problem requires it.',
+    tags: ['LULC', 'Geospatial FMs', 'GeoSAM', 'Transformers', 'PyTorch'],
     color: '#4A6FA5',
+  },
+  {
+    icon: 'agents',
+    title: 'Agentic AI Systems for Territorial Solutions',
+    description:
+      'End-to-end AI agent systems that translate territorial needs into integrated solutions, connecting data, models, spatial reasoning, automation, and decision workflows.',
+    tags: ['AI Agents', 'LLMs', 'Workflow Design', 'Automation', 'Spatial AI'],
+    color: '#8C6D3F',
   },
   {
     icon: 'map',
     title: 'Territorial Intelligence',
     description:
-      'Spatial analysis for public policy design, urban planning, and security assessment. Turning geospatial data into evidence-based decisions.',
-    tags: ['Spatial Analysis', 'R', 'Python', 'Policy'],
+      'Development of socioeconomic, environmental, and crime-related territorial indicators through spatial analysis workflows for public policy and evidence-based decision-making.',
+    tags: ['Indicators', 'Spatial Analysis', 'Crime Analysis', 'Policy', 'R'],
     color: '#2B5C3F',
   },
   {
     icon: 'database',
     title: 'Geospatial Data Infrastructure',
     description:
-      'End-to-end pipelines: collection, processing, modeling, and deployment of geospatial data. PostGIS, cloud-native rasters, and scalable ETL workflows.',
-    tags: ['PostGIS', 'Docker', 'GCP/AWS', 'Apache Arrow'],
+      'Secure, scalable, and optimized geospatial data infrastructure for spatial AI agents, analytical platforms, and production workflows that need reliable performance.',
+    tags: ['PostGIS', 'Spatial APIs', 'Cloud Native', 'Security', 'Performance'],
     color: '#4A6FA5',
-  },
-  {
-    icon: 'drone',
-    title: 'Drone Mapping & Photogrammetry',
-    description:
-      'Aerial survey, 3D model reconstruction, orthomosaic generation, and digital elevation model production from UAV imagery.',
-    tags: ['DJI', 'Agisoft Metashape', 'OpenDroneMap', 'Point Cloud'],
-    color: '#8C6D3F',
   },
   {
     icon: 'presentation',
     title: 'Training & Capacity Building',
     description:
-      'Workshops and university courses in GIS, Remote Sensing, and Spatial Data Science. Teaching 8+ courses with proven methodologies for technical and non-technical audiences.',
-    tags: ['GIS', 'Remote Sensing', 'R', 'Python', 'Workshops'],
+      'Applied training programs in geoanalysis, territorial indicators, criminological spatial analysis, remote sensing, and spatial data science, tailored to teams, institutions, and individual needs.',
+    tags: ['Geoanalysis', 'Indicators', 'Remote Sensing', 'Crime Analysis', 'Workshops'],
     color: '#2B5C3F',
   },
 ];
@@ -55,6 +55,7 @@ const icons: Record<string, string> = {
   brain: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" /></svg>`,
   map: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>`,
   database: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" /></svg>`,
+  agents: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.75 8.25 6l1.5 2.25L12 9.75l2.25-1.5L15.75 6l-1.5-2.25L12 2.25l-2.25 1.5Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 13.5 3 15.75 4.5 18l2.25 1.5L9 18l1.5-2.25L9 13.5 6.75 12 4.5 13.5Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 13.5l-1.5 2.25L15 18l2.25 1.5L19.5 18l1.5-2.25-1.5-2.25L17.25 12 15 13.5Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75v2.5M9.5 15.25h4.9" /></svg>`,
   drone: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" /></svg>`,
   presentation: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" /></svg>`,
 };

@@ -39,8 +39,8 @@ import OrbitalDiagram from './OrbitalDiagram.tsx';
               color: '#2B5C3F',
             },
             {
-              label: 'AI / ML',
-              items: ['PyTorch', 'TensorFlow', 'scikit-learn', 'XGBoost'],
+              label: 'Agentic AI',
+              items: ['Ollama', 'LangGraph', 'OpenAI API', 'RAG', 'MCP', 'Vector DBs'],
               color: '#4A6FA5',
             },
             {
@@ -50,7 +50,7 @@ import OrbitalDiagram from './OrbitalDiagram.tsx';
             },
             {
               label: 'Infrastructure',
-              items: ['Docker', 'Git', 'Linux', 'GCP', 'AWS'],
+              items: ['Docker', 'FastAPI', 'PostgreSQL', 'DuckDB', 'Cloud Run', 'GitHub Actions'],
               color: '#6B52A8',
             },
           ].map((cat) => (
@@ -75,7 +75,7 @@ import OrbitalDiagram from './OrbitalDiagram.tsx';
 
       <!-- Right: Orbital diagram -->
       <div class="gsap-reveal hidden md:block">
-        <div class="rounded-2xl overflow-hidden border border-black/7 bg-[#1A1917]">
+        <div class="overflow-visible bg-transparent">
           <OrbitalDiagram client:visible />
         </div>
       </div>

@@ -1,0 +1,82 @@
+---
+title: "Security Indicators for Territorial Wellbeing in Chile"
+description: "How the MBHT Security Dimension organizes police cases into interpretable indicators for urban blocks, using risk categories, normalization, inverse scoring, and spatial anonymization."
+date: 2026-02-01
+tags: ["Geospatial", "Public Policy", "Security", "Territorial Intelligence"]
+image: "/images/blog/mbht/dim_seguridad.png"
+author: "Denis Berroeta"
+---
+
+# Security Indicators for Territorial Wellbeing in Chile
+
+At the Center for Territorial Intelligence at Universidad Adolfo Ibanez, the **Territorial Human Wellbeing Matrix** (MBHT) uses spatial indicators to make different dimensions of urban wellbeing comparable and interpretable.
+
+The **Security Dimension** focuses on how police cases affect the safety conditions around urban blocks. The objective is not to expose individual events, but to transform complex crime records into territorial indicators that can support regional analysis, planning, and public discussion.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/mbht/dim_seguridad.png`} alt="Security dimension visualization from the Territorial Human Wellbeing Matrix" />
+
+## From Police Records to Territorial Indicators
+
+The starting point is complex: police records can contain hundreds of offense types. For territorial analysis, that level of detail is too fragmented to communicate clearly or compare across urban areas.
+
+The methodology organizes, systematizes, and synthesizes those records into four security indicators. These indicators distinguish two major risk types:
+
+1. Crimes against people.
+2. Crimes against property.
+
+Each risk type is then separated into severe and minor offenses. This structure creates four indicators that are simple enough to interpret, but robust enough to preserve the main differences in public safety conditions.
+
+## Normalization and Inverse Scoring
+
+After classification, the information is normalized and transformed into an inverse score. This is important because the final indicator is designed as a **security score**, not a crime intensity score.
+
+In practical terms, urban blocks with higher values represent safer areas. Values are expressed in a normalized range between 0 and 1, making them comparable across territories and categories.
+
+This transformation makes the indicators easier to read in a wellbeing framework: higher values consistently represent better conditions.
+
+## Spatial Anonymization with KDE
+
+Security data is sensitive. The methodology therefore avoids exposing individual incidents directly.
+
+The cases are spatially anonymized through **Kernel Density Estimation** (KDE) over a regular 500 x 500 meter grid. This approach smooths the spatial distribution of events and produces territorial patterns without revealing exact incident locations.
+
+For public visualization and planning, this is a critical design decision. The goal is to support territorial diagnosis while preserving privacy and reducing the risk of overinterpreting point-level events.
+
+## The Four Security Indicators
+
+### Security Against Severe Crimes Against People
+
+This indicator is built from offenses such as sexual abuse, armed threats, drug consumption or possession, weapons-control offenses, homicides, moderate or severe injuries, drug trafficking and microtrafficking, rape, robberies, and thefts.
+
+It captures conditions where safety is affected by serious risks to personal integrity.
+
+### Security Against Severe Crimes Against Property
+
+This indicator is based on offenses such as vehicle theft, burglary in inhabited places, attempted robbery, and robberies involving violence or intimidation.
+
+It helps identify territorial patterns where property-related crime has a higher severity profile.
+
+### Security Against Minor Crimes Against People
+
+This indicator includes offenses such as threats, quasi-offenses, damages, public drunkenness and alcohol consumption, minor injuries, missing-person reports and findings, receiving stolen goods, family regulation cases, fights, kidnapping and child abduction, domestic violence, and rights violations.
+
+It is useful for observing everyday forms of insecurity that may affect perceived safety and social wellbeing.
+
+### Security Against Minor Crimes Against Property
+
+This indicator is built from offenses such as informal commerce, vehicle findings, theft or robbery of objects from vehicles, robbery in non-inhabited places, and surprise theft.
+
+It captures property-related events that may be less severe individually but still shape territorial safety conditions.
+
+## Why This Matters for Territorial Intelligence
+
+Security indicators are often difficult to integrate into wellbeing platforms because raw crime data is sensitive, heterogeneous, and hard to interpret spatially.
+
+The MBHT approach makes the information more usable by combining classification, synthesis, normalization, inverse scoring, and spatial anonymization. The result is a set of indicators that can be compared with other dimensions of territorial wellbeing, such as accessibility, environmental conditions, and socioeconomic context.
+
+This is the kind of architecture territorial intelligence needs: not only data processing, but careful transformation into indicators that are interpretable, responsible, and useful for decision-making.
+
+## References
+
+- [MBHT visualizations](https://matrizbht.cl/visualizations)
+- Center for Territorial Intelligence, Universidad Adolfo Ibanez.

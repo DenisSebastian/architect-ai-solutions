@@ -1,0 +1,60 @@
+---
+title: "Geospatial Foundation Models for Detecting Territorial Change in Chile"
+description: "A doctoral research agenda for scalable, transferable, and interpretable change detection across Chile's highly diverse landscapes."
+date: 2026-05-01
+tags: ["Geospatial", "Remote Sensing", "Deep Learning", "Research"]
+author: "Denis Berroeta"
+image: "/images/blog/gfm-cd/OBJ3_llm_system.png?v=91cd8fc9"
+---
+
+# Geospatial Foundation Models for Detecting Territorial Change in Chile
+
+Chile is an unusually demanding country for environmental monitoring. Deserts, mountains, agricultural valleys, expanding cities, temperate forests, wetlands, peatlands, and austral landscapes coexist in a narrow and highly dynamic territory.
+
+That diversity makes satellite-based change detection both valuable and difficult. A spectral difference between two images is not always a real landscape transformation. It may be seasonality, soil moisture, sensor variation, clouds, snow, phenology, or a radiometric artifact.
+
+My doctoral research is built around a central question: **how can we detect, characterize, and interpret territorial change in Chile in a way that is accurate, scalable, and transferable across regions?**
+
+## Why Traditional Change Detection Is Not Enough
+
+Many supervised deep learning workflows depend on large volumes of labeled data. In environmental monitoring, those labels are expensive. They require expert interpretation, consistent criteria, and field knowledge. The problem becomes even harder in remote areas, fragile ecosystems, or landscapes that are underrepresented in training datasets.
+
+Geospatial foundation models offer a different starting point. Instead of learning every task from zero, they learn general representations from large volumes of Earth observation data and can then be adapted to specific monitoring problems.
+
+For Chile, the opportunity is not simply to get better scores on a benchmark. The real opportunity is to build monitoring systems that are more stable across sensors, seasons, scales, and ecological contexts.
+
+## Chapter 1: Peatland Change Detection in Chiloe
+
+The first research chapter focuses on peatlands in Chiloe. Peatlands are ecologically and hydrologically important, but their satellite signal is complex. Vegetation, surface moisture, and seasonal dynamics can obscure the boundary between natural variability and real disturbance.
+
+The methodological focus is to compare traditional unsupervised change detection approaches with foundation-model strategies such as SAM-like segmentation, multiscale analysis, and alternative difference images.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/gfm-cd/OBJ1_diagrama_flujo.png?v=d369611b`} alt="Methodological workflow for SAR preprocessing, difference image generation, change classification, and validation" />
+
+## Chapter 2: Semantic Change Detection at National Scale
+
+Binary change detection answers whether something changed. Territorial decision-making often needs a more useful question: **what changed into what?**
+
+A semantic change detection system can distinguish transitions such as native forest to plantation, agricultural land to urban fabric, wetland to grassland, or vegetation to bare soil. That level of information is far more useful for planning, conservation, impact assessment, and public policy.
+
+This chapter aims to combine optical data, radar data, land-cover classes, and geospatial foundation models to produce comparable transition maps across Chile.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/gfm-cd/OBJ2_Coberturas.png?v=e7d39d11`} alt="Hierarchical land-cover taxonomy for natural and anthropic territorial classes in Chile" />
+
+## Chapter 3: Conversational Geospatial Analysis
+
+The third chapter connects vision foundation models with language models. The goal is to make change detection results easier to interrogate.
+
+A user should be able to ask: "Which communes show the largest urban expansion?", "Where did vegetation loss occur near protected areas?", or "What are the main land-cover transitions between 2020 and 2025?"
+
+In this design, the language model is not the source of truth. It is the orchestrator. It interprets the question, selects geospatial tools, queries databases, runs spatial analysis, and returns a traceable answer.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/gfm-cd/OBJ3_llm_system.png?v=91cd8fc9`} alt="Conversational geospatial analysis architecture with dashboard, orchestrator agent, satellite imagery agent, model agent, validation agent, visualization agent, inference service, and PostGIS database" />
+
+## The Broader Aim
+
+The thesis contributes to a new generation of environmental monitoring systems: adaptive, reproducible, and accessible. In that vision, geospatial AI does not replace expert territorial knowledge. It amplifies it, making it easier to observe, interpret, and communicate change.
+
+## References
+
+- Kirillov et al. (2023), Segment Anything.

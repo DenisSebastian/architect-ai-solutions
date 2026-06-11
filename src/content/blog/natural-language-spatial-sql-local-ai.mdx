@@ -1,0 +1,42 @@
+---
+title: "Natural Language Spatial SQL, Running Locally"
+description: "A prototype that translates plain-language questions into spatial SQL, executes them with DuckDB, and returns map-ready results without sending data to the cloud."
+date: 2025-11-20
+tags: ["Geospatial", "AI", "DuckDB", "Architecture"]
+author: "Denis Berroeta"
+---
+
+# Natural Language Spatial SQL, Running Locally
+
+Spatial databases are powerful, but they often remain locked behind SQL fluency. The prototype I built explores a simple question: what if a territorial analyst could ask a spatial database a question in natural language and receive a valid query, a table, and a map in the same workflow?
+
+The demo uses an airports dataset, but the pattern is broader. A user can ask, for example, "show me the five airports in Japan with the highest elevation." An AI agent translates the request into SQL, runs it against the spatial database, and displays the result as both records and geometry.
+
+<video controls src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}videos/blog/chat-sql/chat-sql.mov`} style="width:100%;border-radius:12px;border:1px solid rgba(0,0,0,.08);margin:1.5rem 0;"></video>
+
+## Why Local Matters
+
+The architecture is intentionally local-first. The database and the language model run on the same machine through Ollama, which keeps sensitive spatial data close to the user and avoids unnecessary cloud dependencies.
+
+That design choice matters for public agencies, consulting teams, and research groups that work with infrastructure, facilities, demographic layers, or operational assets. In those contexts, geospatial AI is not only about model capability. It is also about governance, auditability, and control over data movement.
+
+## The Technical Core
+
+The prototype combines three ideas:
+
+1. **Natural-language intent parsing**: the user asks for an analysis in ordinary language.
+2. **Spatial SQL generation**: the agent converts intent into executable SQL.
+3. **Fast analytical execution**: DuckDB with spatial extensions returns results in seconds.
+
+This creates a compact architecture for interactive spatial analytics. It does not replace GIS expertise; it makes the first analytical move faster and easier to inspect.
+
+## Where This Can Go
+
+The next version should make database connection easier, support a more conversational query flow, add drawing tools for spatial filters, and generate charts or reports from the same query results. The most useful version of this type of tool is not a chatbot sitting next to a map. It is an orchestrated interface where chat, table, geometry, and analytics stay synchronized.
+
+## References
+
+- [DuckDB Spatial Extension](https://duckdb.org/docs/stable/core_extensions/spatial/overview)
+- [Ollama](https://ollama.com/)
+- [sqlrooms](https://sqlrooms.org/)
+- Inspiration: the open geospatial work of Qiusheng Wu and interface experiments by Ilya Boyandin.

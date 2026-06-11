@@ -1,60 +1,79 @@
 ---
-import BeforeAfterSlider from './BeforeAfterSlider.tsx';
+const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const asset = (path: string) => `${baseUrl}${path.replace(/^\/+/, '')}`;
+const blogUrl = (slug: string) => `${baseUrl}blog/${slug}/`;
 
 const projects = [
   {
-    id: 'land-use-change',
-    title: 'Land Use Change Detection',
-    subtitle: 'Chilean Central Valley',
+    id: 'mirofish-ahp',
+    title: 'MiroFish-AHP',
+    subtitle: 'Multi-agent wind siting in Northern Chile',
     description:
-      'Deep learning pipeline for multi-temporal Sentinel-2 analysis. Detected 12,000+ ha of land cover transitions over 5 years using a U-Net architecture trained on labeled time-series data.',
-    tags: ['Deep Learning', 'Sentinel-2', 'Python', 'U-Net'],
+      'A territorial decision-support pilot that combines AHP, agent profiles, deliberation rounds, scenario building, and future raster suitability outputs for wind energy planning in Antofagasta.',
+    tags: ['AI Agents', 'AHP', 'Decision Support', 'Wind Energy'],
     featured: true,
     color: '#2B5C3F',
-    beforeLabel: '2018',
-    afterLabel: '2023',
+    image: 'images/blog/mirofish/ahp_mirofish.jpg',
+    alt: 'MiroFish-AHP pilot interface with multi-agent wind siting scenarios',
+    slug: 'mirofish-ahp-multiagent-wind-siting',
+    metric: '6 criteria',
+    metricLabel: 'technical, social, environmental, and risk factors',
   },
   {
-    id: 'urban-expansion',
-    title: 'Urban Expansion Monitoring',
-    subtitle: 'Santiago Metropolitan Area',
+    id: 'foundation-change',
+    title: 'Geospatial Foundation Models',
+    subtitle: 'Territorial change detection in Chile',
     description:
-      'Google Earth Engine + ML classification for tracking urban sprawl and impervious surface growth across the Santiago metro region.',
-    tags: ['Deep Learning', 'GEE', 'R'],
+      'A doctoral research agenda for transferable change detection across Chile, connecting foundation models, semantic transitions, peatland monitoring, and conversational geospatial analysis.',
+    tags: ['Foundation Models', 'Change Detection', 'Research'],
     featured: false,
     color: '#4A6FA5',
+    image: 'images/blog/gfm-cd/OBJ3_llm_system.png?v=91cd8fc9',
+    alt: 'Conversational geospatial analysis architecture for foundation-model change detection work in Chile',
+    slug: 'geospatial-foundation-models-chile-change-detection',
   },
   {
-    id: 'territorial-security',
-    title: 'Territorial Security Analysis',
-    subtitle: 'National Crime Intelligence',
+    id: 'geo-llm',
+    title: 'Geo-LLM',
+    subtitle: 'Local Chilean address geocoding pipeline',
     description:
-      'Spatio-temporal crime modeling for public policy. Hexagonal grid density mapping with predictive hotspot analysis for law enforcement resource allocation.',
-    tags: ['Geostatistics', 'R', 'H3', 'Policy'],
+      'A local geocoding prototype that combines deterministic preprocessing, LLM address parsing, PostGIS validation, street-name similarity, batch execution, and map monitoring.',
+    tags: ['LLM', 'PostGIS', 'FastAPI'],
     featured: false,
     color: '#C04A2E',
+    image: 'images/blog/geo-llm/plataforma_geo-llm.png',
+    alt: 'Geo-LLM mission control interface for batch address geocoding',
+    slug: 'geo-llm-local-geocoding-pipeline-chile',
   },
   {
-    id: 'drone-terrain',
-    title: 'Drone-Based 3D Terrain Reconstruction',
-    subtitle: 'Coastal Erosion Monitoring',
+    id: 'spatial-sql',
+    title: 'Natural Language Spatial SQL',
+    subtitle: 'Running locally with DuckDB and Ollama',
     description:
-      'High-resolution digital elevation models from UAV photogrammetry to monitor coastal erosion rates and predict shoreline change.',
-    tags: ['Photogrammetry', 'DJI', 'OpenDroneMap', 'DEM'],
+      'A local-first prototype that translates plain-language spatial questions into executable SQL, runs them with DuckDB, and returns table and map-ready results without cloud dependencies.',
+    tags: ['Spatial SQL', 'DuckDB', 'Ollama'],
     featured: false,
     color: '#8C6D3F',
+    image: 'images/blog/chat-sql/sql-chat.png',
+    alt: 'Natural language spatial SQL interface showing a local chat-to-map workflow',
+    slug: 'natural-language-spatial-sql-local-ai',
   },
   {
-    id: 'environmental-monitoring',
-    title: 'Environmental Change Monitoring',
-    subtitle: 'Patagonia Ecosystem Health',
+    id: 'security-indicators',
+    title: 'Security Indicators',
+    subtitle: 'Territorial wellbeing in Chile',
     description:
-      'Multi-source satellite data fusion for monitoring vegetation health, water body extent, and fire scar extent across Patagonian ecosystems.',
-    tags: ['NDVI', 'Multi-source Fusion', 'Python', 'GEE'],
+      'A responsible indicator architecture that transforms police records into comparable territorial security scores using classification, normalization, inverse scoring, and spatial anonymization.',
+    tags: ['Public Policy', 'Security', 'KDE'],
     featured: false,
     color: '#2B5C3F',
+    image: 'images/blog/mbht/dim_seguridad.png',
+    alt: 'Security dimension visualization from the Territorial Human Wellbeing Matrix',
+    slug: 'mbht-security-indicators-chile-2025',
   },
 ];
+
+const featuredProject = projects.find((project) => project.featured)!;
 ---
 
 <section id="case-studies" class="relative py-0 bg-[#EEEAE4]">
@@ -77,7 +96,7 @@ const projects = [
     </div>
     <div class="gsap-reveal mb-8 text-center">
       <p class="text-[#6B6865] text-lg max-w-2xl mx-auto">
-        Agentic AI systems applied to real territorial problems
+        Applied geospatial AI, territorial indicators, and decision-support systems drawn from current research and production work
       </p>
     </div>
 
@@ -86,33 +105,21 @@ const projects = [
       class="gsap-reveal mb-8 group relative rounded-2xl overflow-hidden border border-black/7 bg-[#FDFCF9] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] transition-all duration-500"
     >
       <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[240px]">
-        <!-- Satellite imagery comparison — dark panel -->
-        <div class="relative h-48 lg:h-auto bg-[#1A1917] overflow-hidden">
-          <BeforeAfterSlider
-            client:visible
-            beforeSrc="/images/projects/before-placeholder.jpg"
-            afterSrc="/images/projects/after-placeholder.jpg"
-            beforeLabel="2018"
-            afterLabel="2023"
+        <div class="relative h-56 lg:h-auto bg-[#1A1917] overflow-hidden">
+          <img
+            src={asset(featuredProject.image)}
+            alt={featuredProject.alt}
+            class="absolute inset-0 h-full w-full object-cover opacity-80"
+            loading="lazy"
           />
-          <!-- Fallback data visualization -->
-          <div
-            class="absolute inset-0 pointer-events-none"
-            style="background: linear-gradient(135deg, #0d2b1a 0%, #1a2b0d 40%, #0d1b2a 100%);"
-          ></div>
-          <div class="absolute inset-0 survey-grid opacity-30 pointer-events-none"></div>
-          <!-- Data overlay -->
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="text-center">
-              <div class="font-mono text-[#4E9E71] text-xs opacity-70 mb-2 tracking-widest uppercase">
-                Sentinel-2 Imagery
-              </div>
-              <div class="font-display font-bold text-white text-3xl opacity-60">
-                12,000+ ha
-              </div>
-              <div class="font-mono text-white/40 text-xs mt-1">
-                land cover transitions detected
-              </div>
+          <div class="absolute inset-0 bg-gradient-to-br from-[#1A1917]/80 via-[#1A1917]/25 to-[#2B5C3F]/40 pointer-events-none"></div>
+          <div class="absolute inset-0 survey-grid opacity-20 pointer-events-none"></div>
+          <div class="absolute left-5 bottom-5 rounded-lg border border-white/15 bg-black/35 px-4 py-3 backdrop-blur-sm">
+            <div class="font-display font-bold text-white text-3xl leading-none">
+              {featuredProject.metric}
+            </div>
+            <div class="font-mono text-white/70 text-xs mt-2 max-w-[14rem]">
+              {featuredProject.metricLabel}
             </div>
           </div>
         </div>
@@ -127,17 +134,15 @@ const projects = [
           <h3
             class="font-display font-semibold text-3xl md:text-4xl text-[#1A1917] mb-2 leading-tight"
           >
-            Land Use Change Detection
+            {featuredProject.title}
           </h3>
-          <p class="text-[#6B6865] text-sm mb-4 font-mono">Chilean Central Valley</p>
+          <p class="text-[#6B6865] text-sm mb-4 font-mono">{featuredProject.subtitle}</p>
           <p class="text-[#6B6865] leading-relaxed mb-6">
-            Deep learning pipeline for multi-temporal Sentinel-2 analysis.
-            Detected 12,000+ ha of land cover transitions over 5 years using a
-            U-Net architecture trained on labeled time-series satellite imagery.
+            {featuredProject.description}
           </p>
           <div class="flex flex-wrap gap-2 mb-7">
             {
-              ['Deep Learning', 'Sentinel-2', 'Python', 'U-Net'].map((tag) => (
+              featuredProject.tags.map((tag) => (
                 <span class="px-2 py-0.5 rounded text-xs font-mono text-[#2B5C3F] border border-[#2B5C3F25] bg-[#2B5C3F08]">
                   {tag}
                 </span>
@@ -145,10 +150,10 @@ const projects = [
             }
           </div>
           <a
-            href="#contact"
+            href={blogUrl(featuredProject.slug)}
             class="group/link inline-flex items-center gap-2 text-[#2B5C3F] font-semibold text-sm hover:gap-3 transition-all duration-200"
           >
-            Request Case Study
+            Read Project Summary
             <svg
               class="w-4 h-4"
               fill="none"
@@ -172,7 +177,8 @@ const projects = [
         projects
           .filter((p) => !p.featured)
           .map((project) => (
-            <div
+            <a
+              href={blogUrl(project.slug)}
               class="project-card gsap-reveal group relative p-6 rounded-xl border border-black/7 bg-[#FDFCF9] hover:-translate-y-1.5 hover:shadow-[0_4px_20px_rgba(0,0,0,0.07)] transition-all duration-300"
             >
               <!-- Top accent line -->
@@ -181,16 +187,22 @@ const projects = [
                 style={`background: ${project.color};`}
               />
 
-              <!-- Decorative data panel -->
               <div
-                class="w-full h-28 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative bg-[#1A1917]"
+                class="w-full h-32 rounded-lg mb-4 overflow-hidden relative bg-[#1A1917]"
               >
+                <img
+                  src={asset(project.image)}
+                  alt={project.alt}
+                  class="absolute inset-0 h-full w-full object-cover opacity-75 transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-gradient-to-br from-black/55 via-black/15 to-transparent" />
                 <div class="absolute inset-0 survey-grid opacity-20" />
                 <span
-                  class="font-mono text-xs opacity-50 z-10"
+                  class="absolute left-3 bottom-3 font-mono text-[10px] uppercase tracking-wider opacity-80 z-10"
                   style={`color: ${project.color};`}
                 >
-                  {project.id.replace(/-/g, '_')}.tif
+                  {project.id.replace(/-/g, '_')}
                 </span>
               </div>
 
@@ -211,7 +223,7 @@ const projects = [
                   </span>
                 ))}
               </div>
-            </div>
+            </a>
           ))
       }
     </div>

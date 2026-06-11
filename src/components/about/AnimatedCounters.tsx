@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 
 const stats = [
   { value: 7, suffix: '+', label: 'Years\nExperience' },
-  { value: 15, suffix: '+', label: 'Projects\nDelivered' },
+  { value: 15, suffix: '+', label: 'Research' },
+  { value: 50, suffix: '+', label: 'Geospatial\nWorkflows Built' },
   { value: 3, suffix: '', label: 'Advanced\nDegrees' },
   { value: 8, suffix: '+', label: 'Courses\nTaught' },
-  { value: 50, suffix: 'K+', label: 'km² Analyzed' },
-  { value: 95, suffix: '%', label: 'Client\nSatisfaction' },
+  { value: 300, suffix: '+', label: 'Students\nReached' },
 ];
 
 function Counter({

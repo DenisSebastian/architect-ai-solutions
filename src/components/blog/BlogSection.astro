@@ -1,9 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
+const posts = (await getCollection('blog', ({ data }) => !data.draft && !data.tags.includes('Paper Review')))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const assetPath = (path: string) => path.startsWith('/') ? `${base}${path.slice(1)}` : path;
 
 const tagColors: Record<string, string> = {
   'Deep Learning': '#C04A2E',
@@ -25,6 +28,7 @@ function formatDate(d: Date) {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
+    timeZone: 'UTC',
   });
 }
 ---
@@ -73,17 +77,24 @@ function formatDate(d: Date) {
             class="blog-card gsap-reveal group relative flex flex-col rounded-2xl border border-black/7 bg-[#FDFCF9] overflow-hidden hover:-translate-y-1.5 hover:shadow-[0_4px_20px_rgba(0,0,0,0.07)] transition-all duration-300"
           >
             <!-- Thumbnail — dark data panel -->
-            <div
-              class="relative h-44 overflow-hidden flex items-center justify-center bg-[#1A1917]"
-            >
-              <div class="absolute inset-0 survey-grid opacity-25 group-hover:opacity-40 transition-opacity duration-500" />
-              <div class="relative z-10 text-center">
-                <div
-                  class="font-mono text-[#4E9E71] text-4xl opacity-25 group-hover:opacity-50 transition-opacity duration-300"
-                >
-                  {i === 0 ? '🛰' : i === 1 ? '🗺' : '🌍'}
-                </div>
-              </div>
+            <div class="relative h-44 overflow-hidden flex items-center justify-center bg-[#1A1917]">
+              {post.data.image ? (
+                <img
+                  src={assetPath(post.data.image)}
+                  alt=""
+                  class="absolute inset-0 h-full w-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              ) : (
+                <>
+                  <div class="absolute inset-0 survey-grid opacity-25 group-hover:opacity-40 transition-opacity duration-500" />
+                  <div class="relative z-10 text-center">
+                    <div class="font-mono text-[#4E9E71] text-4xl opacity-25 group-hover:opacity-50 transition-opacity duration-300">
+                      {i === 0 ? 'AI' : i === 1 ? 'GIS' : 'EO'}
+                    </div>
+                  </div>
+                </>
+              )}
               <div
                 class="absolute inset-0"
                 style="background: linear-gradient(to bottom, transparent 50%, #1A1917 100%);"

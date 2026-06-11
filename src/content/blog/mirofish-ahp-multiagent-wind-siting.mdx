@@ -1,0 +1,47 @@
+---
+title: "MiroFish-AHP: Multi-Agent Deliberation for Wind Siting in Northern Chile"
+description: "A territorial decision-support pilot that combines AHP, agent profiles, scenario building, and future spatial suitability maps for wind energy planning."
+date: 2026-06-02
+tags: ["Geospatial", "Decision Support", "AI", "Architecture"]
+image: "/images/blog/mirofish/MiroFish_logo.jpeg"
+author: "Denis Berroeta"
+---
+
+# MiroFish-AHP: Multi-Agent Deliberation for Wind Siting in Northern Chile
+
+Energy siting is rarely a purely technical optimization problem. Wind potential matters, but so do grid connection, logistics, environmental restrictions, social sensitivity, Indigenous territory, and disaster risk.
+
+MiroFish-AHP is a pilot for prioritizing wind energy zones in the Antofagasta Region of northern Chile. The project combines the Analytic Hierarchy Process with multi-agent deliberation to make trade-offs explicit before producing spatial suitability outputs.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/mirofish/ahp_mirofish.jpg`} alt="MiroFish-AHP pilot interface running with multi-agent wind siting scenarios" />
+
+## The Decision Model
+
+The pilot works with six criteria:
+
+1. Technical wind potential.
+2. Grid connection viability.
+3. Logistical accessibility.
+4. Environmental restriction.
+5. Social and Indigenous sensitivity.
+6. Disaster risk.
+
+Each criterion is linked to a planned raster proxy, such as wind speed, distance to transmission infrastructure, distance to paved roads, protected areas, social sensitivity, and disaster risk.
+
+## The Agent Layer
+
+The deliberative layer uses six profiles: an energy technician, a connection engineer, an environmental specialist, an Indigenous community perspective, a regional authority, and a disaster-risk specialist.
+
+Each profile begins with its own bias structure. The system generates pairwise AHP matrices from those positions, runs two deliberative rounds, detects conflicts, and consolidates scenarios through geometric aggregation.
+
+## Why This Is More Than a Scoring Exercise
+
+Spatial suitability models often hide political and technical assumptions inside weights. MiroFish-AHP makes those weights discussable. The point is not to pretend that a model resolves conflict. The point is to document how different priorities produce different territorial outcomes.
+
+The current version implements the AHP core, consistency checks, matrix aggregation, agent profiles, deliberation, scenario building, JSON export, and tests. The next stage is the spatial module: raster processing, GeoTIFF export, PNG outputs, and an end-to-end notebook.
+
+## References
+
+- Saaty, T. L. (1980), The Analytic Hierarchy Process.
+- Malczewski, J. (1999), GIS and Multicriteria Decision Analysis.
+- PostGIS and raster-based geospatial suitability modeling patterns.

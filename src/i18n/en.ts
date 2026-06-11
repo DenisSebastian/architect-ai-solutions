@@ -34,11 +34,11 @@ export const en = {
     bio3: 'Specializing in agentic AI for territorial problems, deep learning for change detection, geospatial data pipelines, and spatial analysis for public policy. Based in the beautiful coastal town of Isla Negra, Chile.',
     stats: [
       { value: 7, suffix: '+', label: 'Years\nExperience' },
-      { value: 15, suffix: '+', label: 'Projects\nDelivered' },
+      { value: 15, suffix: '+', label: 'Research' },
+      { value: 50, suffix: '+', label: 'Geospatial\nWorkflows Built' },
       { value: 3, suffix: '', label: 'Advanced\nDegrees' },
       { value: 8, suffix: '+', label: 'Courses\nTaught' },
-      { value: 50, suffix: 'K+', label: 'km² Analyzed' },
-      { value: 95, suffix: '%', label: 'Client\nSatisfaction' },
+      { value: 300, suffix: '+', label: 'Students\nReached' },
     ],
   },
   services: {
@@ -49,71 +49,72 @@ export const en = {
       {
         title: 'Remote Sensing & Earth Observation',
         description:
-          'Satellite image analysis, multispectral processing, and Google Earth Engine pipelines at scale. From raw pixel values to meaningful land cover classifications.',
+          'Satellite and multi-source imagery transformed into territorial indicators for environmental monitoring, mining and industrial operations, agronomy, and urban growth analysis.',
       },
       {
-        title: 'Deep Learning for Change Detection',
+        title: 'Artificial Intelligence for Geospatial Modeling',
         description:
-          'Custom CNN and transformer architectures for detecting land use change from multi-temporal satellite imagery. End-to-end pipelines from data ingestion to model deployment.',
+          'Geospatial foundation models and custom AI workflows for land-use and land-cover classification, change detection, segmentation, and task-specific models when the problem requires it.',
+      },
+      {
+        title: 'Agentic AI Systems for Territorial Solutions',
+        description:
+          'End-to-end AI agent systems that translate territorial needs into integrated solutions, connecting data, models, spatial reasoning, automation, and decision workflows.',
       },
       {
         title: 'Territorial Intelligence',
         description:
-          'Spatial analysis for public policy design, urban planning, and security assessment. Turning geospatial data into evidence-based decisions.',
+          'Development of socioeconomic, environmental, and crime-related territorial indicators through spatial analysis workflows for public policy and evidence-based decision-making.',
       },
       {
         title: 'Geospatial Data Infrastructure',
         description:
-          'End-to-end pipelines: collection, processing, modeling, and deployment of geospatial data. PostGIS, cloud-native rasters, and scalable ETL workflows.',
-      },
-      {
-        title: 'Drone Mapping & Photogrammetry',
-        description:
-          'Aerial survey, 3D model reconstruction, orthomosaic generation, and digital elevation model production from UAV imagery.',
+          'Secure, scalable, and optimized geospatial data infrastructure for spatial AI agents, analytical platforms, and production workflows that need reliable performance.',
       },
       {
         title: 'Training & Capacity Building',
         description:
-          'Workshops and university courses in GIS, Remote Sensing, and Spatial Data Science. Teaching 8+ courses with proven methodologies for technical and non-technical audiences.',
+          'Applied training programs in geoanalysis, territorial indicators, criminological spatial analysis, remote sensing, and spatial data science, tailored to teams, institutions, and individual needs.',
       },
     ],
   },
   work: {
     sectionNum: '03 / Work',
     title: 'Selected Work',
-    description: 'Agentic AI systems applied to real territorial problems',
+    description:
+      'Applied geospatial AI, territorial indicators, and decision-support systems drawn from current research and production work',
     featured: 'Featured Project',
-    requestBtn: 'Request Case Study',
+    requestBtn: 'Read Project Summary',
     projects: [
       {
-        title: 'Land Use Change Detection',
-        subtitle: 'Chilean Central Valley',
+        title: 'MiroFish-AHP',
+        subtitle: 'Multi-agent wind siting in Northern Chile',
         description:
-          'Deep learning pipeline for multi-temporal Sentinel-2 analysis. Detected 12,000+ ha of land cover transitions over 5 years using a U-Net architecture trained on labeled time-series data.',
+          'A territorial decision-support pilot that combines AHP, agent profiles, deliberation rounds, scenario building, and future raster suitability outputs for wind energy planning in Antofagasta.',
       },
       {
-        title: 'Urban Expansion Monitoring',
-        subtitle: 'Santiago Metropolitan Area',
+        title: 'Geospatial Foundation Models',
+        subtitle: 'Territorial change detection in Chile',
         description:
-          'Google Earth Engine + ML classification for tracking urban sprawl and impervious surface growth across the Santiago metro region.',
+          'A doctoral research agenda for transferable change detection across Chile, connecting foundation models, semantic transitions, peatland monitoring, and conversational geospatial analysis.',
       },
       {
-        title: 'Territorial Security Analysis',
-        subtitle: 'National Crime Intelligence',
+        title: 'Geo-LLM',
+        subtitle: 'Local Chilean address geocoding pipeline',
         description:
-          'Spatio-temporal crime modeling for public policy. Hexagonal grid density mapping with predictive hotspot analysis for law enforcement resource allocation.',
+          'A local geocoding prototype that combines deterministic preprocessing, LLM address parsing, PostGIS validation, street-name similarity, batch execution, and map monitoring.',
       },
       {
-        title: 'Drone-Based 3D Terrain Reconstruction',
-        subtitle: 'Coastal Erosion Monitoring',
+        title: 'Natural Language Spatial SQL',
+        subtitle: 'Running locally with DuckDB and Ollama',
         description:
-          'High-resolution digital elevation models from UAV photogrammetry to monitor coastal erosion rates and predict shoreline change.',
+          'A local-first prototype that translates plain-language spatial questions into executable SQL, runs them with DuckDB, and returns table and map-ready results without cloud dependencies.',
       },
       {
-        title: 'Environmental Change Monitoring',
-        subtitle: 'Patagonia Ecosystem Health',
+        title: 'Security Indicators',
+        subtitle: 'Territorial wellbeing in Chile',
         description:
-          'Multi-source satellite data fusion for monitoring vegetation health, water body extent, and fire scar extent across Patagonian ecosystems.',
+          'A responsible indicator architecture that transforms police records into comparable territorial security scores using classification, normalization, inverse scoring, and spatial anonymization.',
       },
     ],
   },
@@ -121,7 +122,7 @@ export const en = {
     sectionNum: '04 / Tech',
     title: 'Tools & Technologies',
     description: 'The full stack of an AI territorial intelligence architect',
-    categories: ['Core Languages', 'AI / ML', 'Geospatial', 'Infrastructure'],
+    categories: ['Core Languages', 'Agentic AI', 'Geospatial', 'Infrastructure'],
   },
   blog: {
     sectionNum: '05 / Blog',

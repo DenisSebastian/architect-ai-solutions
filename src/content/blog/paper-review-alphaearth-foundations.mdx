@@ -1,0 +1,38 @@
+---
+title: "Paper Review: AlphaEarth Foundations"
+description: "A review of AlphaEarth Foundations and its claim that global embedding fields can improve mapping from sparse labels."
+date: 2026-01-22
+tags: ["Paper Review", "Geospatial", "Remote Sensing", "Foundation Models"]
+image: "/images/blog/paper-review/brown-arquitecture.png"
+author: "Denis Berroeta"
+---
+
+# Paper Review: AlphaEarth Foundations
+
+**Paper:** Brown et al. (2025), *AlphaEarth Foundations: An embedding field model for accurate and efficient global mapping from sparse label data*.
+
+AlphaEarth Foundations addresses one of the hardest problems in Earth observation: satellite data is abundant, but high-quality labels are scarce. Field measurements and expert annotations are expensive, unevenly distributed, and often local. The paper proposes global annual embedding fields that can be reused for mapping tasks without retraining the representation for each new problem.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/paper-review/brown-application.png`} alt="AlphaEarth Foundations application examples" />
+
+## Why It Matters
+
+The practical promise is strong. If a general geospatial representation can support accurate mapping from sparse labels, then many institutions could move faster from local observations to operational maps.
+
+This is especially relevant for environmental monitoring, land-cover mapping, habitat analysis, and territorial planning in countries where labeled data is fragmented.
+
+## Technical Idea
+
+The model integrates multiple Earth observation sources and contextual dimensions through a space-time-precision architecture. Instead of treating an image as a single isolated input, it learns a representation that accounts for where, when, and under what measurement conditions the observation exists.
+
+The output is not just a model checkpoint. It is a product: analysis-ready embedding layers across years.
+
+## What I Take From It
+
+AlphaEarth is important because it reframes foundation models as infrastructure for mapping. The strongest use case is not replacing local expertise, but reducing the cost of adapting that expertise to new geographies and tasks.
+
+For Chile, the question is how well these global embeddings transfer to extreme gradients: desert, Andes, Mediterranean landscapes, temperate forests, peatlands, and austral systems.
+
+## Reference
+
+- Brown, C. F. et al. (2025). [AlphaEarth Foundations](https://doi.org/10.48550/arXiv.2507.22291).

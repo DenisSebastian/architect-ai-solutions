@@ -1,0 +1,48 @@
+---
+title: "Geo-LLM: A Local Pipeline for Chilean Address Geocoding"
+description: "A functional prototype that combines deterministic parsing, local LLMs, PostGIS validation, street-name similarity, and operational batch monitoring."
+date: 2026-03-15
+tags: ["Geospatial", "LLM", "PostGIS", "Architecture"]
+image: "/images/blog/geo-llm/plataforma_geo-llm.png"
+author: "Denis Berroeta"
+---
+
+# Geo-LLM: A Local Pipeline for Chilean Address Geocoding
+
+An address is not just text. When it is treated carefully, it can become a coordinate, a spatial layer, and eventually decision-ready territorial information.
+
+Geocoding sounds simple: transform an address such as "Av. Providencia 1208, Providencia, Santiago" into a point on a map. In practice, real addresses arrive incomplete, abbreviated, misspelled, duplicated, or ambiguous. Many operational workflows still solve this with manual cleaning or brittle rules.
+
+Geo-LLM explores how language models can help structure addresses while remaining inside a traceable geospatial pipeline.
+
+<video controls src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}videos/blog/geo-llm/geo-llm.mov`} style="width:100%;border-radius:12px;border:1px solid rgba(0,0,0,.08);margin:1.5rem 0;"></video>
+
+## The Pipeline
+
+The current system combines:
+
+1. Deterministic preprocessing for empty values, invalid communes, and obvious formatting issues.
+2. Structured parsing through a local LLM with Ollama.
+3. Geocoding through a local PostGIS provider, with optional Nominatim or hybrid fallback.
+4. Spatial validation against the expected commune and region.
+5. Street-name similarity matching against a local street master.
+6. Batch execution, WebSocket monitoring, export, and map visualization through a Mission Control interface.
+
+The system does not simply send text to a geocoder. It interprets the address, decides how to process it, validates the result spatially, and proposes corrections when the first attempt fails.
+
+## Why This Pattern Matters
+
+Address quality is a common bottleneck in logistics, public services, market analysis, health access studies, safety analysis, and urban planning. A more intelligent geocoding workflow can reduce manual review while keeping a clear audit trail.
+
+The most important design principle is separation of responsibilities. The LLM helps parse and structure messy text, but PostGIS and spatial validation remain responsible for geographic truth.
+
+## What Comes Next
+
+The next lines of work are performance, user experience, coverage, credibility, and scalability. The direction is a robust operational service: configurable, explainable, and able to process real institutional address datasets without excessive infrastructure.
+
+## References
+
+- [PostGIS](https://postgis.net/)
+- [Ollama](https://ollama.com/)
+- [Nominatim](https://nominatim.org/)
+- [FastAPI](https://fastapi.tiangolo.com/)

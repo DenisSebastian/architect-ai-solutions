@@ -1,0 +1,80 @@
+---
+title: "Socioeconomic Indicators for Territorial Wellbeing in Chile"
+description: "How the MBHT Socioeconomic Dimension uses census microdata to measure housing quality, overcrowding, education, household resilience, employment, and youth participation."
+date: 2026-01-16
+tags: ["Geospatial", "Public Policy", "Socioeconomic", "Territorial Intelligence"]
+image: "/images/blog/mbht/dim_socioeconomico.png"
+author: "Denis Berroeta"
+---
+
+# Socioeconomic Indicators for Territorial Wellbeing in Chile
+
+The **Territorial Human Wellbeing Matrix** (MBHT), developed in the context of the Center for Territorial Intelligence at Universidad Adolfo Ibanez, treats socioeconomic conditions as a structural dimension of territorial wellbeing.
+
+This is especially important in Chile, where social segregation is strongly reflected in the spatial separation of different social groups. For territorial intelligence, this means that wellbeing cannot be understood only through access, environment, or security. The social condition of each territorial unit is part of the structure that shapes opportunity, vulnerability, and quality of life.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/mbht/dim_socioeconomico.png`} alt="Socioeconomic dimension visualization from the Territorial Human Wellbeing Matrix" />
+
+## Data Foundation
+
+The socioeconomic indicators are built from census information aggregated at the minimum territorial unit level, using georeferenced household-level microdata and variables comparable to those prepared by Chile's National Statistics Institute for the 2017 Census.
+
+Because the MBHT is a wellbeing index, variables are normalized so that higher values represent more desirable conditions. Most variables are inverted before normalization, with the exception of the years of schooling of the head of household.
+
+This design decision is important: it makes the interpretation coherent across the platform. A value closer to 1 represents better territorial conditions, while values closer to 0 indicate greater socioeconomic vulnerability.
+
+The current version is based on Census 2017 data, and work is underway to update the calculation using Census 2024 information.
+
+## Indicator 1: Housing Quality
+
+Housing quality is a synthetic variable that summarizes the material condition of dwellings.
+
+It is initially constructed as an indicator of poor quality: higher values indicate worse housing conditions, while lower values indicate better conditions. The indicator is built as a linear average of three subindicators: wall quality, floor quality, and roof quality.
+
+Each subindicator captures the percentage of dwellings within an urban block or rural entity that have insufficient wall, floor, or roof materials.
+
+## Indicator 2: Housing Sufficiency
+
+Housing sufficiency is constructed as an overcrowding indicator.
+
+It uses two variables: the number of dwellings in overcrowded conditions and the number of dwellings in severe overcrowding. In a territorial wellbeing framework, this indicator captures a basic but critical aspect of household vulnerability: whether available housing space is sufficient for the people living in it.
+
+## Indicator 3: Schooling of the Head of Household
+
+This indicator corresponds to the average number of years of education of household heads within an urban block or rural entity.
+
+In Chile, this variable is closely related to income levels and broader socioeconomic opportunity. Unlike the other variables, it is not inverted before normalization, because higher educational attainment is directly interpreted as a more favorable condition.
+
+## Indicator 4: Household Resilience
+
+Household resilience is calculated as the additive inverse of the proportion of single-parent households within each minimum territorial unit.
+
+Single-parent households are those where children live with only one parent. This condition can be associated with different forms of social vulnerability, including lower income, health-related pressures, exposure to insecurity, and reduced support networks.
+
+The indicator is framed as resilience because higher values represent a lower proportion of this vulnerability condition.
+
+## Indicator 5: Employment
+
+The employment indicator calculates the proportion of economically active people with employment, relative to the total number of people who are able and willing to work within each territorial unit.
+
+This indicator reveals potential gaps in access to employment at the neighborhood scale. It is particularly useful because labor-market conditions often vary sharply within the same city or region.
+
+## Indicator 6: Youth Participation in Employment and Study
+
+This indicator measures the proportion of young people between 15 and 24 years old who are either working or studying, relative to the total population in that age group within the urban block or rural entity.
+
+It captures a key transition period between education and work. Low participation can signal socioeconomic exclusion, school dropout trajectories, unemployment risk, and conditions that may increase exposure to broader social vulnerabilities.
+
+## Why This Matters for Territorial Intelligence
+
+The socioeconomic dimension provides a structural reading of wellbeing. It helps identify where material conditions, education, household composition, employment, and youth inclusion interact spatially.
+
+For public policy and territorial planning, this type of indicator system is valuable because it translates census microdata into interpretable territorial evidence. It allows socioeconomic conditions to be compared with other MBHT dimensions, such as accessibility, environmental comfort, and security.
+
+The next methodological step is the update with Census 2024 data. That update is important not only because it refreshes the numbers, but because it allows the platform to observe how territorial inequalities have changed since 2017.
+
+## References
+
+- [MBHT visualizations](https://matrizbht.cl/visualizations)
+- Center for Territorial Intelligence, Universidad Adolfo Ibanez.
+- Chilean Census 2017 and ongoing Census 2024 update work.

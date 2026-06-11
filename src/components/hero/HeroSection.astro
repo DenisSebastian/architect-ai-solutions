@@ -55,7 +55,7 @@ import Globe from './Globe.tsx';
         <!-- Tagline -->
         <div id="hero-tagline" style="opacity:0;">
           <p
-            class="text-xl md:text-2xl font-heading font-medium text-[#1A1917]/80 leading-snug"
+            class="hero-tagline-text text-xl md:text-2xl font-heading font-medium text-[#1A1917]/80 leading-snug"
           >
             Decoding Territory
             <span class="text-[#2B5C3F] font-semibold"> with AI</span>
@@ -159,3 +159,9 @@ import Globe from './Globe.tsx';
     .to('#hero-scroll', { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
     .to('#hero-globe-wrap', { opacity: 1, scale: 1, duration: 1, ease: 'power3.out' }, 0.2);
 </script>
+
+<style>
+  :global(html[data-theme="dark"]) .hero-tagline-text {
+    color: #E4E2DC;
+  }
+</style>
