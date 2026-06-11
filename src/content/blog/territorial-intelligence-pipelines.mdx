@@ -1,10 +1,14 @@
 ---
 title: "Building Territorial Intelligence Pipelines with R and Python"
+titleEs: "Construcción de flujos de inteligencia territorial con R y Python"
 description: "A practical architecture for turning satellite imagery, spatial databases, and statistical models into reproducible territorial intelligence products."
+descriptionEs: "Una arquitectura práctica para transformar imágenes satelitales, bases de datos espaciales y modelos estadísticos en productos reproducibles de inteligencia territorial."
 date: 2025-02-10
 tags: ["R", "Python", "Geospatial", "Architecture"]
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Building Territorial Intelligence Pipelines with R and Python
 
@@ -67,3 +71,71 @@ For me, the core principle is simple: **use the right tool at each stage, but ke
 R can be the analytical language. Python can be the production and AI language. PostGIS can be the spatial memory. Google Earth Engine or STAC catalogs can be the imagery layer. Dashboards and APIs can be the delivery surface.
 
 The value is not in the tools separately. The value is in how they are connected to produce territorial knowledge that is reproducible, transparent, and useful for decisions.
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Construcción de flujos de inteligencia territorial con R y Python
+
+La inteligencia territorial no se produce con un solo modelo, script o tablero. Se produce mediante un flujo: una secuencia de decisiones técnicas que transforma datos espaciales crudos en información que puede auditarse, actualizarse y usarse para planificación.
+
+En mi trabajo, R y Python no compiten. Son partes complementarias de una misma arquitectura. La pregunta importante no es qué lenguaje es mejor. La pregunta importante es dónde cada uno crea el camino más confiable entre datos y decisión.
+
+## Qué necesita hacer un flujo de inteligencia territorial
+
+Un flujo útil debe conectar varias capas de trabajo:
+
+1. **Adquisición de datos**, desde plataformas satelitales, bases de datos espaciales, portales de datos abiertos, registros administrativos o fuentes de terreno.
+2. **Preprocesamiento**, incluyendo proyecciones, filtrado temporal, enmascaramiento de nubes, validación geométrica y normalización.
+3. **Construcción de variables**, como índices de vegetación, métricas térmicas, medidas de accesibilidad, transiciones de cobertura de suelo o variables de exposición espacial.
+4. **Modelación y clasificación**, donde se aplican modelos estadísticos, aprendizaje automático o aprendizaje profundo.
+5. **Agregación a unidades territoriales**, para que la información raster o puntual sea útil a escala de manzanas, barrios, comunas, regiones o unidades de planificación personalizadas.
+6. **Publicación e interpretación**, mediante mapas, tableros, APIs, reportes y herramientas de apoyo a la decisión.
+
+Cada etapa debe ser reproducible. De lo contrario, el mapa final puede verse convincente, pero seguir siendo difícil de confiar.
+
+## Por qué uso R y Python
+
+R es excelente para estadística espacial, análisis exploratorio, manipulación de datos y salidas analíticas comunicables. Paquetes como `sf`, `terra`, `tidyverse`, `stars` y `tmap` hacen eficiente inspeccionar datos, probar supuestos, resumir resultados y producir flujos analíticos transparentes.
+
+Python es más fuerte cuando el flujo necesita aprendizaje profundo, visión computacional, automatización a gran escala, servicios API, orquestación o integración con marcos modernos de aprendizaje automático. Librerías como PyTorch, FastAPI, GeoPandas, Rasterio, Xarray y scikit-learn hacen de Python una opción natural para IA geoespacial orientada a producción.
+
+Los flujos más sólidos no fuerzan todo dentro de un solo ecosistema. Usan formatos estables de intercambio:
+
+- GeoParquet para datos vectoriales.
+- Cloud-Optimized GeoTIFF para productos raster.
+- Metadatos STAC para catálogos de imágenes.
+- PostgreSQL/PostGIS para infraestructura espacial persistente.
+- JSON o formatos basados en Arrow para salidas de modelos e intercambio con APIs.
+
+## Arquitectura antes que scripts
+
+Muchos proyectos geoespaciales comienzan como notebooks. Eso es útil para explorar, pero no basta para productos de inteligencia territorial que deben mantenerse en el tiempo.
+
+Un flujo profesional debería dejar claro:
+
+- De dónde provino cada insumo.
+- Qué transformación se aplicó.
+- Qué parámetros se usaron.
+- Qué unidad territorial recibió cada resultado.
+- Cómo pueden regenerarse las salidas.
+- Cómo se manejan la incertidumbre, los datos faltantes y los casos borde.
+
+Por eso pienso en términos de arquitectura más que de análisis aislados. Un producto territorial debería resistir un cambio de sensor, una actualización de límites administrativos o una solicitud para reproducir el resultado seis meses después.
+
+## El lado humano del flujo
+
+Los flujos técnicos solo son útiles si responden preguntas territoriales con claridad. Un indicador de vegetación, un puntaje de accesibilidad, una capa de riesgo o un mapa de transición de cobertura debe ser comprensible para quienes lo usarán.
+
+Eso significa que la salida final no debería ser solo un conjunto de datos. Debería incluir documentación, interpretación, validación y una forma de explorar patrones espaciales. El mejor flujo es el que vuelve legible el análisis geoespacial complejo sin ocultar los supuestos que lo sostienen.
+
+## El principio de diseño
+
+Para mí, el principio central es simple: **usar la herramienta correcta en cada etapa, pero mantener el flujo coherente de punta a punta**.
+
+R puede ser el lenguaje analítico. Python puede ser el lenguaje de producción e IA. PostGIS puede ser la memoria espacial. Google Earth Engine o catálogos STAC pueden ser la capa de imágenes. Tableros y APIs pueden ser la superficie de entrega.
+
+El valor no está en las herramientas por separado. El valor está en cómo se conectan para producir conocimiento territorial reproducible, transparente y útil para la toma de decisiones.
+
+</section>

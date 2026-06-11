@@ -10,6 +10,7 @@ export const en = {
     work: 'Work',
     tech: 'Tech',
     blog: 'Blog',
+    paperReview: 'Paper Review',
     contact: 'Contact',
   },
   hero: {
@@ -158,6 +159,26 @@ export const en = {
   footer: {
     tagline: 'AI Solutions Architect Applied to Territory',
     builtWith: 'Built with',
+  },
+  pages: {
+    blog: {
+      title: 'Blog',
+      label: 'Technical Writings',
+      description:
+        'Deep dives into AI, remote sensing, geospatial data science, and territorial intelligence.',
+      backHome: 'Back to Home',
+      read: 'Read',
+    },
+    paperReview: {
+      title: 'Paper Review',
+      label: 'Research Notes',
+      description:
+        'Concise reviews of papers that matter for geospatial AI, urban analytics, and territorial decision systems.',
+      readReview: 'Read review',
+    },
+    post: {
+      allPosts: 'All Posts',
+    },
   },
   notFound: {
     label: '404 Error',

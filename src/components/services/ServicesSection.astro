@@ -1,54 +1,45 @@
 ---
-const services = [
+import { en } from '../../i18n/en';
+
+const serviceMeta = [
   {
     icon: 'satellite',
-    title: 'Remote Sensing & Earth Observation',
-    description:
-      'Satellite and multi-source imagery transformed into territorial indicators for environmental monitoring, mining and industrial operations, agronomy, and urban growth analysis.',
     tags: ['Sentinel-2', 'MODIS', 'Datacubes', 'GEE', 'GDAL'],
     color: '#2B5C3F',
   },
   {
     icon: 'brain',
-    title: 'Artificial Intelligence for Geospatial Modeling',
-    description:
-      'Geospatial foundation models and custom AI workflows for land-use and land-cover classification, change detection, segmentation, and task-specific models when the problem requires it.',
     tags: ['LULC', 'Geospatial FMs', 'GeoSAM', 'Transformers', 'PyTorch'],
     color: '#4A6FA5',
   },
   {
     icon: 'agents',
-    title: 'Agentic AI Systems for Territorial Solutions',
-    description:
-      'End-to-end AI agent systems that translate territorial needs into integrated solutions, connecting data, models, spatial reasoning, automation, and decision workflows.',
     tags: ['AI Agents', 'LLMs', 'Workflow Design', 'Automation', 'Spatial AI'],
     color: '#8C6D3F',
   },
   {
     icon: 'map',
-    title: 'Territorial Intelligence',
-    description:
-      'Development of socioeconomic, environmental, and crime-related territorial indicators through spatial analysis workflows for public policy and evidence-based decision-making.',
     tags: ['Indicators', 'Spatial Analysis', 'Crime Analysis', 'Policy', 'R'],
     color: '#2B5C3F',
   },
   {
     icon: 'database',
-    title: 'Geospatial Data Infrastructure',
-    description:
-      'Secure, scalable, and optimized geospatial data infrastructure for spatial AI agents, analytical platforms, and production workflows that need reliable performance.',
     tags: ['PostGIS', 'Spatial APIs', 'Cloud Native', 'Security', 'Performance'],
     color: '#4A6FA5',
   },
   {
     icon: 'presentation',
-    title: 'Training & Capacity Building',
-    description:
-      'Applied training programs in geoanalysis, territorial indicators, criminological spatial analysis, remote sensing, and spatial data science, tailored to teams, institutions, and individual needs.',
     tags: ['Geoanalysis', 'Indicators', 'Remote Sensing', 'Crime Analysis', 'Workshops'],
     color: '#2B5C3F',
   },
 ];
+
+const services = en.services.items.map((item, index) => ({
+  ...item,
+  ...serviceMeta[index],
+  titleKey: `services.items.${index}.title`,
+  descriptionKey: `services.items.${index}.description`,
+}));
 
 const icons: Record<string, string> = {
   satellite: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25L12 21m0 0l6.75-6.75M12 21V3m0 0L5.25 9.75M12 3l6.75 6.75" /><circle cx="12" cy="12" r="3" stroke-width="1.5"/></svg>`,
@@ -93,17 +84,17 @@ const icons: Record<string, string> = {
     <div class="text-center mb-8">
       <div class="gsap-reveal mb-3">
         <span class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase"
-          >02 / Services</span
+          data-i18n="services.sectionNum">{en.services.sectionNum}</span
         >
       </div>
       <div class="gsap-reveal mb-3">
         <h2 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917]">
-          What I Do
+          <span data-i18n="services.title">{en.services.title}</span>
         </h2>
       </div>
       <div class="gsap-reveal">
         <p class="text-[#6B6865] text-lg max-w-2xl mx-auto">
-          Connecting territorial problems with AI solutions
+          <span data-i18n="services.description">{en.services.description}</span>
         </p>
       </div>
     </div>
@@ -131,10 +122,10 @@ const icons: Record<string, string> = {
 
             <!-- Content -->
             <h3 class="font-heading font-semibold text-[#1A1917] text-base mb-2 leading-tight">
-              {service.title}
+              <span data-i18n={service.titleKey}>{service.title}</span>
             </h3>
             <p class="text-[#6B6865] text-sm leading-relaxed mb-3">
-              {service.description}
+              <span data-i18n={service.descriptionKey}>{service.description}</span>
             </p>
 
             <!-- Tags -->

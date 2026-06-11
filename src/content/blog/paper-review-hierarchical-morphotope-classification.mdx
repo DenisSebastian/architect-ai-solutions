@@ -1,11 +1,15 @@
 ---
 title: "Paper Review: Hierarchical Morphotope Classification"
+titleEs: "Reseña de artículo: clasificación jerárquica de morfotopos"
 description: "A review of a theory-driven and scalable framework for classifying built form at large spatial scales."
+descriptionEs: "Una reseña de un marco escalable y guiado por teoría para clasificar la forma construida a grandes escalas espaciales."
 date: 2026-01-22
 tags: ["Paper Review", "Urban Analytics", "Geospatial", "Architecture"]
 image: "/images/blog/paper-review/fleischmann-map.png"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Paper Review: Hierarchical Morphotope Classification
 
@@ -36,3 +40,39 @@ In Chile, this line of work could support comparative analysis across metropolit
 - Fleischmann, M. et al. (2025). [The Hierarchical Morphotope Classification](https://arxiv.org/abs/2509.10083).
 - [Urban Taxonomy project](https://urbantaxonomy.org/)
 - [urban_taxonomy repository](https://github.com/uscuni/urban_taxonomy)
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Reseña de artículo: clasificación jerárquica de morfotopos
+
+**Artículo:** Fleischmann et al. (2025), *The Hierarchical Morphotope Classification: A Theory-Driven Framework for Large-Scale Analysis of Built Form*.
+
+La morfología urbana suele enfrentar una tensión. Las clasificaciones locales pueden ser ricas y estar guiadas por teoría, pero son difíciles de escalar. Las clasificaciones de gran escala pueden cubrir geografías amplias, pero a menudo pierden la estructura conceptual que hace útil a la morfología.
+
+Este artículo propone una clasificación jerárquica de morfotopos que mantiene una base teórica y, al mismo tiempo, sigue siendo computacionalmente escalable.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/paper-review/fleischmann-method.png`} alt="Método de clasificación jerárquica de morfotopos" />
+
+## Por qué importa
+
+Para la inteligencia territorial, la forma construida es una capa clave. Influye en la movilidad, la exposición al calor, la accesibilidad a servicios, el costo de infraestructura, la densidad, la interacción social y los cambios de uso de suelo.
+
+Una clasificación escalable e interpretable de la forma urbana puede apoyar diagnósticos de planificación, estudios urbanos comparados, adaptación climática y diseño de políticas a escala barrial.
+
+## Lectura técnica
+
+El marco usa medidas espaciales de la forma construida para clasificar tejido urbano en distintos niveles de detalle. La estructura jerárquica es importante porque las preguntas de planificación operan a diferentes escalas. Un diagnóstico nacional y una intervención barrial no necesitan la misma granularidad.
+
+## Aplicabilidad en Chile
+
+En Chile, esta línea de trabajo podría apoyar análisis comparativos entre el Gran Santiago, ciudades intermedias, asentamientos costeros, ciudades mineras y bordes urbano-rurales. El requisito principal es contar con huellas de edificios de buena calidad y datos consistentes de redes urbanas.
+
+## Referencias
+
+- Fleischmann, M. et al. (2025). [The Hierarchical Morphotope Classification](https://arxiv.org/abs/2509.10083).
+- [Urban Taxonomy project](https://urbantaxonomy.org/)
+- [urban_taxonomy repository](https://github.com/uscuni/urban_taxonomy)
+
+</section>

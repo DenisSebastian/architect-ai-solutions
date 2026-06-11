@@ -1,11 +1,15 @@
 ---
 title: "Socioeconomic Indicators for Territorial Wellbeing in Chile"
+titleEs: "Indicadores socioeconómicos para el bienestar territorial en Chile"
 description: "How the MBHT Socioeconomic Dimension uses census microdata to measure housing quality, overcrowding, education, household resilience, employment, and youth participation."
+descriptionEs: "Cómo la dimensión socioeconómica de la MBHT usa microdatos censales para medir calidad de vivienda, hacinamiento, educación, resiliencia del hogar, empleo y participación juvenil."
 date: 2026-01-16
 tags: ["Geospatial", "Public Policy", "Socioeconomic", "Territorial Intelligence"]
 image: "/images/blog/mbht/dim_socioeconomico.png"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Socioeconomic Indicators for Territorial Wellbeing in Chile
 
@@ -78,3 +82,81 @@ The next methodological step is the update with Census 2024 data. That update is
 - [MBHT visualizations](https://matrizbht.cl/visualizations)
 - Center for Territorial Intelligence, Universidad Adolfo Ibanez.
 - Chilean Census 2017 and ongoing Census 2024 update work.
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Indicadores socioeconómicos para el bienestar territorial en Chile
+
+La **Matriz de Bienestar Humano Territorial** (MBHT), desarrollada en el contexto del Centro de Inteligencia Territorial de la Universidad Adolfo Ibáñez, trata las condiciones socioeconómicas como una dimensión estructural del bienestar territorial.
+
+Esto es especialmente importante en Chile, donde la segregación social se refleja con fuerza en la separación espacial de distintos grupos sociales. Para la inteligencia territorial, esto significa que el bienestar no puede entenderse solo desde el acceso, el ambiente o la seguridad. La condición social de cada unidad territorial forma parte de la estructura que configura oportunidades, vulnerabilidad y calidad de vida.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/mbht/dim_socioeconomico.png`} alt="Visualización de la dimensión socioeconómica de la Matriz de Bienestar Humano Territorial" />
+
+## Base de datos
+
+Los indicadores socioeconómicos se construyen a partir de información censal agregada al nivel de unidad territorial mínima, usando microdatos georreferenciados a nivel de hogar y variables comparables con las preparadas por el Instituto Nacional de Estadísticas de Chile para el Censo 2017.
+
+Como la MBHT es un índice de bienestar, las variables se normalizan para que los valores más altos representen condiciones más deseables. La mayoría de las variables se invierten antes de la normalización, con excepción de los años de escolaridad del jefe o jefa de hogar.
+
+Esta decisión de diseño es importante: hace coherente la interpretación en toda la plataforma. Un valor más cercano a 1 representa mejores condiciones territoriales, mientras que valores más cercanos a 0 indican mayor vulnerabilidad socioeconómica.
+
+La versión actual se basa en datos del Censo 2017, y ya existe trabajo en curso para actualizar el cálculo con información del Censo 2024.
+
+## Indicador 1: calidad de la vivienda
+
+La calidad de la vivienda es una variable sintética que resume la condición material de las viviendas.
+
+Inicialmente se construye como un indicador de mala calidad: valores más altos indican peores condiciones habitacionales, mientras que valores más bajos indican mejores condiciones. El indicador se calcula como un promedio lineal de tres subindicadores: calidad de muros, calidad de piso y calidad de techo.
+
+Cada subindicador captura el porcentaje de viviendas dentro de una manzana urbana o entidad rural que presenta materiales insuficientes en muros, piso o techo.
+
+## Indicador 2: suficiencia habitacional
+
+La suficiencia habitacional se construye como un indicador de hacinamiento.
+
+Usa dos variables: el número de viviendas en condiciones de hacinamiento y el número de viviendas en hacinamiento crítico. En un marco de bienestar territorial, este indicador captura un aspecto básico pero crítico de la vulnerabilidad del hogar: si el espacio habitacional disponible es suficiente para las personas que viven en él.
+
+## Indicador 3: escolaridad del jefe o jefa de hogar
+
+Este indicador corresponde al promedio de años de educación de jefes y jefas de hogar dentro de una manzana urbana o entidad rural.
+
+En Chile, esta variable está estrechamente relacionada con niveles de ingreso y oportunidades socioeconómicas más amplias. A diferencia de las demás variables, no se invierte antes de la normalización, porque una mayor escolaridad se interpreta directamente como una condición más favorable.
+
+## Indicador 4: resiliencia del hogar
+
+La resiliencia del hogar se calcula como el inverso aditivo de la proporción de hogares monoparentales dentro de cada unidad territorial mínima.
+
+Los hogares monoparentales son aquellos donde niñas, niños o adolescentes viven con solo uno de sus padres. Esta condición puede asociarse con distintas formas de vulnerabilidad social, incluyendo menores ingresos, presiones vinculadas a salud, exposición a inseguridad y redes de apoyo reducidas.
+
+El indicador se formula como resiliencia porque valores más altos representan una menor proporción de esta condición de vulnerabilidad.
+
+## Indicador 5: empleo
+
+El indicador de empleo calcula la proporción de personas económicamente activas con empleo, en relación con el total de personas que pueden y quieren trabajar dentro de cada unidad territorial.
+
+Este indicador revela posibles brechas de acceso al empleo a escala barrial. Es particularmente útil porque las condiciones del mercado laboral suelen variar fuertemente dentro de una misma ciudad o región.
+
+## Indicador 6: participación juvenil en empleo y estudio
+
+Este indicador mide la proporción de jóvenes entre 15 y 24 años que trabajan o estudian, en relación con la población total de ese grupo etario dentro de la manzana urbana o entidad rural.
+
+Captura un período clave de transición entre educación y trabajo. Una baja participación puede señalar exclusión socioeconómica, trayectorias de deserción escolar, riesgo de desempleo y condiciones que pueden aumentar la exposición a vulnerabilidades sociales más amplias.
+
+## Por qué importa para la inteligencia territorial
+
+La dimensión socioeconómica entrega una lectura estructural del bienestar. Ayuda a identificar dónde condiciones materiales, educación, composición del hogar, empleo e inclusión juvenil interactúan espacialmente.
+
+Para política pública y planificación territorial, este tipo de sistema de indicadores es valioso porque transforma microdatos censales en evidencia territorial interpretable. Permite comparar condiciones socioeconómicas con otras dimensiones de la MBHT, como accesibilidad, confort ambiental y seguridad.
+
+El siguiente paso metodológico es la actualización con datos del Censo 2024. Esa actualización es importante no solo porque renueva las cifras, sino porque permite observar cómo han cambiado las desigualdades territoriales desde 2017.
+
+## Referencias
+
+- [Visualizaciones MBHT](https://matrizbht.cl/visualizations)
+- Centro de Inteligencia Territorial, Universidad Adolfo Ibáñez.
+- Censo chileno 2017 y trabajo de actualización en curso con Censo 2024.
+
+</section>

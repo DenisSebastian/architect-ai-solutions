@@ -1,11 +1,15 @@
 ---
 title: "Paper Review: AlphaEarth Foundations"
+titleEs: "Reseña de artículo: AlphaEarth Foundations"
 description: "A review of AlphaEarth Foundations and its claim that global embedding fields can improve mapping from sparse labels."
+descriptionEs: "Una reseña de AlphaEarth Foundations y su propuesta de que los campos globales de embeddings pueden mejorar el mapeo con etiquetas escasas."
 date: 2026-01-22
 tags: ["Paper Review", "Geospatial", "Remote Sensing", "Foundation Models"]
 image: "/images/blog/paper-review/brown-arquitecture.png"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Paper Review: AlphaEarth Foundations
 
@@ -36,3 +40,39 @@ For Chile, the question is how well these global embeddings transfer to extreme 
 ## Reference
 
 - Brown, C. F. et al. (2025). [AlphaEarth Foundations](https://doi.org/10.48550/arXiv.2507.22291).
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Reseña de artículo: AlphaEarth Foundations
+
+**Artículo:** Brown et al. (2025), *AlphaEarth Foundations: An embedding field model for accurate and efficient global mapping from sparse label data*.
+
+AlphaEarth Foundations aborda uno de los problemas más difíciles de la observación de la Tierra: los datos satelitales son abundantes, pero las etiquetas de alta calidad son escasas. Las mediciones de campo y las anotaciones expertas son costosas, están distribuidas de manera desigual y suelen ser locales. El artículo propone campos globales anuales de embeddings que pueden reutilizarse en tareas de mapeo sin volver a entrenar la representación para cada problema nuevo.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/paper-review/brown-application.png`} alt="Ejemplos de aplicación de AlphaEarth Foundations" />
+
+## Por qué importa
+
+La promesa práctica es potente. Si una representación geoespacial general puede sostener mapeos precisos a partir de pocas etiquetas, muchas instituciones podrían avanzar más rápido desde observaciones locales hacia mapas operativos.
+
+Esto es especialmente relevante para monitoreo ambiental, mapeo de cobertura de suelo, análisis de hábitats y planificación territorial en países donde los datos etiquetados están fragmentados.
+
+## Idea técnica
+
+El modelo integra múltiples fuentes de observación de la Tierra y dimensiones contextuales mediante una arquitectura de espacio, tiempo y precisión. En lugar de tratar una imagen como una entrada aislada, aprende una representación que considera dónde, cuándo y bajo qué condiciones de medición existe la observación.
+
+La salida no es solo un checkpoint de modelo. Es un producto: capas de embeddings listas para análisis a través de distintos años.
+
+## Qué rescato
+
+AlphaEarth es importante porque replantea los modelos fundacionales como infraestructura para el mapeo. Su caso de uso más fuerte no es reemplazar la experiencia local, sino reducir el costo de adaptar esa experiencia a nuevas geografías y tareas.
+
+Para Chile, la pregunta es qué tan bien se transfieren estos embeddings globales a gradientes extremos: desierto, Andes, paisajes mediterráneos, bosques templados, turberas y sistemas australes.
+
+## Referencia
+
+- Brown, C. F. et al. (2025). [AlphaEarth Foundations](https://doi.org/10.48550/arXiv.2507.22291).
+
+</section>

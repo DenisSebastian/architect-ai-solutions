@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { en } from '../../i18n/en';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -15,6 +16,9 @@ const assetPath = (path: string) => path.startsWith('/') ? `${base}${path.slice(
 function formatDate(d: Date) {
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 }
+
+const titleEs = post.data.titleEs || post.data.title;
+const descriptionEs = post.data.descriptionEs || post.data.description;
 
 const tagColors: Record<string, string> = {
   'Deep Learning': '#C04A2E',
@@ -43,7 +47,7 @@ const tagColors: Record<string, string> = {
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
         </svg>
-        All Posts
+        <span data-i18n="pages.post.allPosts">{en.pages.post.allPosts}</span>
       </a>
 
       <!-- Header -->
@@ -59,13 +63,14 @@ const tagColors: Record<string, string> = {
           ))}
         </div>
         <h1 class="font-display font-semibold text-3xl md:text-4xl text-[#1A1917] mb-5 leading-tight">
-          {post.data.title}
+          <span data-text-en={post.data.title} data-text-es={titleEs}>{post.data.title}</span>
         </h1>
         <div class="flex items-center gap-3 text-[#6B6865] text-sm font-mono">
           <span>{post.data.author}</span>
           <span class="text-black/20">·</span>
-          <time>{formatDate(post.data.date)}</time>
+          <time data-date={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
         </div>
+        <p class="sr-only" data-text-en={post.data.description} data-text-es={descriptionEs}>{post.data.description}</p>
         {post.data.image && (
           <img
             src={assetPath(post.data.image)}

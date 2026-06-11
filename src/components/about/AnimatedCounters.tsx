@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { en } from '../../i18n/en';
+import { es } from '../../i18n/es';
 
-const stats = [
-  { value: 7, suffix: '+', label: 'Years\nExperience' },
-  { value: 15, suffix: '+', label: 'Research' },
-  { value: 50, suffix: '+', label: 'Geospatial\nWorkflows Built' },
-  { value: 3, suffix: '', label: 'Advanced\nDegrees' },
-  { value: 8, suffix: '+', label: 'Courses\nTaught' },
-  { value: 300, suffix: '+', label: 'Students\nReached' },
-];
+const translations = { en, es };
+type Language = keyof typeof translations;
 
 function Counter({
   value,
@@ -70,6 +66,21 @@ function Counter({
 }
 
 export default function AnimatedCounters() {
+  const [language, setLanguage] = useState<Language>('en');
+  const stats = translations[language].about.stats;
+
+  useEffect(() => {
+    const currentLanguage = () =>
+      document.documentElement.getAttribute('data-language') === 'es' ? 'es' : 'en';
+    setLanguage(currentLanguage());
+    const onLanguageChange = (event: Event) => {
+      const detail = (event as CustomEvent<{ language: Language }>).detail;
+      setLanguage(detail?.language === 'es' ? 'es' : 'en');
+    };
+    window.addEventListener('languagechange', onLanguageChange);
+    return () => window.removeEventListener('languagechange', onLanguageChange);
+  }, []);
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
       {stats.map((s) => (

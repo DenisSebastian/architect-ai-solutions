@@ -1,16 +1,18 @@
 ---
+import { en } from '../../i18n/en';
+
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/'); // always trailing slash
 const isHome = Astro.url.pathname === base || Astro.url.pathname + '/' === base;
 const anchor = (id: string) => isHome ? `#${id}` : `${base}#${id}`;
 
 const navLinks = [
-  { href: anchor('about'), label: 'About' },
-  { href: anchor('services'), label: 'Services' },
-  { href: anchor('case-studies'), label: 'Work' },
-  { href: anchor('tech-stack'), label: 'Tech' },
-  { href: `${base}blog`, label: 'Blog' },
-  { href: `${base}paper-review`, label: 'Paper Review' },
-  { href: anchor('contact'), label: 'Contact' },
+  { href: anchor('about'), label: en.nav.about, key: 'nav.about' },
+  { href: anchor('services'), label: en.nav.services, key: 'nav.services' },
+  { href: anchor('case-studies'), label: en.nav.work, key: 'nav.work' },
+  { href: anchor('tech-stack'), label: en.nav.tech, key: 'nav.tech' },
+  { href: `${base}blog`, label: en.nav.blog, key: 'nav.blog' },
+  { href: `${base}paper-review`, label: en.nav.paperReview, key: 'nav.paperReview' },
+  { href: anchor('contact'), label: en.nav.contact, key: 'nav.contact' },
 ];
 ---
 
@@ -41,6 +43,7 @@ const navLinks = [
               <a
                 href={link.href}
                 class="text-[#6B6865] hover:text-[#2B5C3F] text-sm font-medium tracking-wide transition-colors duration-200 relative group"
+                data-i18n={link.key}
               >
                 {link.label}
                 <span class="absolute -bottom-1 left-0 w-0 h-px bg-[#2B5C3F] transition-all duration-300 group-hover:w-full" />
@@ -51,7 +54,25 @@ const navLinks = [
       </ul>
 
       <!-- Right side: Theme toggle + mobile menu -->
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
+        <!-- Language Toggle Switch -->
+        <button
+          id="language-toggle"
+          data-lang-toggle
+          aria-label="Switch language"
+          aria-pressed="false"
+          class="relative flex items-center w-14 h-7 rounded-full border border-black/10 bg-[#EEEAE4] transition-colors duration-300 focus:outline-none"
+          style="flex-shrink:0;"
+        >
+          <span class="absolute left-1.5 text-[9px] font-mono font-bold text-[#2B5C3F]">EN</span>
+          <span class="absolute right-1.5 text-[9px] font-mono font-bold text-[#6B6865]">ES</span>
+          <span
+            data-lang-thumb
+            class="absolute left-1 w-5 h-5 rounded-full bg-white shadow-md border border-black/10 transition-transform duration-300 ease-in-out"
+          ></span>
+          <span data-lang-label class="sr-only">EN</span>
+        </button>
+
         <!-- Theme Toggle Switch -->
         <button
           id="theme-toggle"
@@ -105,6 +126,7 @@ const navLinks = [
         <a
           href={link.href}
           class="mobile-nav-link text-2xl font-display font-semibold text-[#1A1917] hover:text-[#2B5C3F] transition-colors duration-200"
+          data-i18n={link.key}
         >
           {link.label}
         </a>
@@ -156,6 +178,15 @@ const navLinks = [
     const nowDark = html.getAttribute('data-theme') === 'dark';
     applyTheme(!nowDark);
     localStorage.setItem('theme', !nowDark ? 'dark' : 'light');
+  });
+
+  // ── Language Toggle ───────────────────────────────────
+  const languageToggle = document.getElementById('language-toggle');
+  languageToggle?.addEventListener('click', () => {
+    const current = localStorage.getItem('language') === 'es' ? 'es' : 'en';
+    const next = current === 'es' ? 'en' : 'es';
+    localStorage.setItem('language', next);
+    window.__applyLanguage?.(next);
   });
 
   // ── Navbar scroll ─────────────────────────────────────

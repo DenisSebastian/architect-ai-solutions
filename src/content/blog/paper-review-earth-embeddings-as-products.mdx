@@ -1,11 +1,15 @@
 ---
 title: "Paper Review: Earth Embeddings as Products"
+titleEs: "Reseña de artículo: embeddings de la Tierra como productos"
 description: "A review of a taxonomy for Earth embedding products, with emphasis on access, licensing, standardization, and reproducible use."
+descriptionEs: "Una reseña de una taxonomía para productos de embeddings terrestres, con énfasis en acceso, licenciamiento, estandarización y uso reproducible."
 date: 2026-01-22
 tags: ["Paper Review", "Geospatial", "Foundation Models", "Architecture"]
 image: "/images/blog/paper-review/fang-taxonomy.png"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Paper Review: Earth Embeddings as Products
 
@@ -34,3 +38,37 @@ For Chile, standardized embedding access could accelerate environmental monitori
 ## Reference
 
 - Fang, H. et al. (2026). [Earth Embeddings as Products](https://arxiv.org/abs/2601.13134).
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Reseña de artículo: embeddings de la Tierra como productos
+
+**Artículo:** Fang et al. (2026), *Earth Embeddings as Products: Taxonomy, Ecosystem, and Standardized Access*.
+
+El artículo revisa un problema que se vuelve cada vez más visible a medida que maduran los modelos fundacionales geoespaciales: los embeddings se están publicando como productos, pero el ecosistema sigue fragmentado. Distintos productos varían en resolución espacial, cobertura temporal, modalidad, método de acceso, licenciamiento y calidad de metadatos.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/paper-review/fang-tab1-cobertura.png`} alt="Comparación de cobertura entre productos de embeddings terrestres" />
+
+## Por qué importa
+
+Para equipos aplicados, los embeddings solo son útiles si pueden descubrirse, compararse y reproducirse. Un modelo fuerte no basta si quienes los usan no pueden entender su cobertura, frecuencia de actualización, restricciones o licencias.
+
+Este es un problema de arquitectura de soluciones tanto como de aprendizaje automático. Los embeddings necesitan diseño de producto, gobernanza de datos y estándares de acceso.
+
+## Contribución principal
+
+El artículo propone una taxonomía para productos de embeddings terrestres y discute el ecosistema necesario para un acceso estandarizado. Esto incluye cómo se empaquetan los embeddings, cómo se consultan y cómo los metadatos del producto comunican sus límites.
+
+Esto es directamente relevante para plataformas que buscan combinar modelos fundacionales satelitales con datos territoriales locales.
+
+## Aplicabilidad en Chile
+
+Para Chile, el acceso estandarizado a embeddings podría acelerar el monitoreo ambiental, el análisis de cambios de cobertura de suelo, los estudios de crecimiento urbano y la evaluación de riesgos. El desafío es la validación: los embeddings globales deben evaluarse frente a realidades ecológicas, administrativas y socioterritoriales locales.
+
+## Referencia
+
+- Fang, H. et al. (2026). [Earth Embeddings as Products](https://arxiv.org/abs/2601.13134).
+
+</section>

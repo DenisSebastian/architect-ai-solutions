@@ -1,11 +1,15 @@
 ---
 title: "Google Earth Engine for National Environmental Indicators in Chile"
+titleEs: "Google Earth Engine para indicadores ambientales nacionales en Chile"
 description: "How Google Earth Engine supported the construction of national environmental indicators for the Territorial Human Wellbeing Matrix at UAI's Center for Territorial Intelligence."
+descriptionEs: "Cómo Google Earth Engine apoyó la construcción de indicadores ambientales nacionales para la Matriz de Bienestar Humano Territorial del Centro de Inteligencia Territorial UAI."
 date: 2026-01-15
 tags: ["Google Earth Engine", "Remote Sensing", "GEE", "Environmental Indicators"]
 image: "/images/blog/mbht/dim_ambiental.png"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Google Earth Engine for National Environmental Indicators in Chile
 
@@ -60,3 +64,63 @@ The resulting indicators can be explored in the public MBHT visualization platfo
 - [MBHT visualizations](https://matrizbht.cl/visualizations)
 - Center for Territorial Intelligence, Universidad Adolfo Ibanez.
 - Google Earth Engine documentation.
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Google Earth Engine para indicadores ambientales nacionales en Chile
+
+En el Centro de Inteligencia Territorial de la Universidad Adolfo Ibáñez trabajé en la construcción de indicadores ambientales de escala nacional para Chile como parte de la **Matriz de Bienestar Humano Territorial** (MBHT).
+
+El trabajo se enfocó en la dimensión ambiental de la plataforma, cuyo objetivo es medir el confort ambiental del entorno de manzanas urbanas y entidades territoriales. Esta dimensión considera dos componentes clave: amplitud térmica anual y cobertura vegetal.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/mbht/dim_ambiental.png`} alt="Visualización de la dimensión ambiental de la Matriz de Bienestar Humano Territorial" />
+
+## De datos de teledetección a indicadores territoriales
+
+No se trató de un análisis de área pequeña ni de un caso de estudio aislado. Los indicadores fueron diseñados para el territorio nacional chileno, lo que exigió un flujo reproducible capaz de procesar información derivada de satélites de manera consistente entre climas, formas urbanas y contextos ecológicos muy distintos.
+
+Google Earth Engine fue útil porque permitió combinar procesamiento raster a gran escala, composición temporal, estadísticas zonales y rutinas de exportación sin trasladar todo el archivo satelital a una infraestructura local.
+
+## Indicador 1: amplitud térmica anual
+
+El **Indicador de Amplitud Térmica Anual** (IATA) corresponde a la diferencia de temperatura superficial terrestre entre períodos fríos y cálidos dentro de un año.
+
+El indicador se expresa en grados Celsius de variación a lo largo del territorio nacional. Desde una perspectiva de bienestar territorial, ayuda a identificar áreas donde el entorno está expuesto a contrastes térmicos anuales más fuertes.
+
+Este tipo de indicador es relevante para confort urbano, exposición al calor y desigualdad ambiental. Dos barrios pueden pertenecer a la misma ciudad, pero su comportamiento térmico puede diferir sustancialmente según vegetación, materiales, densidad, topografía y cobertura de suelo circundante.
+
+## Indicador 2: cobertura vegetal
+
+El **Indicador de Cobertura Vegetal** (ICV) representa la proporción de cobertura vegetal dentro de un área determinada.
+
+Cada polígono recibe un valor porcentual que expresa qué parte de su superficie está cubierta por vegetación. Un valor más alto significa una mayor proporción vegetada, hasta llegar al 100 % cuando todo el polígono presenta vegetación.
+
+Es un indicador simple de explicar, pero potente para el análisis territorial. La vegetación se relaciona con confort térmico, servicios ecosistémicos, calidad del espacio público y capacidad de los entornos urbanos para amortiguar estrés ambiental.
+
+## Por qué importa la arquitectura
+
+A escala nacional, el desafío técnico no es solo calcular una fórmula. El desafío principal es la consistencia.
+
+El flujo necesita:
+
+1. Usar insumos satelitales comparables en todo el país.
+2. Definir ventanas temporales pertinentes para períodos fríos y cálidos.
+3. Reducir datos raster a unidades territoriales sin perder trazabilidad.
+4. Producir salidas integrables en una plataforma pública de visualización.
+5. Mantener un proceso lo suficientemente reproducible como para actualizarlo o auditarlo después.
+
+Aquí es donde Google Earth Engine se vuelve valioso como parte de una arquitectura más amplia de inteligencia territorial. No es solo una herramienta de procesamiento; es una forma de operacionalizar información ambiental para la toma de decisiones.
+
+## Visualización pública
+
+Los indicadores resultantes pueden explorarse en la plataforma pública de visualización de la MBHT. La dimensión ambiental se describe como una medición del confort ambiental del entorno de manzanas y entidades, considerando amplitud térmica anual y cobertura vegetal.
+
+## Referencias
+
+- [Visualizaciones MBHT](https://matrizbht.cl/visualizations)
+- Centro de Inteligencia Territorial, Universidad Adolfo Ibáñez.
+- Documentación de Google Earth Engine.
+
+</section>

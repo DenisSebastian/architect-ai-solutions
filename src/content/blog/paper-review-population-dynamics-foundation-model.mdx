@@ -1,11 +1,15 @@
 ---
 title: "Paper Review: Population Dynamics Foundation Model"
+titleEs: "Reseña de artículo: Population Dynamics Foundation Model"
 description: "A review of PDFM, a graph-based multimodal foundation model for geospatial inference across health, socioeconomic, environmental, and forecasting tasks."
+descriptionEs: "Una reseña de PDFM, un modelo fundacional multimodal basado en grafos para inferencia geoespacial en tareas de salud, socioeconomía, ambiente y pronóstico."
 date: 2026-01-22
 tags: ["Paper Review", "Geospatial", "Foundation Models", "Public Policy"]
 image: "/images/blog/paper-review/agawarl-logo.png"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Paper Review: Population Dynamics Foundation Model
 
@@ -36,3 +40,39 @@ The transferable lesson is architectural: combine spatial graphs, multimodal con
 ## Reference
 
 - Agarwal, M. et al. (2025). [General Geospatial Inference with a Population Dynamics Foundation Model](https://doi.org/10.48550/arXiv.2411.07207).
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Reseña de artículo: Population Dynamics Foundation Model
+
+**Artículo:** Agarwal et al. (2025), *General Geospatial Inference with a Population Dynamics Foundation Model*.
+
+El Population Dynamics Foundation Model propone una representación de lugares basada en grafos que combina comportamiento humano, mapas, afluencia, clima, calidad del aire y otras señales contextuales. El objetivo es producir embeddings geoespaciales capaces de apoyar muchas tareas posteriores con modelos relativamente simples.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/paper-review/agawarl-graph.png`} alt="Estructura de grafo del Population Dynamics Foundation Model" />
+
+## Por qué importa
+
+Muchas preguntas de política pública son espaciales, pero no puramente ambientales. Salud, pobreza, movilidad, acceso, exposición y vulnerabilidad social dependen de relaciones entre personas y lugares.
+
+PDFM es interesante porque lleva los modelos fundacionales geoespaciales más allá de los píxeles. Trata la dinámica poblacional y el contexto local como señales de primer orden.
+
+## Patrón técnico
+
+El modelo construye un grafo sobre códigos postales y condados de Estados Unidos, y luego usa una red neuronal de estilo GraphSAGE para producir embeddings. Esos embeddings se evalúan en tareas de interpolación, extrapolación, superresolución y pronóstico.
+
+El artículo reporta buen desempeño en indicadores de salud, factores socioeconómicos y mediciones ambientales, incluyendo mejoras cuando se combina con TimesFM para pronosticar desempleo y pobreza.
+
+## Aplicabilidad en Chile
+
+Para Chile, un enfoque similar a PDFM podría apoyar análisis de vulnerabilidad territorial, planificación de servicios de salud, exposición a contaminación, estimación de pobreza y evaluación de políticas urbanas. La limitación es el acceso a datos. Algunas modalidades, como tendencias de búsqueda o afluencia agregada, dependen de acuerdos y gobernanza que preserven la privacidad.
+
+La lección transferible es arquitectónica: combinar grafos espaciales, contexto multimodal y modelos posteriores livianos.
+
+## Referencia
+
+- Agarwal, M. et al. (2025). [General Geospatial Inference with a Population Dynamics Foundation Model](https://doi.org/10.48550/arXiv.2411.07207).
+
+</section>

@@ -1,5 +1,6 @@
 ---
 import ContactForm from './ContactForm.tsx';
+import { en } from '../../i18n/en';
 
 const contactLinks = [
   {
@@ -36,17 +37,17 @@ const contactLinks = [
     <!-- Header -->
     <div class="gsap-reveal mb-3 text-center">
       <span class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase">
-        06 / Contact
+        <span data-i18n="contact.sectionNum">{en.contact.sectionNum}</span>
       </span>
     </div>
     <div class="gsap-reveal mb-3 text-center">
       <h2 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917]">
-        Let's Work Together
+        <span data-i18n="contact.title">{en.contact.title}</span>
       </h2>
     </div>
     <div class="gsap-reveal mb-8 text-center">
       <p class="text-[#6B6865] text-lg max-w-2xl mx-auto">
-        Have a territorial challenge that needs AI? Let's decode it together.
+        <span data-i18n="contact.description">{en.contact.description}</span>
       </p>
     </div>
 
@@ -58,7 +59,7 @@ const contactLinks = [
         <div class="flex items-center gap-3 mb-6">
           <span class="w-6 h-px bg-[#2B5C3F]"></span>
           <h3 class="font-mono text-[#2B5C3F] text-xs tracking-[0.2em] uppercase font-semibold">
-            Get In Touch
+            <span data-i18n="contact.formTitle">{en.contact.formTitle}</span>
           </h3>
         </div>
         <ContactForm client:visible />
@@ -69,7 +70,7 @@ const contactLinks = [
         <!-- Location badge -->
         <div class="flex items-center gap-3 mb-2">
           <div class="w-2 h-2 rounded-full bg-[#2B5C3F] animate-pulse"></div>
-          <span class="font-mono text-[#6B6865] text-xs tracking-wider uppercase">Isla Negra, Chile — 33°26'S, 71°41'W</span>
+          <span class="font-mono text-[#6B6865] text-xs tracking-wider uppercase" data-i18n="contact.location">{en.contact.location}</span>
         </div>
 
         {

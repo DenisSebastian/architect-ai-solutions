@@ -1,10 +1,14 @@
 ---
 title: "Natural Language Spatial SQL, Running Locally"
+titleEs: "SQL espacial en lenguaje natural, ejecutado localmente"
 description: "A prototype that translates plain-language questions into spatial SQL, executes them with DuckDB, and returns map-ready results without sending data to the cloud."
+descriptionEs: "Un prototipo que traduce preguntas en lenguaje natural a SQL espacial, las ejecuta con DuckDB y retorna resultados listos para mapa sin enviar datos a la nube."
 date: 2025-11-20
 tags: ["Geospatial", "AI", "DuckDB", "Architecture"]
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Natural Language Spatial SQL, Running Locally
 
@@ -40,3 +44,44 @@ The next version should make database connection easier, support a more conversa
 - [Ollama](https://ollama.com/)
 - [sqlrooms](https://sqlrooms.org/)
 - Inspiration: the open geospatial work of Qiusheng Wu and interface experiments by Ilya Boyandin.
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# SQL espacial en lenguaje natural, ejecutado localmente
+
+Las bases de datos espaciales son potentes, pero muchas veces quedan bloqueadas detrás de la fluidez en SQL. El prototipo que construí explora una pregunta simple: ¿qué pasaría si una analista territorial pudiera hacer una pregunta en lenguaje natural a una base de datos espacial y recibir una consulta válida, una tabla y un mapa dentro del mismo flujo?
+
+La demo usa un conjunto de datos de aeropuertos, pero el patrón es más amplio. Una persona puede pedir, por ejemplo, "muéstrame los cinco aeropuertos de Japón con mayor elevación". Un agente de IA traduce la solicitud a SQL, la ejecuta contra la base de datos espacial y muestra el resultado como registros y geometría.
+
+<video controls src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}videos/blog/chat-sql/chat-sql.mov`} style="width:100%;border-radius:12px;border:1px solid rgba(0,0,0,.08);margin:1.5rem 0;"></video>
+
+## Por qué importa lo local
+
+La arquitectura prioriza la ejecución local. La base de datos y el modelo de lenguaje corren en la misma máquina mediante Ollama, lo que mantiene los datos espaciales sensibles cerca de quien consulta y evita dependencias innecesarias de la nube.
+
+Esa decisión de diseño importa para agencias públicas, equipos consultores y grupos de investigación que trabajan con infraestructura, equipamientos, capas demográficas o activos operacionales. En esos contextos, la IA geoespacial no se trata solo de capacidad del modelo. También se trata de gobernanza, auditabilidad y control sobre el movimiento de datos.
+
+## El núcleo técnico
+
+El prototipo combina tres ideas:
+
+1. **Interpretación de intención en lenguaje natural**: la persona solicita un análisis en lenguaje común.
+2. **Generación de SQL espacial**: el agente convierte la intención en SQL ejecutable.
+3. **Ejecución analítica rápida**: DuckDB con extensiones espaciales devuelve resultados en segundos.
+
+Esto crea una arquitectura compacta para analítica espacial interactiva. No reemplaza la experiencia GIS; hace que el primer movimiento analítico sea más rápido y más fácil de inspeccionar.
+
+## Hacia dónde puede avanzar
+
+La siguiente versión debería facilitar la conexión a bases de datos, soportar un flujo de consulta más conversacional, agregar herramientas de dibujo para filtros espaciales y generar gráficos o reportes desde los mismos resultados. La versión más útil de este tipo de herramienta no es un chatbot al lado de un mapa. Es una interfaz orquestada donde chat, tabla, geometría y analítica permanecen sincronizados.
+
+## Referencias
+
+- [DuckDB Spatial Extension](https://duckdb.org/docs/stable/core_extensions/spatial/overview)
+- [Ollama](https://ollama.com/)
+- [sqlrooms](https://sqlrooms.org/)
+- Inspiración: el trabajo geoespacial abierto de Qiusheng Wu y los experimentos de interfaz de Ilya Boyandin.
+
+</section>

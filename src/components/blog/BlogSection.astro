@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { en } from '../../i18n/en';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft && !data.tags.includes('Paper Review')))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -31,6 +32,9 @@ function formatDate(d: Date) {
     timeZone: 'UTC',
   });
 }
+
+const localizedTitle = (post: (typeof posts)[number]) => post.data.titleEs || post.data.title;
+const localizedDescription = (post: (typeof posts)[number]) => post.data.descriptionEs || post.data.description;
 ---
 
 <section id="blog" class="relative py-0 bg-[#EEEAE4]">
@@ -43,17 +47,17 @@ function formatDate(d: Date) {
         <span
           class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase block mb-3"
         >
-          05 / Blog
+          <span data-i18n="blog.sectionNum">{en.blog.sectionNum}</span>
         </span>
         <h2 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917]">
-          Latest Insights
+          <span data-i18n="blog.title">{en.blog.title}</span>
         </h2>
       </div>
       <a
         href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}blog`}
         class="inline-flex items-center gap-2 text-[#2B5C3F] font-semibold text-sm hover:gap-3 transition-all duration-200 group"
       >
-        View All Posts
+        <span data-i18n="blog.viewAll">{en.blog.viewAll}</span>
         <svg
           class="w-4 h-4"
           fill="none"
@@ -107,18 +111,19 @@ function formatDate(d: Date) {
               <time
                 class="font-mono text-[#6B6865] text-xs mb-3"
                 datetime={post.data.date.toISOString()}
+                data-date={post.data.date.toISOString()}
               >
                 {formatDate(post.data.date)}
               </time>
 
               <!-- Title -->
               <h3 class="font-heading font-semibold text-[#1A1917] text-base leading-snug mb-3 group-hover:text-[#2B5C3F] transition-colors duration-200">
-                {post.data.title}
+                <span data-text-en={post.data.title} data-text-es={localizedTitle(post)}>{post.data.title}</span>
               </h3>
 
               <!-- Excerpt -->
               <p class="text-[#6B6865] text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
-                {post.data.description}
+                <span data-text-en={post.data.description} data-text-es={localizedDescription(post)}>{post.data.description}</span>
               </p>
 
               <!-- Read more -->
@@ -126,7 +131,7 @@ function formatDate(d: Date) {
                 href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}blog/${post.id}`}
                 class="inline-flex items-center gap-2 text-[#2B5C3F] text-sm font-semibold hover:gap-3 transition-all duration-200 mb-4"
               >
-                Read More
+                <span data-i18n="blog.readMore">{en.blog.readMore}</span>
                 <svg
                   class="w-3.5 h-3.5"
                   fill="none"

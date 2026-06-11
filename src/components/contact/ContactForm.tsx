@@ -1,17 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { en } from '../../i18n/en';
+import { es } from '../../i18n/es';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
 
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xvznbqzb';
+const translations = { en, es };
+type Language = keyof typeof translations;
 
 export default function ContactForm() {
   const [state, setState] = useState<FormState>('idle');
+  const [language, setLanguage] = useState<Language>('en');
   const [form, setForm] = useState({
     name: '',
     email: '',
     subject: '',
     message: '',
   });
+  const t = translations[language].contact.form;
+
+  useEffect(() => {
+    const currentLanguage = () =>
+      document.documentElement.getAttribute('data-language') === 'es' ? 'es' : 'en';
+    setLanguage(currentLanguage());
+    const onLanguageChange = (event: Event) => {
+      const detail = (event as CustomEvent<{ language: Language }>).detail;
+      setLanguage(detail?.language === 'es' ? 'es' : 'en');
+    };
+    window.addEventListener('languagechange', onLanguageChange);
+    return () => window.removeEventListener('languagechange', onLanguageChange);
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -54,27 +72,27 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-mono text-[#6B6865] mb-1.5 uppercase tracking-wider">
-            Name
+            {t.name}
           </label>
           <input
             name="name"
             value={form.name}
             onChange={handleChange}
-            placeholder="Your name"
+            placeholder={t.namePlaceholder}
             required
             className={inputClass}
           />
         </div>
         <div>
           <label className="block text-xs font-mono text-[#6B6865] mb-1.5 uppercase tracking-wider">
-            Email
+            {t.email}
           </label>
           <input
             type="email"
             name="email"
             value={form.email}
             onChange={handleChange}
-            placeholder="you@example.com"
+            placeholder={t.emailPlaceholder}
             required
             className={inputClass}
           />
@@ -83,13 +101,13 @@ export default function ContactForm() {
 
       <div>
         <label className="block text-xs font-mono text-[#6B6865] mb-1.5 uppercase tracking-wider">
-          Subject
+          {t.subject}
         </label>
         <input
           name="subject"
           value={form.subject}
           onChange={handleChange}
-          placeholder="What's this about?"
+          placeholder={t.subjectPlaceholder}
           required
           className={inputClass}
         />
@@ -97,13 +115,13 @@ export default function ContactForm() {
 
       <div>
         <label className="block text-xs font-mono text-[#6B6865] mb-1.5 uppercase tracking-wider">
-          Message
+          {t.message}
         </label>
         <textarea
           name="message"
           value={form.message}
           onChange={handleChange}
-          placeholder="Tell me about your territorial challenge..."
+          placeholder={t.messagePlaceholder}
           required
           rows={4}
           className={`${inputClass} resize-none`}
@@ -128,15 +146,15 @@ export default function ContactForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
           </svg>
         )}
-        {state === 'idle' && 'Send Message'}
-        {state === 'loading' && 'Sending...'}
-        {state === 'success' && 'Message Sent!'}
-        {state === 'error' && 'Try Again'}
+        {state === 'idle' && t.send}
+        {state === 'loading' && t.sending}
+        {state === 'success' && t.sent}
+        {state === 'error' && t.tryAgain}
       </button>
 
       {state === 'error' && (
         <p className="text-[#C04A2E] text-xs font-mono text-center">
-          Something went wrong. Please email me directly at denisberroeta@gmail.com
+          {t.error}
         </p>
       )}
     </form>

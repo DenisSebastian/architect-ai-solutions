@@ -1,11 +1,15 @@
 ---
 title: "Paper Review: CriX, Crime, Demographics, and Explainable AI"
+titleEs: "Reseña de artículo: CriX, crimen, demografía e IA explicable"
 description: "A review of a framework that combines hotspot detection, demographic indicators, RAG, LLMs, and explainability for localized crime analysis."
+descriptionEs: "Una reseña de un marco que combina detección de puntos críticos, indicadores demográficos, RAG, LLMs y explicabilidad para análisis localizado del delito."
 date: 2026-01-22
 tags: ["Paper Review", "Urban Analytics", "LLM", "Public Policy"]
 image: "/images/blog/paper-review/reza-arquitectura.png"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Paper Review: CriX, Crime, Demographics, and Explainable AI
 
@@ -36,3 +40,39 @@ Any real deployment would require careful governance, bias auditing, institution
 ## Reference
 
 - Reza, M. A. et al. (2025). [CriX: Intersection of Crime, Demographics and Explainable AI](https://www.scitepress.org/Papers/2025/133162/133162.pdf).
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Reseña de artículo: CriX, crimen, demografía e IA explicable
+
+**Artículo:** Reza et al. (2025), *CriX: Intersection of Crime, Demographics and Explainable AI*.
+
+CriX aborda una debilidad común en los sistemas de predicción del delito: con frecuencia modelan incidentes sin prestar suficiente atención al contexto demográfico y local. El artículo combina detección espacio-temporal de puntos críticos, predicción con LSTM, embeddings del dominio legal, recuperación con FAISS y explicaciones generadas por LLM.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/paper-review/reza-map.png`} alt="Mapa de puntos críticos de crimen predichos por CriX" />
+
+## Por qué importa
+
+El análisis del delito es un dominio de alto impacto. Un modelo que solo predice puntos críticos puede ser atractivo operativamente, pero analíticamente débil. Las explicaciones, la incertidumbre, el contexto demográfico y la gobernanza son esenciales.
+
+El marco de CriX es útil como referencia de arquitectura porque conecta predicción, recuperación y explicación. Intenta pasar de “¿dónde es alto el riesgo?” a “¿qué factores locales podrían estar relacionados y cómo debería interpretar el resultado una persona?”.
+
+## Patrón técnico
+
+El flujo usa ST-DBSCAN para identificar puntos críticos, modelos LSTM para predecir puntos críticos futuros, embeddings InLegalBERT para el corpus de conocimiento, FAISS para recuperación y Mixtral para explicaciones textuales refinadas mediante aprendizaje zero-shot.
+
+La precisión de validación reportada supera el 82 % para la predicción de puntos críticos, con métricas de explicación evaluadas por personas en concisión, fidelidad y completitud.
+
+## Aplicabilidad en Chile
+
+Para Chile, la lección relevante no es copiar el modelo directamente. Es diseñar analítica de seguridad pública con validación espacial, contexto demográfico y explicabilidad desde el inicio.
+
+Cualquier despliegue real exigiría gobernanza cuidadosa, auditoría de sesgos, responsabilidad institucional y límites estrictos a la toma de decisiones automatizada.
+
+## Referencia
+
+- Reza, M. A. et al. (2025). [CriX: Intersection of Crime, Demographics and Explainable AI](https://www.scitepress.org/Papers/2025/133162/133162.pdf).
+
+</section>

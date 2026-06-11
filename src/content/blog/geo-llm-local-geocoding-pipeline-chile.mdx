@@ -1,11 +1,15 @@
 ---
 title: "Geo-LLM: A Local Pipeline for Chilean Address Geocoding"
+titleEs: "Geo-LLM: un flujo local para geocodificación de direcciones chilenas"
 description: "A functional prototype that combines deterministic parsing, local LLMs, PostGIS validation, street-name similarity, and operational batch monitoring."
+descriptionEs: "Un prototipo funcional que combina análisis determinístico, LLMs locales, validación PostGIS, similitud de nombres de calles y monitoreo operativo por lotes."
 date: 2026-03-15
 tags: ["Geospatial", "LLM", "PostGIS", "Architecture"]
 image: "/images/blog/geo-llm/plataforma_geo-llm.png"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Geo-LLM: A Local Pipeline for Chilean Address Geocoding
 
@@ -46,3 +50,49 @@ The next lines of work are performance, user experience, coverage, credibility, 
 - [Ollama](https://ollama.com/)
 - [Nominatim](https://nominatim.org/)
 - [FastAPI](https://fastapi.tiangolo.com/)
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Geo-LLM: un flujo local para geocodificación de direcciones chilenas
+
+Una dirección no es solo texto. Cuando se trata con cuidado, puede convertirse en una coordenada, una capa espacial y, finalmente, en información territorial lista para apoyar decisiones.
+
+Geocodificar parece simple: transformar una dirección como "Av. Providencia 1208, Providencia, Santiago" en un punto sobre un mapa. En la práctica, las direcciones reales llegan incompletas, abreviadas, mal escritas, duplicadas o ambiguas. Muchos flujos operativos todavía resuelven esto con limpieza manual o reglas frágiles.
+
+Geo-LLM explora cómo los modelos de lenguaje pueden ayudar a estructurar direcciones sin salir de un flujo geoespacial trazable.
+
+<video controls src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}videos/blog/geo-llm/geo-llm.mov`} style="width:100%;border-radius:12px;border:1px solid rgba(0,0,0,.08);margin:1.5rem 0;"></video>
+
+## El flujo
+
+El sistema actual combina:
+
+1. Preprocesamiento determinístico para valores vacíos, comunas inválidas y problemas evidentes de formato.
+2. Análisis estructurado mediante un LLM local con Ollama.
+3. Geocodificación mediante un proveedor local en PostGIS, con Nominatim opcional o respaldo híbrido.
+4. Validación espacial contra la comuna y región esperadas.
+5. Comparación de similitud de nombres de calles contra un maestro local de calles.
+6. Ejecución por lotes, monitoreo con WebSocket, exportación y visualización cartográfica mediante una interfaz de control operativo.
+
+El sistema no se limita a enviar texto a un geocodificador. Interpreta la dirección, decide cómo procesarla, valida espacialmente el resultado y propone correcciones cuando el primer intento falla.
+
+## Por qué importa este patrón
+
+La calidad de las direcciones es un cuello de botella común en logística, servicios públicos, análisis de mercado, estudios de acceso a salud, análisis de seguridad y planificación urbana. Un flujo de geocodificación más inteligente puede reducir la revisión manual y mantener una traza clara de auditoría.
+
+El principio de diseño más importante es separar responsabilidades. El LLM ayuda a analizar y estructurar texto desordenado, pero PostGIS y la validación espacial siguen siendo responsables de la verdad geográfica.
+
+## Qué viene después
+
+Las siguientes líneas de trabajo son rendimiento, experiencia de usuario, cobertura, credibilidad y escalabilidad. La dirección es un servicio operacional robusto: configurable, explicable y capaz de procesar bases institucionales reales de direcciones sin requerir infraestructura excesiva.
+
+## Referencias
+
+- [PostGIS](https://postgis.net/)
+- [Ollama](https://ollama.com/)
+- [Nominatim](https://nominatim.org/)
+- [FastAPI](https://fastapi.tiangolo.com/)
+
+</section>

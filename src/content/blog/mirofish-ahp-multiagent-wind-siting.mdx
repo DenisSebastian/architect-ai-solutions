@@ -1,11 +1,15 @@
 ---
 title: "MiroFish-AHP: Multi-Agent Deliberation for Wind Siting in Northern Chile"
+titleEs: "MiroFish-AHP: deliberación multiagente para localización eólica en el norte de Chile"
 description: "A territorial decision-support pilot that combines AHP, agent profiles, scenario building, and future spatial suitability maps for wind energy planning."
+descriptionEs: "Un piloto de apoyo a la decisión territorial que combina AHP, perfiles de agentes, construcción de escenarios y mapas futuros de aptitud espacial para planificación eólica."
 date: 2026-06-02
 tags: ["Geospatial", "Decision Support", "AI", "Architecture"]
 image: "/images/blog/mirofish/MiroFish_logo.jpeg"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # MiroFish-AHP: Multi-Agent Deliberation for Wind Siting in Northern Chile
 
@@ -45,3 +49,48 @@ The current version implements the AHP core, consistency checks, matrix aggregat
 - Saaty, T. L. (1980), The Analytic Hierarchy Process.
 - Malczewski, J. (1999), GIS and Multicriteria Decision Analysis.
 - PostGIS and raster-based geospatial suitability modeling patterns.
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# MiroFish-AHP: deliberación multiagente para localización eólica en el norte de Chile
+
+La localización de proyectos energéticos rara vez es un problema puramente técnico de optimización. El potencial eólico importa, pero también importan la conexión a la red, la logística, las restricciones ambientales, la sensibilidad social, el territorio indígena y el riesgo de desastres.
+
+MiroFish-AHP es un piloto para priorizar zonas de energía eólica en la Región de Antofagasta, en el norte de Chile. El proyecto combina el Proceso Analítico Jerárquico con deliberación multiagente para hacer explícitas las tensiones y compensaciones antes de producir salidas de aptitud espacial.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/mirofish/ahp_mirofish.jpg`} alt="Interfaz piloto de MiroFish-AHP con escenarios multiagente de localización eólica" />
+
+## El modelo de decisión
+
+El piloto trabaja con seis criterios:
+
+1. Potencial eólico técnico.
+2. Viabilidad de conexión a la red.
+3. Accesibilidad logística.
+4. Restricción ambiental.
+5. Sensibilidad social e indígena.
+6. Riesgo de desastres.
+
+Cada criterio se vincula con un proxy raster planificado, como velocidad del viento, distancia a infraestructura de transmisión, distancia a caminos pavimentados, áreas protegidas, sensibilidad social y riesgo de desastres.
+
+## La capa de agentes
+
+La capa deliberativa usa seis perfiles: un técnico energético, un ingeniero de conexión, una especialista ambiental, una perspectiva de comunidad indígena, una autoridad regional y una especialista en riesgo de desastres.
+
+Cada perfil comienza con su propia estructura de sesgos. El sistema genera matrices AHP pareadas desde esas posiciones, ejecuta dos rondas deliberativas, detecta conflictos y consolida escenarios mediante agregación geométrica.
+
+## Por qué esto es más que un ejercicio de puntajes
+
+Los modelos de aptitud espacial suelen ocultar supuestos políticos y técnicos dentro de los pesos. MiroFish-AHP hace que esos pesos sean discutibles. El objetivo no es pretender que un modelo resuelve el conflicto. El objetivo es documentar cómo distintas prioridades producen distintos resultados territoriales.
+
+La versión actual implementa el núcleo AHP, chequeos de consistencia, agregación de matrices, perfiles de agentes, deliberación, construcción de escenarios, exportación JSON y pruebas. La siguiente etapa es el módulo espacial: procesamiento raster, exportación GeoTIFF, salidas PNG y un notebook de punta a punta.
+
+## Referencias
+
+- Saaty, T. L. (1980), The Analytic Hierarchy Process.
+- Malczewski, J. (1999), GIS and Multicriteria Decision Analysis.
+- PostGIS y patrones de modelación geoespacial de aptitud basada en raster.
+
+</section>

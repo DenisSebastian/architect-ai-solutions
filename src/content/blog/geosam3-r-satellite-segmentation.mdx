@@ -1,11 +1,15 @@
 ---
 title: "GeoSAM3 in R: Prompt-Based Segmentation for High-Resolution Imagery"
+titleEs: "GeoSAM3 en R: segmentación guiada por indicaciones para imágenes de alta resolución"
 description: "A practical look at how text, point, and example prompts can accelerate object extraction from aerial and satellite imagery directly in R."
+descriptionEs: "Una mirada práctica a cómo indicaciones de texto, puntos y ejemplos pueden acelerar la extracción de objetos desde imágenes aéreas y satelitales directamente en R."
 date: 2026-02-01
 tags: ["R", "Geospatial", "Computer Vision", "Remote Sensing"]
 image: "/images/blog/geosam3/geosam.jpg"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # GeoSAM3 in R: Prompt-Based Segmentation for High-Resolution Imagery
 
@@ -39,3 +43,42 @@ Tools such as `{geosam}` show how foundation models can become practical when th
 - [Kyle Walker, geosam](https://github.com/walkerke/geosam)
 - [Meta Segment Anything](https://ai.meta.com/sam2/)
 - [Qiusheng Wu, samgeo](https://github.com/opengeos/segment-geospatial)
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# GeoSAM3 en R: segmentación guiada por indicaciones para imágenes de alta resolución
+
+La segmentación de objetos en imágenes de alta resolución suele exigir datos etiquetados, configuración de modelos y un flujo de trabajo que puede sentirse lejos del análisis geoespacial cotidiano. El paquete `{geosam}` de Kyle Walker lleva una experiencia distinta a R: segmentación guiada por indicaciones con SAM3 para imágenes satelitales y aéreas.
+
+En una serie rápida de experimentos, probé indicaciones como "boats", "roads" y "buildings" sobre escenas de alta resolución. Lo interesante no es solo que el modelo pueda devolver máscaras. Es que la salida puede usarse como dato geoespacial.
+
+## Por qué es útil
+
+Para usuarios de R, el valor está en la continuidad del flujo. Una persona puede trabajar con imágenes georreferenciadas, guiar el modelo con indicaciones y exportar resultados como polígonos `sf` para análisis posteriores.
+
+Eso convierte la segmentación en un paso dentro de un flujo espacial, en vez de un proyecto separado de visión computacional. También reduce la barrera para prototipos rápidos en analítica urbana, inventarios de infraestructura, monitoreo ambiental y planificación en terreno.
+
+## Patrones de interacción
+
+El paquete admite varios estilos de indicaciones:
+
+1. Indicaciones de texto, como "pool", "boats" o "buildings".
+2. Indicaciones por ejemplo, donde la persona dibuja un objeto y busca objetos similares.
+3. Indicaciones por punto, donde un clic guía la extracción.
+4. Control del umbral de confianza y exportación directa de vuelta a R.
+
+Esto es especialmente prometedor para trabajo exploratorio. Un analista puede probar si una categoría es separable antes de comprometerse con un conjunto de datos etiquetado o un modelo personalizado.
+
+## La lección de arquitectura
+
+Herramientas como `{geosam}` muestran cómo los modelos fundacionales pueden volverse prácticos cuando se integran en flujos propios del dominio. El modelo es importante, pero el flujo de trabajo es lo que lo hace usable.
+
+## Referencias
+
+- [Kyle Walker, geosam](https://github.com/walkerke/geosam)
+- [Meta Segment Anything](https://ai.meta.com/sam2/)
+- [Qiusheng Wu, samgeo](https://github.com/opengeos/segment-geospatial)
+
+</section>

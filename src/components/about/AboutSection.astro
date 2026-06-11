@@ -1,5 +1,6 @@
 ---
 import AnimatedCounters from './AnimatedCounters.tsx';
+import { en } from '../../i18n/en';
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
@@ -28,10 +29,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     <!-- Section header -->
     <div class="gsap-reveal mb-8 text-center">
       <span class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase block mb-3"
-        >01 / About</span
+        data-i18n="about.sectionNum">{en.about.sectionNum}</span
       >
       <h2 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917]">
-        Who I Am
+        <span data-i18n="about.title">{en.about.title}</span>
       </h2>
     </div>
 
@@ -73,25 +74,19 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       <div class="flex flex-col gap-8">
         <div class="gsap-reveal">
           <h3 class="font-heading font-semibold text-base text-[#2B5C3F] mb-4 tracking-wider uppercase">
-            AI · Territory · Intelligence
+            <span data-i18n="about.subtitle">{en.about.subtitle}</span>
           </h3>
-          <p class="text-[#6B6865] leading-relaxed mb-4">
-            I architect AI solutions that decode territory. With a PhD candidate
-            background in Data Science and 7+ years at CIT-UAI (Center for
-            Territorial Intelligence), I bridge the gap between satellite sensors
-            and policy decisions.
+          <p class="text-[#6B6865] leading-relaxed mb-4" data-i18n="about.bio1">
+            {en.about.bio1}
           </p>
           <p class="text-[#6B6865] leading-relaxed mb-4">
-            I'm not a data scientist who happens to work with maps — I'm a
+            <span data-i18n="about.bio2pre">{en.about.bio2pre}</span>
             <span class="text-[#1A1917] font-semibold"
-              >territorial intelligence architect</span
-            > who designs end-to-end AI systems that connect earth observation data
-            to actionable insights for governments, organizations, and communities.
+              data-i18n="about.bio2highlight">{en.about.bio2highlight}</span
+            ><span data-i18n="about.bio2post">{en.about.bio2post}</span>
           </p>
-          <p class="text-[#6B6865] leading-relaxed">
-            Specializing in agentic AI for territorial problems, deep learning for change detection,
-            geospatial data pipelines, and spatial analysis for public
-            policy. Based in the beautiful coastal town of Isla Negra, Chile.
+          <p class="text-[#6B6865] leading-relaxed" data-i18n="about.bio3">
+            {en.about.bio3}
           </p>
         </div>
 
@@ -99,7 +94,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <div class="gsap-reveal flex items-center justify-end gap-3">
           <div class="w-2 h-2 rounded-full bg-[#2B5C3F] animate-pulse"></div>
           <span class="font-mono text-[#6B6865] text-xs tracking-wider uppercase">
-            Isla Negra, Chile — 33°26'S, 71°41'W
+            <span data-i18n="contact.location">{en.contact.location}</span>
           </span>
         </div>
 

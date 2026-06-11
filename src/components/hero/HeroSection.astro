@@ -1,5 +1,6 @@
 ---
 import Globe from './Globe.tsx';
+import { en } from '../../i18n/en';
 ---
 
 <section
@@ -36,7 +37,7 @@ import Globe from './Globe.tsx';
           <span
             class="w-1.5 h-1.5 rounded-full bg-[#2B5C3F] animate-pulse"
           ></span>
-          AI Solutions Architect
+          <span data-i18n="hero.tag">{en.hero.tag}</span>
         </div>
 
         <!-- Name — editorial serif -->
@@ -57,17 +58,15 @@ import Globe from './Globe.tsx';
           <p
             class="hero-tagline-text text-xl md:text-2xl font-heading font-medium text-[#1A1917]/80 leading-snug"
           >
-            Decoding Territory
-            <span class="text-[#2B5C3F] font-semibold"> with AI</span>
+            <span data-i18n="hero.tagline1">{en.hero.tagline1}</span>
+            <span class="text-[#2B5C3F] font-semibold" data-i18n="hero.tagline2"> {en.hero.tagline2}</span>
           </p>
         </div>
 
         <!-- Description -->
         <div id="hero-desc" style="opacity:0;">
           <p class="text-[#6B6865] text-base md:text-lg leading-relaxed max-w-xl">
-            Architecting agentic AI systems that transform satellite imagery
-            and geospatial data into actionable territorial intelligence —
-            from field sensors to policy decisions.
+            <span data-i18n="hero.description">{en.hero.description}</span>
           </p>
         </div>
 
@@ -79,7 +78,7 @@ import Globe from './Globe.tsx';
               href="#case-studies"
               class="group relative px-7 py-3 rounded-lg bg-[#2B5C3F] text-white font-heading font-semibold text-sm tracking-wide overflow-hidden transition-all duration-300 hover:shadow-[0_8px_24px_#2B5C3F33] hover:-translate-y-0.5"
             >
-              <span class="relative z-10">Explore My Work</span>
+              <span class="relative z-10" data-i18n="hero.cta1">{en.hero.cta1}</span>
               <div
                 class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300"
               ></div>
@@ -88,7 +87,7 @@ import Globe from './Globe.tsx';
               href="#contact"
               class="px-7 py-3 rounded-lg border border-[#2B5C3F] text-[#2B5C3F] font-heading font-semibold text-sm tracking-wide transition-all duration-300 hover:bg-[#2B5C3F08] hover:-translate-y-0.5"
             >
-              Get In Touch
+              <span data-i18n="hero.cta2">{en.hero.cta2}</span>
             </a>
           </div>
         </div>
@@ -98,7 +97,7 @@ import Globe from './Globe.tsx';
           <div
             class="flex items-center gap-2 text-[#6B6865] text-xs font-mono"
           >
-            <span>Scroll to explore</span>
+            <span data-i18n="hero.scroll">{en.hero.scroll}</span>
             <svg
               class="w-3.5 h-3.5 animate-bounce"
               fill="none"

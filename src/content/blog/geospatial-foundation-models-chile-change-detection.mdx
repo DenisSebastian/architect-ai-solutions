@@ -1,11 +1,15 @@
 ---
 title: "Geospatial Foundation Models for Detecting Territorial Change in Chile"
+titleEs: "Modelos fundacionales geoespaciales para detectar cambio territorial en Chile"
 description: "A doctoral research agenda for scalable, transferable, and interpretable change detection across Chile's highly diverse landscapes."
+descriptionEs: "Una agenda doctoral para detección de cambios escalable, transferible e interpretable en los paisajes altamente diversos de Chile."
 date: 2026-05-01
 tags: ["Geospatial", "Remote Sensing", "Deep Learning", "Research"]
 author: "Denis Berroeta"
 image: "/images/blog/gfm-cd/OBJ3_llm_system.png?v=91cd8fc9"
 ---
+
+<section data-lang-content="en">
 
 # Geospatial Foundation Models for Detecting Territorial Change in Chile
 
@@ -58,3 +62,61 @@ The thesis contributes to a new generation of environmental monitoring systems: 
 ## References
 
 - Kirillov et al. (2023), Segment Anything.
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Modelos fundacionales geoespaciales para detectar cambio territorial en Chile
+
+Chile es un país especialmente exigente para el monitoreo ambiental. Desiertos, montañas, valles agrícolas, ciudades en expansión, bosques templados, humedales, turberas y paisajes australes coexisten en un territorio angosto y altamente dinámico.
+
+Esa diversidad hace que la detección de cambios con datos satelitales sea valiosa y difícil al mismo tiempo. Una diferencia espectral entre dos imágenes no siempre representa una transformación real del paisaje. Puede deberse a estacionalidad, humedad del suelo, variación del sensor, nubes, nieve, fenología o un artefacto radiométrico.
+
+Mi investigación doctoral se estructura en torno a una pregunta central: **¿cómo podemos detectar, caracterizar e interpretar el cambio territorial en Chile de manera precisa, escalable y transferible entre regiones?**
+
+## Por qué la detección tradicional de cambios no es suficiente
+
+Muchos flujos supervisados de aprendizaje profundo dependen de grandes volúmenes de datos etiquetados. En monitoreo ambiental, esas etiquetas son costosas. Requieren interpretación experta, criterios consistentes y conocimiento de terreno. El problema se vuelve aún más difícil en áreas remotas, ecosistemas frágiles o paisajes poco representados en los conjuntos de entrenamiento.
+
+Los modelos fundacionales geoespaciales ofrecen un punto de partida distinto. En vez de aprender cada tarea desde cero, aprenden representaciones generales a partir de grandes volúmenes de datos de observación de la Tierra y luego pueden adaptarse a problemas específicos de monitoreo.
+
+Para Chile, la oportunidad no es simplemente obtener mejores métricas en una prueba de referencia. La oportunidad real es construir sistemas de monitoreo más estables entre sensores, estaciones, escalas y contextos ecológicos.
+
+## Capítulo 1: detección de cambios en turberas de Chiloé
+
+El primer capítulo de investigación se enfoca en turberas de Chiloé. Las turberas son importantes ecológica e hidrológicamente, pero su señal satelital es compleja. La vegetación, la humedad superficial y las dinámicas estacionales pueden ocultar el límite entre variabilidad natural y perturbación real.
+
+El foco metodológico es comparar enfoques tradicionales no supervisados de detección de cambios con estrategias basadas en modelos fundacionales, como segmentación tipo SAM, análisis multiescala e imágenes de diferencia alternativas.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/gfm-cd/OBJ1_diagrama_flujo.png?v=d369611b`} alt="Flujo metodológico para preprocesamiento SAR, generación de imágenes de diferencia, clasificación de cambios y validación" />
+
+## Capítulo 2: detección semántica de cambios a escala nacional
+
+La detección binaria responde si algo cambió. La toma de decisiones territoriales suele necesitar una pregunta más útil: **¿qué cambió hacia qué?**
+
+Un sistema de detección semántica de cambios puede distinguir transiciones como bosque nativo a plantación, suelo agrícola a tejido urbano, humedal a pastizal o vegetación a suelo desnudo. Ese nivel de información es mucho más útil para planificación, conservación, evaluación de impactos y política pública.
+
+Este capítulo busca combinar datos ópticos, datos radar, clases de cobertura de suelo y modelos fundacionales geoespaciales para producir mapas de transición comparables a lo largo de Chile.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/gfm-cd/OBJ2_Coberturas.png?v=e7d39d11`} alt="Taxonomía jerárquica de coberturas de suelo para clases territoriales naturales y antrópicas en Chile" />
+
+## Capítulo 3: análisis geoespacial conversacional
+
+El tercer capítulo conecta modelos fundacionales de visión con modelos de lenguaje. El objetivo es hacer que los resultados de detección de cambios sean más fáciles de interrogar.
+
+Una persona debería poder preguntar: "¿Qué comunas muestran la mayor expansión urbana?", "¿Dónde ocurrió pérdida de vegetación cerca de áreas protegidas?" o "¿Cuáles son las principales transiciones de cobertura entre 2020 y 2025?"
+
+En este diseño, el modelo de lenguaje no es la fuente de verdad. Es el orquestador. Interpreta la pregunta, selecciona herramientas geoespaciales, consulta bases de datos, ejecuta análisis espacial y devuelve una respuesta trazable.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/gfm-cd/OBJ3_llm_system.png?v=91cd8fc9`} alt="Arquitectura de análisis geoespacial conversacional con tablero, agente orquestador, agente de imágenes satelitales, agente de modelos, agente de validación, agente de visualización, servicio de inferencia y base PostGIS" />
+
+## Objetivo general
+
+La tesis contribuye a una nueva generación de sistemas de monitoreo ambiental: adaptativos, reproducibles y accesibles. En esa visión, la IA geoespacial no reemplaza el conocimiento territorial experto. Lo amplifica, haciendo más fácil observar, interpretar y comunicar el cambio.
+
+## Referencias
+
+- Kirillov et al. (2023), Segment Anything.
+
+</section>

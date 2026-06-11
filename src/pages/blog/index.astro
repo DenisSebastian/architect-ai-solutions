@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { en } from '../../i18n/en';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft && !data.tags.includes('Paper Review')))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -22,6 +23,9 @@ const tagColors: Record<string, string> = {
 function formatDate(d: Date) {
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 }
+
+const localizedTitle = (post: (typeof posts)[number]) => post.data.titleEs || post.data.title;
+const localizedDescription = (post: (typeof posts)[number]) => post.data.descriptionEs || post.data.description;
 ---
 
 <BaseLayout title="Blog — Denis Berroeta" description="Technical articles on AI, remote sensing, geospatial data science, and territorial intelligence.">
@@ -33,14 +37,14 @@ function formatDate(d: Date) {
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
         </svg>
-        Back to Home
+        <span data-i18n="pages.blog.backHome">{en.pages.blog.backHome}</span>
       </a>
 
       <!-- Header -->
       <div class="mb-12">
-        <span class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase block mb-3">Technical Writings</span>
-        <h1 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917] mb-4">Blog</h1>
-        <p class="text-[#6B6865] text-lg max-w-xl">Deep dives into AI, remote sensing, geospatial data science, and territorial intelligence.</p>
+        <span class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase block mb-3" data-i18n="pages.blog.label">{en.pages.blog.label}</span>
+        <h1 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917] mb-4" data-i18n="pages.blog.title">{en.pages.blog.title}</h1>
+        <p class="text-[#6B6865] text-lg max-w-xl" data-i18n="pages.blog.description">{en.pages.blog.description}</p>
       </div>
 
       <!-- Post list -->
@@ -52,11 +56,11 @@ function formatDate(d: Date) {
 
             <div class="flex flex-col sm:flex-row sm:items-start gap-4">
               <div class="flex-1">
-                <time class="font-mono text-[#6B6865] text-xs">{formatDate(post.data.date)}</time>
+                <time class="font-mono text-[#6B6865] text-xs" data-date={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
                 <h2 class="font-heading font-semibold text-[#1A1917] text-xl mt-2 mb-3 group-hover:text-[#2B5C3F] transition-colors duration-200 leading-snug">
-                  <a href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}blog/${post.id}`}>{post.data.title}</a>
+                  <a href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}blog/${post.id}`} data-text-en={post.data.title} data-text-es={localizedTitle(post)}>{post.data.title}</a>
                 </h2>
-                <p class="text-[#6B6865] text-sm leading-relaxed mb-4">{post.data.description}</p>
+                <p class="text-[#6B6865] text-sm leading-relaxed mb-4" data-text-en={post.data.description} data-text-es={localizedDescription(post)}>{post.data.description}</p>
                 <div class="flex flex-wrap gap-2">
                   {post.data.tags.map((tag) => (
                     <span
@@ -72,7 +76,7 @@ function formatDate(d: Date) {
                 href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}blog/${post.id}`}
                 class="sm:mt-2 inline-flex items-center gap-1.5 text-[#2B5C3F] text-sm font-semibold whitespace-nowrap hover:gap-3 transition-all duration-200"
               >
-                Read
+                <span data-i18n="pages.blog.read">{en.pages.blog.read}</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>

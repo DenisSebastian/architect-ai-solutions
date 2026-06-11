@@ -1,11 +1,15 @@
 ---
 title: "Security Indicators for Territorial Wellbeing in Chile"
+titleEs: "Indicadores de seguridad para el bienestar territorial en Chile"
 description: "How the MBHT Security Dimension organizes police cases into interpretable indicators for urban blocks, using risk categories, normalization, inverse scoring, and spatial anonymization."
+descriptionEs: "Cómo la dimensión Seguridad de la MBHT organiza casos policiales en indicadores interpretables para manzanas urbanas, usando categorías de riesgo, normalización, puntuación inversa y anonimato espacial."
 date: 2026-02-01
 tags: ["Geospatial", "Public Policy", "Security", "Territorial Intelligence"]
 image: "/images/blog/mbht/dim_seguridad.png"
 author: "Denis Berroeta"
 ---
+
+<section data-lang-content="en">
 
 # Security Indicators for Territorial Wellbeing in Chile
 
@@ -80,3 +84,83 @@ This is the kind of architecture territorial intelligence needs: not only data p
 
 - [MBHT visualizations](https://matrizbht.cl/visualizations)
 - Center for Territorial Intelligence, Universidad Adolfo Ibanez.
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Indicadores de seguridad para el bienestar territorial en Chile
+
+En el Centro de Inteligencia Territorial de la Universidad Adolfo Ibáñez, la **Matriz de Bienestar Humano Territorial** (MBHT) usa indicadores espaciales para hacer comparables e interpretables distintas dimensiones del bienestar urbano.
+
+La **dimensión Seguridad** se enfoca en cómo los casos policiales afectan las condiciones de seguridad alrededor de las manzanas urbanas. El objetivo no es exponer eventos individuales, sino transformar registros delictuales complejos en indicadores territoriales que apoyen análisis regional, planificación y discusión pública.
+
+<img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/mbht/dim_seguridad.png`} alt="Visualización de la dimensión Seguridad de la Matriz de Bienestar Humano Territorial" />
+
+## De registros policiales a indicadores territoriales
+
+El punto de partida es complejo: los registros policiales pueden contener cientos de tipos de delitos. Para el análisis territorial, ese nivel de detalle es demasiado fragmentado para comunicar con claridad o comparar entre áreas urbanas.
+
+La metodología organiza, sistematiza y sintetiza esos registros en cuatro indicadores de seguridad. Estos indicadores distinguen dos grandes tipos de riesgo:
+
+1. Delitos contra las personas.
+2. Delitos contra la propiedad.
+
+Luego, cada tipo de riesgo se separa entre delitos graves y delitos leves. Esta estructura crea cuatro indicadores lo suficientemente simples para ser interpretados, pero suficientemente robustos para preservar las principales diferencias en las condiciones de seguridad pública.
+
+## Normalización y puntuación inversa
+
+Después de la clasificación, la información se normaliza y se transforma en una puntuación inversa. Esto es importante porque el indicador final está diseñado como un **puntaje de seguridad**, no como un puntaje de intensidad delictual.
+
+En términos prácticos, las manzanas urbanas con valores más altos representan áreas más seguras. Los valores se expresan en un rango normalizado entre 0 y 1, lo que permite compararlos entre territorios y categorías.
+
+Esta transformación hace que los indicadores sean más fáciles de leer dentro de un marco de bienestar: valores más altos representan de manera consistente mejores condiciones.
+
+## Anonimización espacial con KDE
+
+Los datos de seguridad son sensibles. Por eso, la metodología evita exponer directamente incidentes individuales.
+
+Los casos se anonimizan espacialmente mediante **Kernel Density Estimation** (KDE) sobre una grilla regular de 500 x 500 metros. Este enfoque suaviza la distribución espacial de los eventos y produce patrones territoriales sin revelar ubicaciones exactas de incidentes.
+
+Para visualización pública y planificación, esta es una decisión crítica de diseño. El objetivo es apoyar el diagnóstico territorial preservando la privacidad y reduciendo el riesgo de sobreinterpretar eventos puntuales.
+
+## Los cuatro indicadores de seguridad
+
+### Seguridad frente a delitos graves contra las personas
+
+Este indicador se construye a partir de delitos como abuso sexual, amenazas con arma, consumo o porte de drogas, infracciones a la ley de control de armas, homicidios, lesiones menos graves o graves, tráfico y microtráfico de drogas, violación, robos y hurtos.
+
+Captura condiciones donde la seguridad se ve afectada por riesgos graves a la integridad personal.
+
+### Seguridad frente a delitos graves contra la propiedad
+
+Este indicador se basa en delitos como robo de vehículos, robo en lugar habitado, intento de robo y robos con violencia o intimidación.
+
+Ayuda a identificar patrones territoriales donde los delitos contra la propiedad tienen un perfil de mayor gravedad.
+
+### Seguridad frente a delitos leves contra las personas
+
+Este indicador incluye delitos como amenazas, cuasidelitos, daños, ebriedad y consumo de alcohol en la vía pública, lesiones leves, denuncias y hallazgos de presuntas desgracias, receptación, casos de regulación familiar, riñas, secuestro y sustracción de menores, violencia intrafamiliar y vulneraciones de derechos.
+
+Es útil para observar formas cotidianas de inseguridad que pueden afectar la percepción de seguridad y el bienestar social.
+
+### Seguridad frente a delitos leves contra la propiedad
+
+Este indicador se construye a partir de delitos como comercio informal, hallazgo de vehículos, hurto o robo de objetos desde vehículos, robo en lugar no habitado y robo por sorpresa.
+
+Captura eventos contra la propiedad que pueden ser menos graves individualmente, pero que igualmente configuran condiciones territoriales de seguridad.
+
+## Por qué importa para la inteligencia territorial
+
+Los indicadores de seguridad suelen ser difíciles de integrar en plataformas de bienestar porque los datos delictuales brutos son sensibles, heterogéneos y difíciles de interpretar espacialmente.
+
+El enfoque de la MBHT vuelve la información más usable al combinar clasificación, síntesis, normalización, puntuación inversa y anonimización espacial. El resultado es un conjunto de indicadores que puede compararse con otras dimensiones del bienestar territorial, como accesibilidad, condiciones ambientales y contexto socioeconómico.
+
+Esta es la arquitectura que necesita la inteligencia territorial: no solo procesamiento de datos, sino transformación cuidadosa en indicadores interpretables, responsables y útiles para la toma de decisiones.
+
+## Referencias
+
+- [Visualizaciones MBHT](https://matrizbht.cl/visualizations)
+- Centro de Inteligencia Territorial, Universidad Adolfo Ibáñez.
+
+</section>

@@ -1,15 +1,13 @@
 ---
+import { en } from '../../i18n/en';
+
 const baseUrl = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const asset = (path: string) => `${baseUrl}${path.replace(/^\/+/, '')}`;
 const blogUrl = (slug: string) => `${baseUrl}blog/${slug}/`;
 
-const projects = [
+const projectMeta = [
   {
     id: 'mirofish-ahp',
-    title: 'MiroFish-AHP',
-    subtitle: 'Multi-agent wind siting in Northern Chile',
-    description:
-      'A territorial decision-support pilot that combines AHP, agent profiles, deliberation rounds, scenario building, and future raster suitability outputs for wind energy planning in Antofagasta.',
     tags: ['AI Agents', 'AHP', 'Decision Support', 'Wind Energy'],
     featured: true,
     color: '#2B5C3F',
@@ -21,10 +19,6 @@ const projects = [
   },
   {
     id: 'foundation-change',
-    title: 'Geospatial Foundation Models',
-    subtitle: 'Territorial change detection in Chile',
-    description:
-      'A doctoral research agenda for transferable change detection across Chile, connecting foundation models, semantic transitions, peatland monitoring, and conversational geospatial analysis.',
     tags: ['Foundation Models', 'Change Detection', 'Research'],
     featured: false,
     color: '#4A6FA5',
@@ -34,10 +28,6 @@ const projects = [
   },
   {
     id: 'geo-llm',
-    title: 'Geo-LLM',
-    subtitle: 'Local Chilean address geocoding pipeline',
-    description:
-      'A local geocoding prototype that combines deterministic preprocessing, LLM address parsing, PostGIS validation, street-name similarity, batch execution, and map monitoring.',
     tags: ['LLM', 'PostGIS', 'FastAPI'],
     featured: false,
     color: '#C04A2E',
@@ -47,10 +37,6 @@ const projects = [
   },
   {
     id: 'spatial-sql',
-    title: 'Natural Language Spatial SQL',
-    subtitle: 'Running locally with DuckDB and Ollama',
-    description:
-      'A local-first prototype that translates plain-language spatial questions into executable SQL, runs them with DuckDB, and returns table and map-ready results without cloud dependencies.',
     tags: ['Spatial SQL', 'DuckDB', 'Ollama'],
     featured: false,
     color: '#8C6D3F',
@@ -60,10 +46,6 @@ const projects = [
   },
   {
     id: 'security-indicators',
-    title: 'Security Indicators',
-    subtitle: 'Territorial wellbeing in Chile',
-    description:
-      'A responsible indicator architecture that transforms police records into comparable territorial security scores using classification, normalization, inverse scoring, and spatial anonymization.',
     tags: ['Public Policy', 'Security', 'KDE'],
     featured: false,
     color: '#2B5C3F',
@@ -72,6 +54,14 @@ const projects = [
     slug: 'mbht-security-indicators-chile-2025',
   },
 ];
+
+const projects = en.work.projects.map((project, index) => ({
+  ...project,
+  ...projectMeta[index],
+  titleKey: `work.projects.${index}.title`,
+  subtitleKey: `work.projects.${index}.subtitle`,
+  descriptionKey: `work.projects.${index}.description`,
+}));
 
 const featuredProject = projects.find((project) => project.featured)!;
 ---
@@ -86,17 +76,17 @@ const featuredProject = projects.find((project) => project.featured)!;
     <!-- Header -->
     <div class="gsap-reveal mb-3 text-center">
       <span class="font-mono text-[#2B5C3F] text-xs tracking-[0.3em] uppercase">
-        03 / Work
+        <span data-i18n="work.sectionNum">{en.work.sectionNum}</span>
       </span>
     </div>
     <div class="gsap-reveal mb-3 text-center">
       <h2 class="font-display font-semibold text-4xl md:text-5xl text-[#1A1917]">
-        Selected Work
+        <span data-i18n="work.title">{en.work.title}</span>
       </h2>
     </div>
     <div class="gsap-reveal mb-8 text-center">
       <p class="text-[#6B6865] text-lg max-w-2xl mx-auto">
-        Applied geospatial AI, territorial indicators, and decision-support systems drawn from current research and production work
+        <span data-i18n="work.description">{en.work.description}</span>
       </p>
     </div>
 
@@ -129,16 +119,16 @@ const featuredProject = projects.find((project) => project.featured)!;
           <div
             class="inline-flex items-center gap-2 w-fit px-3 py-1 rounded-full border border-[#2B5C3F33] bg-[#2B5C3F08] text-[#2B5C3F] text-xs font-mono mb-5"
           >
-            Featured Project
+            <span data-i18n="work.featured">{en.work.featured}</span>
           </div>
           <h3
             class="font-display font-semibold text-3xl md:text-4xl text-[#1A1917] mb-2 leading-tight"
           >
-            {featuredProject.title}
+            <span data-i18n={featuredProject.titleKey}>{featuredProject.title}</span>
           </h3>
-          <p class="text-[#6B6865] text-sm mb-4 font-mono">{featuredProject.subtitle}</p>
+          <p class="text-[#6B6865] text-sm mb-4 font-mono" data-i18n={featuredProject.subtitleKey}>{featuredProject.subtitle}</p>
           <p class="text-[#6B6865] leading-relaxed mb-6">
-            {featuredProject.description}
+            <span data-i18n={featuredProject.descriptionKey}>{featuredProject.description}</span>
           </p>
           <div class="flex flex-wrap gap-2 mb-7">
             {
@@ -153,7 +143,7 @@ const featuredProject = projects.find((project) => project.featured)!;
             href={blogUrl(featuredProject.slug)}
             class="group/link inline-flex items-center gap-2 text-[#2B5C3F] font-semibold text-sm hover:gap-3 transition-all duration-200"
           >
-            Read Project Summary
+            <span data-i18n="work.requestBtn">{en.work.requestBtn}</span>
             <svg
               class="w-4 h-4"
               fill="none"
@@ -207,11 +197,11 @@ const featuredProject = projects.find((project) => project.featured)!;
               </div>
 
               <h3 class="font-heading font-semibold text-[#1A1917] text-sm mb-1 leading-tight">
-                {project.title}
+                <span data-i18n={project.titleKey}>{project.title}</span>
               </h3>
-              <p class="text-[#6B6865] text-xs mb-3 font-mono">{project.subtitle}</p>
+              <p class="text-[#6B6865] text-xs mb-3 font-mono" data-i18n={project.subtitleKey}>{project.subtitle}</p>
               <p class="text-[#6B6865] text-xs leading-relaxed mb-4 line-clamp-3">
-                {project.description}
+                <span data-i18n={project.descriptionKey}>{project.description}</span>
               </p>
               <div class="flex flex-wrap gap-1.5">
                 {project.tags.slice(0, 3).map((tag) => (
