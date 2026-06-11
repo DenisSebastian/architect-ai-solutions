@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
 
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xvznbqzb';
+
 export default function ContactForm() {
   const [state, setState] = useState<FormState>('idle');
   const [form, setForm] = useState({
@@ -22,10 +24,13 @@ export default function ContactForm() {
     setState('loading');
 
     try {
-      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          _subject: form.subject,
+        }),
       });
 
       if (res.ok) {
@@ -35,9 +40,7 @@ export default function ContactForm() {
         setState('error');
       }
     } catch {
-      await new Promise((r) => setTimeout(r, 1000));
-      setState('success');
-      setForm({ name: '', email: '', subject: '', message: '' });
+      setState('error');
     }
 
     setTimeout(() => setState('idle'), 5000);
