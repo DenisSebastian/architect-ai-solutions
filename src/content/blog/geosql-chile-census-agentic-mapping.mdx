@@ -1,0 +1,116 @@
+---
+title: "From Natural Language to a Chilean Census Map with GeoSQL"
+titleEs: "Del lenguaje natural a un mapa censal de Chile con GeoSQL"
+description: "A local experiment in which an AI agent discovers a PostGIS dataset, validates spatial SQL, and produces an interpretable census map in Dekart."
+descriptionEs: "Un experimento local donde un agente de IA descubre una base PostGIS, valida SQL espacial y produce un mapa censal interpretable en Dekart."
+date: 2026-07-17
+tags: ["Geospatial", "AI", "PostGIS", "GeoSQL", "Chile"]
+image: "/images/blog/geosql/geosql-image.png"
+author: "Denis Berroeta"
+---
+
+<section data-lang-content="en">
+
+# From Natural Language to a Chilean Census Map with GeoSQL
+
+Can an AI agent do more than write plausible SQL? I wanted to test whether it could start with an underspecified territorial question, inspect an unfamiliar spatial database, and produce a map whose query, data checks, and interpretation remain open to review.
+
+For this experiment I used [GeoSQL](https://github.com/dekart-xyz/geosql) with a fully local stack: PostgreSQL/PostGIS in Docker, an AI coding agent, and [Dekart](https://dekart.xyz/) for the final interactive map. The dataset contains socioeconomic indicators and census-block geometries for Chile's Metropolitan Region, derived from the 2024 Census.
+
+<video controls preload="metadata" poster={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/geosql/geosql-image.png`} src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}videos/blog/geosql/geosql-short.mov`} style="width:100%;border-radius:12px;border:1px solid rgba(0,0,0,.08);margin:1.75rem 0;"></video>
+
+## The question
+
+I gave the agent a single request: identify the municipalities with the highest average years of schooling and render the result on a map, with an explanation of how to read it.
+
+I did not provide the table name, field names, geometry type, or coordinate reference system. The agent had to discover that context from PostGIS. That is an important part of the task: real spatial databases rarely arrive with a clean, prompt-ready description.
+
+## What the workflow did
+
+The agent inspected the database metadata, found the relevant socioeconomic table, selected the schooling indicator and municipality as the aggregation unit, then generated and ran the spatial SQL. Before rendering, it checked record counts, missing values, and geometry validity.
+
+The resulting query first ranked municipalities by the simple mean of the block-level schooling indicator, then mapped the census blocks of the leading municipalities. Dekart rendered the output as a choropleth over a dark basemap and included a readable explanation alongside the map. The SQL remains available for inspection, rather than being hidden behind the interface.
+
+## Why the validation loop matters
+
+The useful outcome is not merely that a language model can generate a query. The workflow creates a chain of evidence that can be checked:
+
+1. The schema and spatial reference are discovered from the database.
+2. The SQL is executable and visible.
+3. Nulls, row counts, and geometries are validated before mapping.
+4. The map documents its indicator, unit of analysis, and limitations.
+
+This makes the result easier to discuss with an analyst or stakeholder. A map that renders correctly is not automatically a sound territorial conclusion; data quality, aggregation, and the meaning of the indicator still matter.
+
+## A necessary limitation
+
+The ranking is a descriptive comparison of block-level averages. It is not population-weighted and it does not explain the causes of educational inequality. Each block with an available value contributes equally to its municipality's average, so the map should be read as an exploratory view rather than an estimate of the population-wide mean.
+
+That distinction is precisely why I find this pattern promising: AI can accelerate the path from a question to evidence, while spatial validation and explicit interpretation keep the work auditable.
+
+## What I learned
+
+Two implementation details made the local workflow more reliable. First, the map contract had to be explicit: PostGIS geometries were serialized as GeoJSON before being passed to the map layer. Second, interpretation became part of the output contract. Each report includes results, guidance for reading the map, the analytical caveat, and source and quality notes.
+
+The complete run—from the natural-language request to a validated query, map, and written explanation—took under two minutes in this local test. That is not a universal benchmark; it depends on the model, the data volume, geometry complexity, and the amount of schema discovery required. It is, however, a useful indication of what a well-bounded agentic workflow can make practical.
+
+## References
+
+- [GeoSQL](https://github.com/dekart-xyz/geosql)
+- [Dekart](https://github.com/dekart-xyz/dekart)
+- [PostGIS](https://postgis.net/)
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# Del lenguaje natural a un mapa censal de Chile con GeoSQL
+
+¿Puede un agente de IA hacer más que escribir SQL verosímil? Quise probar si era capaz de partir con una pregunta territorial incompleta, inspeccionar una base de datos espacial desconocida y producir un mapa cuya consulta, validaciones e interpretación siguieran abiertas a revisión.
+
+Para este experimento utilicé [GeoSQL](https://github.com/dekart-xyz/geosql) con una arquitectura completamente local: PostgreSQL/PostGIS en Docker, un agente de programación con IA y [Dekart](https://dekart.xyz/) para el mapa interactivo final. El conjunto de datos contiene indicadores socioeconómicos y geometrías de manzanas censales de la Región Metropolitana, derivados del Censo 2024.
+
+<video controls preload="metadata" poster={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}images/blog/geosql/geosql-image.png`} src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}videos/blog/geosql/geosql-short.mov`} style="width:100%;border-radius:12px;border:1px solid rgba(0,0,0,.08);margin:1.75rem 0;"></video>
+
+## La pregunta
+
+Le di al agente una sola solicitud: identificar las comunas con mayor promedio de años de escolaridad y representar el resultado en un mapa, incluyendo una explicación para leerlo.
+
+No entregué el nombre de la tabla, los campos, el tipo de geometría ni el sistema de referencia de coordenadas. El agente tuvo que descubrir ese contexto desde PostGIS. Esa es una parte relevante del problema: las bases de datos espaciales reales rara vez llegan con una descripción limpia y lista para usar en un prompt.
+
+## Qué hizo el flujo
+
+El agente inspeccionó los metadatos de la base, encontró la tabla socioeconómica pertinente, seleccionó el indicador de escolaridad y la comuna como unidad de agregación, y luego generó y ejecutó el SQL espacial. Antes de renderizar, revisó conteos de registros, valores faltantes y validez de las geometrías.
+
+La consulta resultante primero ordenó las comunas por el promedio simple del indicador de escolaridad a nivel de manzana y luego mapeó las manzanas de las comunas líderes. Dekart representó el resultado como un mapa coroplético sobre una base oscura e incorporó una explicación legible junto al mapa. El SQL queda disponible para inspección, en lugar de permanecer oculto detrás de la interfaz.
+
+## Por qué importa el ciclo de validación
+
+El resultado útil no es solamente que un modelo de lenguaje pueda generar una consulta. El flujo crea una cadena de evidencia que se puede revisar:
+
+1. El esquema y la referencia espacial se descubren desde la base de datos.
+2. El SQL es ejecutable y visible.
+3. Los nulos, conteos y geometrías se validan antes de mapear.
+4. El mapa documenta su indicador, unidad de análisis y limitaciones.
+
+Esto facilita conversar el resultado con una persona analista o con quienes deben tomar decisiones. Que un mapa se renderice correctamente no lo convierte automáticamente en una conclusión territorial sólida: siguen importando la calidad de los datos, la agregación y el significado del indicador.
+
+## Una limitación necesaria
+
+El ranking es una comparación descriptiva de promedios a nivel de manzana. No está ponderado por población ni explica las causas de la desigualdad educativa. Cada manzana con dato disponible aporta el mismo peso al promedio de su comuna, por lo que el mapa debe leerse como una exploración y no como una estimación del promedio de toda la población.
+
+Esa distinción es justamente lo que vuelve prometedor este patrón: la IA puede acelerar el tránsito desde una pregunta a la evidencia, mientras la validación espacial y una interpretación explícita mantienen el trabajo auditable.
+
+## Lo que aprendí
+
+Dos detalles de implementación hicieron más confiable el flujo local. Primero, el contrato cartográfico debía ser explícito: las geometrías de PostGIS se serializaron como GeoJSON antes de enviarlas a la capa del mapa. Segundo, la interpretación pasó a ser parte del contrato de salida. Cada reporte incorpora resultados, orientación para leer el mapa, la advertencia analítica y notas sobre fuente y calidad.
+
+La ejecución completa —desde la solicitud en lenguaje natural hasta la consulta validada, el mapa y la explicación escrita— tomó menos de dos minutos en esta prueba local. No es un benchmark universal: depende del modelo, el volumen de datos, la complejidad geométrica y el nivel de descubrimiento de esquema requerido. Sí es una señal útil de lo que un flujo agéntico bien acotado puede volver práctico.
+
+## Referencias
+
+- [GeoSQL](https://github.com/dekart-xyz/geosql)
+- [Dekart](https://github.com/dekart-xyz/dekart)
+- [PostGIS](https://postgis.net/)
+
+</section>
