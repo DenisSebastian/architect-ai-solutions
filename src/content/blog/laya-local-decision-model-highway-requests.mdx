@@ -36,7 +36,7 @@ I approached the problem the way I approach any project: **designing the whole s
 
 It started with a professional curiosity: **how does a decision model like Jev work under the hood?**
 
-Jev (by TypeSafe) is not a text-generation model. It receives a text and a set of questions, each with its options, and returns **a probability distribution over those options**. It does not write an answer: it chooses, and says how confident it is. For classifying, routing, or filtering, that is exactly what you need: a bounded, auditable output with a confidence you can act on.
+[Jev, introduced by TypeSafe](https://typesafe.ai/blog/introducing-system-one-models-and-jev), is not a text-generation model. It receives a text and a set of questions, each with its options, and returns **a probability distribution over those options**. It does not write an answer: it chooses, and says how confident it is. For classifying, routing, or filtering, that is exactly what you need: a bounded, auditable output with a confidence you can act on.
 
 Jev is a remote, paid service. I wanted to understand the approach in depth, so I set myself three goals:
 
@@ -102,7 +102,7 @@ In the proposed workflow, **calibrated confidence helps decide the next step**: 
 
 ## 4. The model: Laya fine-tuned on real cases
 
-As the base I used **multilingual Laya** (Convai Innovations), an open decision model:
+As the base I used **multilingual Laya** (Convai Innovations), an open decision model. For local inference on Apple Silicon, I adapted the independent [Laya-MLX implementation](https://github.com/mizorewww/laya-mlx) to this prototype's workflow:
 
 | | |
 |---|---|
@@ -268,7 +268,7 @@ Abordé el problema como abordo cualquier proyecto: **pensando el sistema comple
 
 Todo empezó con una inquietud profesional: **¿cómo funciona por dentro un modelo de decisión como Jev?**
 
-Jev (de TypeSafe) no es un modelo que genera texto. Recibe un texto y un conjunto de preguntas, cada una con sus opciones, y devuelve **una distribución de probabilidad sobre esas opciones**. No escribe una respuesta: elige, y dice qué tan seguro está. Para clasificar, derivar o filtrar, eso es justo lo que se necesita: una salida acotada, auditable y con una confianza que se puede usar para decidir.
+[Jev, presentado por TypeSafe](https://typesafe.ai/blog/introducing-system-one-models-and-jev), no es un modelo que genera texto. Recibe un texto y un conjunto de preguntas, cada una con sus opciones, y devuelve **una distribución de probabilidad sobre esas opciones**. No escribe una respuesta: elige, y dice qué tan seguro está. Para clasificar, derivar o filtrar, eso es justo lo que se necesita: una salida acotada, auditable y con una confianza que se puede usar para decidir.
 
 Jev es un servicio remoto y de pago. Quería entender el enfoque a fondo, así que me propuse tres cosas:
 
@@ -334,7 +334,7 @@ En el flujo propuesto, **la confianza calibrada ayuda a decidir el siguiente pas
 
 ## 4. El modelo: Laya ajustado con casos reales
 
-Como base usé **Laya multilingüe** (Convai Innovations), un modelo de decisión abierto:
+Como base usé **Laya multilingüe** (Convai Innovations), un modelo de decisión abierto. Para ejecutarlo localmente en Apple Silicon, adapté la implementación independiente [Laya-MLX](https://github.com/mizorewww/laya-mlx) al flujo de este prototipo:
 
 | | |
 |---|---|
