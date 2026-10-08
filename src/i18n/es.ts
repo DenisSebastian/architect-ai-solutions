@@ -4,7 +4,7 @@ export const es: Translations = {
   meta: {
     title: 'Denis Berroeta — Arquitecto de Soluciones de IA Aplicadas al Territorio',
     description:
-      'Diseño soluciones de IA que decodifican el territorio. Imágenes satelitales, datos geoespaciales y aprendizaje profundo para inteligencia territorial accionable.',
+      'Diseño soluciones de IA que decodifican el territorio. Datos territoriales, modelos y agentes inteligentes para transformar información compleja en decisiones.',
   },
   nav: {
     about: 'Sobre mí',
@@ -20,7 +20,7 @@ export const es: Translations = {
     tagline1: 'Decodificando el territorio',
     tagline2: 'con IA',
     description:
-      'Diseño sistemas de IA agéntica que transforman imágenes satelitales y datos geoespaciales en inteligencia territorial accionable, desde sensores de campo hasta decisiones de política pública.',
+      'Diseño sistemas de IA que transforman datos territoriales de múltiples fuentes en información accionable, desde la integración de los datos hasta las decisiones de política pública.',
     cta1: 'Explorar mi trabajo',
     cta2: 'Contáctame',
     scroll: 'Desplázate para explorar',
@@ -29,12 +29,12 @@ export const es: Translations = {
     sectionNum: '01 / Sobre mí',
     title: 'Quién soy',
     subtitle: 'IA · Territorio · Inteligencia',
-    bio1: 'Diseño soluciones de IA que decodifican el territorio. Con formación doctoral en Ciencia de Datos y más de 7 años en CIT-UAI (Centro de Inteligencia Territorial), conecto sensores satelitales con decisiones de política pública.',
-    bio2pre: 'No soy un científico de datos que trabaja con mapas por casualidad: soy un ',
-    bio2highlight: 'arquitecto de inteligencia territorial',
+    bio1: 'Me gusta diseñar soluciones de inteligencia artificial para problemas territoriales. Tengo un Máster en Data Science y un Magíster en Inteligencia Artificial, soy estudiante del Doctorado en Ciencia de Datos y llevo más de 7 años en el CIT-UAI (Centro de Inteligencia Territorial), trabajando donde se cruzan los datos, los modelos y las decisiones.',
+    bio2pre: 'Abordo cada problema como lo haría un arquitecto: ',
+    bio2highlight: 'pensando el sistema completo',
     bio2post:
-      ' que diseña sistemas de IA de punta a punta para conectar datos de observación de la Tierra con información accionable para gobiernos, organizaciones y comunidades.',
-    bio3: 'Me especializo en IA agéntica para problemas territoriales, aprendizaje profundo para detección de cambios, flujos de datos geoespaciales y análisis espacial para políticas públicas. Vivo en Isla Negra, Chile.',
+      ', desde la integración de datos diversos hasta los modelos y agentes que los transforman en información útil para gobiernos, organizaciones y comunidades.',
+    bio3: 'Trabajo con IA agéntica, aprendizaje profundo, flujos de datos geoespaciales y análisis espacial, en ámbitos tan distintos como el medio ambiente, las ciudades, la industria o la política pública. Todo esto lo hago desde la costa, en Isla Negra, cerca del mar.',
     stats: [
       { value: 7, suffix: '+', label: 'Años de\nexperiencia' },
       { value: 15, suffix: '+', label: 'Investigación' },
@@ -94,6 +94,12 @@ export const es: Translations = {
         subtitle: 'Localización eólica multiagente en el norte de Chile',
         description:
           'Un piloto de apoyo a la decisión territorial que combina AHP, perfiles de agentes, rondas de deliberación, construcción de escenarios y salidas raster futuras de aptitud para planificación eólica en Antofagasta.',
+      },
+      {
+        title: 'Laya · Solicitudes de autopista',
+        subtitle: 'Modelo de decisión local con revisión humana',
+        description:
+          'Un prototipo para derivar solicitudes de autopista con un modelo local ajustado, un flujo de decisión explícito, umbrales de confianza y evaluación en 1.000 casos reservados.',
       },
       {
         title: 'Modelos fundacionales geoespaciales',

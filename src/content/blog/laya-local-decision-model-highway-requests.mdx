@@ -1,0 +1,476 @@
+---
+title: "From 20 Minutes to 70 Milliseconds: A Local Decision Model to Route Highway Requests"
+titleEs: "De 20 minutos a 70 milisegundos: un modelo de decisión local para clasificar solicitudes de una autopista"
+description: "A local decision-model prototype for highway requests: two-stage routing, 5,448 training cases, evaluation on 1,000 held-out cases, and a plan for human oversight."
+descriptionEs: "Un prototipo local para clasificar solicitudes de autopista: decisión en dos rondas, 5.448 casos de entrenamiento, evaluación en 1.000 casos reservados y revisión humana."
+date: 2026-10-08
+tags: ["AI", "Decision Models", "NLP", "Local AI", "Architecture"]
+image: "/images/blog/laya-autopistas/hoy-vs-sistema.png"
+author: "Denis Berroeta"
+---
+
+export const B = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+<section data-lang-content="en">
+
+# From 20 Minutes to 70 Milliseconds: A Local Decision Model to Route Highway Requests
+
+A highway user request (a billing complaint, say, or a warning about an obstacle on the road) can pass through several reviews before reaching the person who resolves it. In the workflow used for this prototype, **four reviews of roughly five minutes each** provide a 20-minute reference scenario. That figure is an estimate, not a measured operational baseline.
+
+This post explains a local prototype that classifies a request in about **70 milliseconds** on the test computer. It covers the decision flow, the held-out evaluation, the failure modes, and what a shadow pilot would need to establish before it could improve response times in practice.
+
+<img src={`${B}images/blog/laya-autopistas/hoy-vs-sistema.png`} alt="Today versus with the system" />
+<p class="caption">The proposed flow sends confident cases to their destination and uncertain cases to human review. The comparison illustrates a design scenario; operational times remain to be measured. <a href={`${B}html/blog/laya-autopistas/hoy-vs-sistema.html`} target="_blank" rel="noopener">Open interactive diagram ↗</a></p>
+
+---
+
+## Why this case is about territory
+
+A highway is territorial infrastructure, and requests from its users can also describe what is happening along the route: obstacles, congestion, signage problems, or third-party damage. Consistent classification could make those reports useful for monitoring patterns, provided location data and suitable safeguards are available. Geospatial analysis is a next step, not a result of this prototype.
+
+I approached the problem the way I approach any project: **designing the whole system**, not just training a model. Business rules, the model, confidence thresholds, people, and the feedback loop are all part of the solution.
+
+---
+
+## 1. The question that led me here
+
+It started with a professional curiosity: **how does a decision model like Jev work under the hood?**
+
+Jev (by TypeSafe) is not a text-generation model. It receives a text and a set of questions, each with its options, and returns **a probability distribution over those options**. It does not write an answer: it chooses, and says how confident it is. For classifying, routing, or filtering, that is exactly what you need: a bounded, auditable output with a confidence you can act on.
+
+Jev is a remote, paid service. I wanted to understand the approach in depth, so I set myself three goals:
+
+1. Build a **local test bench** (I called it *Jev Lab*) where any model that speaks the same contract can be compared on the same data and metrics, with the original Jev as the reference.
+2. Find an **open alternative that runs on my Mac**.
+3. Test it on a **real case**, not toy data.
+
+The case was a highway concession company in Chile, with its own request-handling flowchart and a history of cases already classified by people.
+
+---
+
+## 2. The problem: a decision tree that people walk through by hand
+
+The company already had its own flowchart. Each request is classified on three chained levels: **area → class → type**.
+
+<img src={`${B}images/blog/laya-autopistas/flujo-decision.png`} alt="Decision tree for 200 highway requests, showing commercial, operational, and interrupted-contact branches with their possible outcomes" />
+<p class="caption">The decision tree applied to 200 requests. The numbers show how many examples followed each branch; they describe this sample, not the model's accuracy. The table below translates the branch names. <a href={`${B}images/blog/laya-autopistas/flujo-decision.png`} target="_blank" rel="noopener">View full-size diagram ↗</a></p>
+
+| Area | Class | Types |
+|---|---|---|
+| **Interference** | — | Call dropped before the case was known → automatic close |
+| **Commercial** | Is the caller the account holder? No → automatic close | |
+| | Inquiry | Payments · Charges · Other inquiries |
+| | Complaint | Payments · Charges · Other complaints |
+| | Suggestion | — |
+| **Operational** | Inquiry (on the road) | Other inquiries |
+| | Complaint (on the road) | User assistance · Charges · Congestion · Obstacles · Public road · Third-party damage · Assistance · Signage, traffic and diversions · Tolls · Other complaints · Roadworks |
+| | Suggestion | Congestion |
+
+Three features define the problem:
+
+- **Two exits with no routing.** If the call dropped before the case was known (*Interference*), or if the person asking about a commercial matter is not the account holder, the flow ends. A real automatic reply would require verified channel signals and the company's approval.
+- **Account-holder validation only exists in the commercial area.** Anyone can report an obstacle on the road.
+- **The destination depends on three chained decisions.** If the area is wrong, the class and type come from the wrong branch.
+
+---
+
+## 3. The design: five questions in two rounds
+
+I translated the flowchart into **five questions** for the model, each tied to a point in the tree:
+
+| Question | Kind | Point in the flowchart |
+|---|---|---|
+| `area` | choice | Commercial / Operational |
+| `error_comunicacion` | yes / no | Interference → END |
+| `no_titular` | yes / no | Account holder? NO → END |
+| `clase` | choice | Inquiry / Complaint / Suggestion |
+| `tipo` | choice | Leaf of the tree (only the options of its branch) |
+
+Instead of always asking all five questions, they are asked in **two rounds**:
+
+- **Round 1** (a single call): area, did the call drop?, and is the caller not the account holder? If the call dropped, or if it is commercial and not the account holder, the case is closed with an automatic reply.
+- **Round 2** (only if the case is still open): class and type, with **only the options of its branch**: three if commercial, eleven if it is an operational complaint, and no model call at all when the branch has a single option.
+
+In the proposed workflow, **calibrated confidence helps decide the next step**: a high-confidence classification can be routed directly, while an uncertain or sensitive case goes to a person. Confidence alone is not proof that a prediction is correct.
+
+<img src={`${B}images/blog/laya-autopistas/flujo-solicitudes.png`} alt="How a request is decided" />
+<p class="caption">The two rounds and the three possible outcomes: automatic close, direct routing, or human review. <a href={`${B}html/blog/laya-autopistas/flujo-solicitudes.html`} target="_blank" rel="noopener">Open interactive diagram ↗</a></p>
+
+**Why two rounds instead of one call with everything?** Because the model's cost is linear in tokens (≈0.05 ms per token on the Mac GPU), and most tokens are in the instructions and options, not in the user's text. Asking for the type with 3 options instead of 13, and asking nothing once the case is closed, cuts latency per request by around 20%. I also measured the network and Python layer: it costs less than 2%. Rewriting it in another language would not have helped; what makes it faster is **processing fewer tokens**.
+
+---
+
+## 4. The model: Laya fine-tuned on real cases
+
+As the base I used **multilingual Laya** (Convai Innovations), an open decision model:
+
+| | |
+|---|---|
+| Architecture | Bidirectional encoder (mmBERT), **not autoregressive** |
+| Size | **322 million parameters**, 1,024-token context |
+| Output | Probability distribution over each question's options (same contract as Jev) |
+| Engine | Native MLX on Apple Silicon (Mac M4 Pro, 48 GB), no PyTorch |
+| Fine-tuned model size | ≈ 647 MB |
+
+Without fine-tuning, Laya scored around **50%** accuracy on a 100-case sample (the original Jev scored 78% on the same sample). A general model does not know a concession company's categories. So I fine-tuned it.
+
+### The data
+
+<img src={`${B}images/blog/laya-autopistas/pipeline-entrenamiento.png`} alt="From cases to model" />
+<p class="caption">From 11,161 historical rows to an evaluated prototype, with a test set held out from the start. <a href={`${B}html/blog/laya-autopistas/pipeline-entrenamiento.html`} target="_blank" rel="noopener">Open interactive diagram ↗</a></p>
+
+- **11,161 real rows** of requests already classified by people.
+- **Rule-based anonymization**: names, national IDs (RUT), and phone numbers.
+- **Repeated texts:** 105 texts accounted for 31% of the rows, sometimes with different labels. They are kept with the majority label (agreement ≥ 70%) and their frequency.
+- **Automatic closes left out of type training:** their category was almost arbitrary. I turned them into the two yes/no questions.
+- Result: **6,448 cases**, of which **5,448 entered the training and internal-validation pool** and **1,000 were held out** with the historical case mix. The held-out set was used for the final evaluation reported here.
+
+### Fine-tuning
+
+| Parameter | Value | Why |
+|---|---|---|
+| What is tuned | The whole encoder and the decision head | |
+| Encoder / head learning rate | 2·10⁻⁵ / 1·10⁻⁴ | The encoder moves a little, the head more |
+| Epochs | 5, with early stopping | The best epoch usually comes before the maximum |
+| Epoch selection | Macro-F1 on validation | With imbalanced classes, accuracy is misleading |
+| Option order | Shuffled on every pass | Forces the model to read the option, not memorize its position |
+| Class balance | Smoothed (α = 0.5) | Helps rare classes without equalizing them |
+| Calibration | Temperature tuned by number of options | So confidence resembles the real probability of being right |
+
+Each final model takes 50 to 65 minutes on the Mac. I also tried **seven training configurations** on a development set (balanced area, type per area, merged question, short descriptions, frequency weighting…). **None beat the baseline.** Two identical runs differed by about 3 points, more than the differences between variants. That is a result, not a failure: it told me the limit was not in the training.
+
+---
+
+## 5. How it was evaluated, without fooling myself
+
+I split three sets, each with a single purpose:
+
+1. **Training:** to fit the weights, within the 5,448-case development pool.
+2. **Internal validation (12% of that pool):** to choose the epoch and calibrate confidence.
+3. **Evaluation (1,000 cases):** held out from training and model selection, with the historical case mix.
+
+The main metric is not per-question accuracy but the **correct final destination against the historical label**: a matching close or a matching leaf of the tree. Because historical labels are sometimes inconsistent, this is a comparison with the recorded decision, not independent proof that every destination was right.
+
+### Out-of-sample results (1,000 unseen requests)
+
+| Measure | Result |
+|---|---|
+| Area (commercial / operational) | **99.1%** |
+| Class (inquiry / complaint / suggestion) | **95.8%** |
+| Type | 74.6% (80.4% when area and class are correct) |
+| **Correct final destination** | **75.7%** |
+| Operational cases detected | 88% (35 of 40) |
+| Automatic closes | 15% of requests |
+| Latency per full request | ≈ 70 ms |
+
+The 70 ms measures model classification on the test computer. It does not include queueing, staff review, case resolution, or a reply to the user.
+
+### Evaluation in action
+
+<video controls preload="metadata" playsInline poster={`${B}images/blog/laya-autopistas/flujo-solicitudes.png`} aria-label="Demonstration of the decision-model evaluation with highway user comments and requests" style={{ width: '100%', borderRadius: '12px', margin: '1.5rem 0 0.5rem' }}>
+  <source src={`${B}images/blog/laya-autopistas/evaluacion-laya-autopistas.mp4`} type="video/mp4" />
+  Your browser cannot play this video. <a href={`${B}images/blog/laya-autopistas/evaluacion-laya-autopistas.mp4`}>Download the evaluation demonstration</a>.
+</video>
+<p class="caption">A visual demonstration of the evaluation flow with highway user comments and requests. The reported metrics come from the held-out test set above; the video illustrates the process.</p>
+
+### Confidence helps identify uncertain cases
+
+For the type, the hardest decision:
+
+| Confidence threshold | Cases it resolves alone | Accuracy on those cases |
+|---|---|---|
+| none | 100% | 77% |
+| ≥ 0.7 | 73% | 84% |
+| ≥ 0.8 | 58% | 88% |
+| ≥ 0.9 | 34% | **95%** |
+
+This selective evaluation is useful because accuracy rises as the threshold rises, while fewer cases qualify for automatic routing. It applies to the **type decision**, not to the entire workflow. A pilot must measure the final destination at the chosen threshold, including errors the model makes confidently.
+
+### What did not go as well, and why
+
+- **Type plateaus near 75%.** In my error review, roughly half of the mistakes involved *charges* versus *other commercial inquiries*. Repeated phrasing with different historical labels makes this distinction hard to learn. Reviewing the labeling rules is a practical next step.
+- **Operational cases are only 4% of the data.** Types such as congestion, signage, or third-party damage have fewer than five examples. No tuning fixes that: more real cases are needed.
+- **Text style matters.** The model learned from agent notes ("User states that…"). With first-person messages from users, it fails considerably more. The input text is part of the system.
+
+---
+
+## 6. The proposed operating flow
+
+<img src={`${B}images/blog/laya-autopistas/arquitectura-sistema.png`} alt="How everything connects" />
+<p class="caption">Proposed architecture: verified channel signals, local model, confidence threshold, and human review. Corrections could inform later model versions. <a href={`${B}html/blog/laya-autopistas/arquitectura-sistema.html`} target="_blank" rel="noopener">Open interactive diagram ↗</a></p>
+
+1. **Use verified signals first.** If the channel reliably records a dropped call or failed account-holder validation, rules can handle those outcomes without asking the model to infer them from text.
+2. **Run the model locally**, in two rounds, within the organization's infrastructure and data-handling controls.
+3. **Apply a policy agreed with the team.** Route only eligible high-confidence cases directly; send uncertain or sensitive cases to human review.
+4. **Monitor and retrain.** Record corrections, review performance by category, and test any replacement model before changing the workflow.
+
+---
+
+## 7. The real benefit: answering users sooner
+
+The retrospective scenario suggests **up to 32% less review time** under one routing assumption. At a 0.8 threshold, the simulated split is approximately 15% automatic closes, 49% direct routes, and 37% human review; the figures are rounded and are not observed operating outcomes.
+
+The goal is **better service for users**. Earlier routing could let the right team start sooner, especially for operational reports such as road obstacles. Whether that reduces the time to resolve a case or improves user satisfaction remains to be measured.
+
+Two caveats:
+
+- The savings figure **depends on an assumption that has not been measured yet**: how many review steps a clear case needs when its destination already arrives correct. If one, savings are 32%; if two, they drop to 10%.
+- With a 0.8 threshold, about **8% of cases** would be misrouted with high confidence (largely because of the label ambiguity described above).
+
+That is why the next step is not more training: it is a **shadow pilot**, where the model classifies in parallel without deciding, and real times are measured.
+
+---
+
+## 8. What I take away
+
+- **Check the labels before tuning the model.** Half of my errors came from the data.
+- **Measure with data you never touched.** And distrust any difference smaller than the variation between two identical runs.
+- **Give the workflow an "I don't know" exit.** A confidence threshold creates a path for human review; it still needs end-to-end validation.
+- **Measure the whole system, not just the model.** Rules, model, threshold, and people.
+- **A compact local model can be practical.** This prototype ran on a Mac; deployment and privacy claims require validation in the organization's environment.
+
+There is also a natural next step for territorial analysis: if operational requests include usable locations and are classified consistently, they could be **placed along the route** to study where obstacles, congestion, or signage problems concentrate.
+
+---
+
+## 9. If you would like to explore the approach
+
+This project leaves useful questions open: how to define consistent labels, choose a confidence threshold, and test whether faster routing actually improves service. If you would like more detail about the evaluation, the local implementation, or how to obtain and run the models used here, <a href={`${B}#contact`}>you can contact me</a>.
+
+---
+
+*Note: the results describe a prototype evaluated on historical highway-request data. The video is a visualization of its evaluation; it does not establish production performance. The effect on response and resolution times needs a shadow pilot.*
+
+</section>
+
+<section data-lang-content="es" hidden>
+
+# De 20 minutos a 70 milisegundos: un modelo de decisión local para clasificar solicitudes de una autopista
+
+Una solicitud de un usuario de autopista, como un reclamo por un cobro o un aviso de un obstáculo en la vía, puede pasar por varias revisiones antes de llegar a quien la resuelve. En el flujo usado para este prototipo, **cuatro revisiones de unos cinco minutos** forman un escenario de referencia de 20 minutos. Es una estimación, no una medición de la operación.
+
+Este artículo cuenta cómo construí un prototipo local que clasifica una solicitud en unos **70 milisegundos** en el computador de pruebas. Explico el flujo de decisión, la evaluación con casos reservados, los errores y lo que habría que medir en un piloto antes de afirmar que mejora los tiempos de respuesta.
+
+<img src={`${B}images/blog/laya-autopistas/hoy-vs-sistema.png`} alt="Hoy y con el sistema" />
+<p class="caption">El flujo propuesto envía los casos claros a su destino y deja los dudosos para revisión humana. La comparación ilustra un escenario de diseño; los tiempos reales siguen por medir. <a href={`${B}html/blog/laya-autopistas/hoy-vs-sistema.html`} target="_blank" rel="noopener">Ver diagrama interactivo ↗</a></p>
+
+---
+
+## Por qué este caso habla del territorio
+
+Una autopista es infraestructura territorial y las solicitudes de sus usuarios también pueden describir lo que ocurre en la ruta: obstáculos, congestión, problemas de señalización o daños por terceros. Clasificarlas de forma consistente podría servir para detectar patrones, si se dispone de ubicaciones y resguardos adecuados. El análisis geoespacial es una etapa posible, no un resultado de este prototipo.
+
+Abordé el problema como abordo cualquier proyecto: **pensando el sistema completo**, no solo entrenando un modelo. Las reglas del negocio, el modelo, los umbrales de confianza, las personas y la retroalimentación son parte de la solución.
+
+---
+
+## 1. La pregunta que me llevó aquí
+
+Todo empezó con una inquietud profesional: **¿cómo funciona por dentro un modelo de decisión como Jev?**
+
+Jev (de TypeSafe) no es un modelo que genera texto. Recibe un texto y un conjunto de preguntas, cada una con sus opciones, y devuelve **una distribución de probabilidad sobre esas opciones**. No escribe una respuesta: elige, y dice qué tan seguro está. Para clasificar, derivar o filtrar, eso es justo lo que se necesita: una salida acotada, auditable y con una confianza que se puede usar para decidir.
+
+Jev es un servicio remoto y de pago. Quería entender el enfoque a fondo, así que me propuse tres cosas:
+
+1. Armar un **banco de pruebas local** (lo llamé *Jev Lab*) donde cualquier modelo que hable el mismo contrato se compare con los mismos datos y las mismas métricas, con Jev original como referencia.
+2. Encontrar una **alternativa abierta que corra en mi Mac**.
+3. Probarla con un **caso real**, no con datos de juguete.
+
+El caso fue una concesionaria de autopistas en Chile, con su diagrama de flujo de solicitudes y un histórico de casos ya clasificados por personas.
+
+---
+
+## 2. El problema: un árbol de decisión que hoy recorren personas
+
+La concesionaria ya tenía su propio diagrama. Cada solicitud se clasifica en tres niveles encadenados: **área → clase → tipo**.
+
+<img src={`${B}images/blog/laya-autopistas/flujo-decision.png`} alt="Árbol de decisión de 200 solicitudes de autopista con ramas comerciales, operativas y de interferencia, y sus destinos posibles" />
+<p class="caption">El árbol aplicado a 200 solicitudes. Los números muestran cuántos ejemplos siguieron cada rama de esta muestra; no representan el acierto del modelo. La tabla siguiente resume las categorías. <a href={`${B}images/blog/laya-autopistas/flujo-decision.png`} target="_blank" rel="noopener">Ver diagrama a tamaño completo ↗</a></p>
+
+| Área | Clase | Tipos |
+|---|---|---|
+| **Interferencia** | — | La comunicación se cortó antes de conocer el caso → cierre automático |
+| **Comercial** | ¿Es titular? No → cierre automático | |
+| | Consulta | Pagos · Cobros · Otras consultas |
+| | Reclamo | Pagos · Cobros · Otros reclamos |
+| | Sugerencia | — |
+| **Operativo** | Consulta (en la vía) | Otras consultas |
+| | Reclamo (en la vía) | Atención a usuarios · Cobros · Congestión · Obstáculos en la vía · Vía pública · Daños por terceros · Asistencias · Señalización, tránsito y desvíos · Tarifas · Otros reclamos · Obras |
+| | Sugerencia | Congestión |
+
+Tres características definen el problema:
+
+- **Dos salidas sin derivación.** Si la comunicación se cortó antes de conocer el caso (*Interferencia*), o si quien consulta un tema comercial no es el titular, el flujo termina. Una respuesta automática real exigiría señales verificadas del canal y aprobación de la concesionaria.
+- **La validación de titular solo existe en el área comercial.** Cualquiera puede avisar de un obstáculo en la vía.
+- **El destino depende de tres decisiones encadenadas.** Si el área sale mal, la clase y el tipo salen de la rama equivocada.
+
+---
+
+## 3. El diseño: cinco preguntas en dos rondas
+
+Traduje el diagrama a **cinco preguntas** para el modelo, cada una ligada a un punto del árbol:
+
+| Pregunta | Tipo | Punto del diagrama |
+|---|---|---|
+| `area` | elección | Comercial / Operativo |
+| `error_comunicacion` | sí / no | Interferencia → FIN |
+| `no_titular` | sí / no | ¿Es titular? NO → FIN |
+| `clase` | elección | Consulta / Reclamo / Sugerencia |
+| `tipo` | elección | Hoja del árbol (solo las opciones de su rama) |
+
+En vez de hacer las cinco preguntas siempre, se hacen en **dos rondas**:
+
+- **Ronda 1** (una sola llamada): área, ¿se cortó? y ¿no es titular? Si se cortó, o si es comercial y no es titular, el caso se cierra con una respuesta automática.
+- **Ronda 2** (solo si el caso sigue abierto): clase y tipo, con **solo las opciones de su rama**: tres si es comercial, once si es un reclamo operativo, y ninguna consulta al modelo cuando la rama tiene una sola opción.
+
+En el flujo propuesto, **la confianza calibrada ayuda a decidir el siguiente paso**: un caso elegible y de alta confianza podría ir directo, mientras uno dudoso o sensible pasa a revisión humana. La confianza por sí sola no demuestra que la predicción sea correcta.
+
+<img src={`${B}images/blog/laya-autopistas/flujo-solicitudes.png`} alt="Cómo se decide una solicitud" />
+<p class="caption">Las dos rondas y las tres salidas posibles: cierre automático, derivación directa o revisión humana. <a href={`${B}html/blog/laya-autopistas/flujo-solicitudes.html`} target="_blank" rel="noopener">Ver diagrama interactivo ↗</a></p>
+
+**¿Por qué dos rondas y no una sola llamada con todo?** Porque el costo del modelo es lineal en tokens (≈0,05 ms por token en la GPU del Mac) y la mayor parte de los tokens está en las instrucciones y las opciones, no en el texto del usuario. Preguntar el tipo con 3 opciones en vez de 13, y no preguntar nada cuando el caso ya se cerró, reduce la latencia por solicitud en torno a un 20 %. Medí también la capa de red y Python: cuesta menos del 2 %. Reescribirla en otro lenguaje no habría servido; lo que acelera es **procesar menos tokens**.
+
+---
+
+## 4. El modelo: Laya ajustado con casos reales
+
+Como base usé **Laya multilingüe** (Convai Innovations), un modelo de decisión abierto:
+
+| | |
+|---|---|
+| Arquitectura | Codificador bidireccional (mmBERT), **no autorregresivo** |
+| Tamaño | **322 millones de parámetros**, contexto de 1.024 tokens |
+| Salida | Distribución de probabilidad sobre las opciones de cada pregunta (mismo contrato que Jev) |
+| Motor | MLX nativo en Apple Silicon (Mac M4 Pro, 48 GB), sin PyTorch |
+| Peso del modelo ajustado | ≈ 647 MB |
+
+Sin ajuste, Laya rondaba el **50 %** de acierto en una muestra de 100 casos (Jev original, en esa misma muestra, 78 %). Un modelo general no conoce las categorías de una concesionaria. Así que lo ajusté.
+
+### Los datos
+
+<img src={`${B}images/blog/laya-autopistas/pipeline-entrenamiento.png`} alt="De los casos al modelo" />
+<p class="caption">De 11.161 filas históricas a un prototipo evaluado, con un conjunto de prueba separado desde el principio. <a href={`${B}html/blog/laya-autopistas/pipeline-entrenamiento.html`} target="_blank" rel="noopener">Ver diagrama interactivo ↗</a></p>
+
+- **11.161 filas reales** de solicitudes ya clasificadas por personas.
+- **Anonimización** por reglas: nombres, RUT y teléfonos.
+- **Textos repetidos:** 105 textos sumaban el 31 % de las filas, a veces con etiquetas distintas. Se conservan con la etiqueta mayoritaria (acuerdo ≥ 70 %) y su frecuencia.
+- **Cierres automáticos fuera del entrenamiento del tipo:** su categoría era casi arbitraria. Los convertí en las dos preguntas de sí/no.
+- Resultado: **6.448 casos**, de los cuales **5.448 entraron al conjunto de entrenamiento y validación interna** y **1.000 quedaron reservados**, con la mezcla histórica de solicitudes. El conjunto reservado se usó para la evaluación final que presento aquí.
+
+### El ajuste fino
+
+| Parámetro | Valor | Por qué |
+|---|---|---|
+| Qué se ajusta | Todo el codificador y la cabeza de decisión | |
+| Tasa del codificador / de la cabeza | 2·10⁻⁵ / 1·10⁻⁴ | El codificador se mueve poco, la cabeza más |
+| Épocas | 5, con parada temprana | La mejor época suele quedar antes del máximo |
+| Selección de época | Macro-F1 en validación | Con clases desbalanceadas, la exactitud engaña |
+| Orden de las opciones | Aleatorio en cada visita | Obliga a leer la opción y no a memorizar su posición |
+| Balance de clases | Suavizado (α = 0,5) | Ayuda a las clases raras sin igualarlas |
+| Calibración | Temperatura ajustada por cantidad de opciones | Para que la confianza se parezca a la probabilidad real de acierto |
+
+Cada modelo final toma entre 50 y 65 minutos en el Mac. Además probé **siete configuraciones de entrenamiento** en un conjunto de desarrollo (área balanceada, tipo por área, pregunta fusionada, descripciones cortas, peso por frecuencia…). **Ninguna superó a la línea base.** Dos corridas idénticas diferían unos 3 puntos, más que las diferencias entre variantes. Esto es un resultado, no un fracaso: me dijo que el límite no estaba en el entrenamiento.
+
+---
+
+## 5. Cómo se evaluó, sin engañarse
+
+Separé tres conjuntos y cada uno sirve para una sola cosa:
+
+1. **Entrenamiento:** para ajustar los pesos, dentro del conjunto de desarrollo de 5.448 casos.
+2. **Validación interna (12 % de ese conjunto):** para elegir la época y calibrar la confianza.
+3. **Evaluación (1.000 casos):** separada del entrenamiento y de la selección del modelo, con la mezcla histórica de solicitudes.
+
+La métrica principal no es la exactitud de cada pregunta, sino la **coincidencia del destino final con la etiqueta histórica**: un cierre o una hoja del árbol que coincida con lo registrado. Como algunas etiquetas históricas son inconsistentes, esta comparación no prueba por sí sola que todos esos destinos fueran correctos.
+
+### Resultados fuera de muestra (1.000 solicitudes nunca vistas)
+
+| Medida | Resultado |
+|---|---|
+| Área (comercial / operativo) | **99,1 %** |
+| Clase (consulta / reclamo / sugerencia) | **95,8 %** |
+| Tipo | 74,6 % (80,4 % si el área y la clase son correctas) |
+| **Destino final correcto** | **75,7 %** |
+| Operativos detectados | 88 % (35 de 40) |
+| Cierres automáticos | 15 % de las solicitudes |
+| Latencia por solicitud completa | ≈ 70 ms |
+
+Los 70 ms miden la clasificación del modelo en el computador de pruebas. No incluyen espera en cola, revisión humana, resolución del caso ni respuesta al usuario.
+
+### La evaluación en acción
+
+<video controls preload="metadata" playsInline poster={`${B}images/blog/laya-autopistas/flujo-solicitudes.png`} aria-label="Demostración de la evaluación del modelo de decisión con opiniones y solicitudes de usuarios de autopista" style={{ width: '100%', borderRadius: '12px', margin: '1.5rem 0 0.5rem' }}>
+  <source src={`${B}images/blog/laya-autopistas/evaluacion-laya-autopistas.mp4`} type="video/mp4" />
+  Tu navegador no puede reproducir este video. <a href={`${B}images/blog/laya-autopistas/evaluacion-laya-autopistas.mp4`}>Descargar la demostración de evaluación</a>.
+</video>
+<p class="caption">Demostración visual del flujo de evaluación con opiniones y solicitudes de usuarios de autopista. Las métricas provienen del conjunto reservado descrito arriba; el video ilustra el proceso.</p>
+
+### La confianza ayuda a identificar casos dudosos
+
+Para el tipo, que es la decisión más difícil:
+
+| Umbral de confianza | Casos que resuelve solo | Acierto en esos casos |
+|---|---|---|
+| ninguno | 100 % | 77 % |
+| ≥ 0,7 | 73 % | 84 % |
+| ≥ 0,8 | 58 % | 88 % |
+| ≥ 0,9 | 34 % | **95 %** |
+
+Esta evaluación selectiva es útil porque el acierto aumenta al subir el umbral, pero menos casos califican para derivación automática. Se refiere a la **decisión de tipo**, no al flujo completo. Un piloto debe medir el destino final con el umbral elegido, incluidos los errores de alta confianza.
+
+### Lo que no salió tan bien, y por qué
+
+- **El tipo ronda el 75 %.** En mi revisión, cerca de la mitad de los errores involucraba *cobros* frente a *otras consultas comerciales*. Frases repetidas con etiquetas históricas distintas dificultan aprender esa diferencia. Revisar las reglas de etiquetado es el siguiente paso práctico.
+- **Lo operativo es solo el 4 % de los casos.** Tipos como congestión, señalización o daños por terceros tienen menos de cinco ejemplos. Ningún ajuste lo corrige: se necesitan más casos reales.
+- **El estilo del texto importa.** El modelo aprendió con notas del agente («Usuario indica que…»). Con mensajes del usuario en primera persona, falla bastante más. El texto de entrada es parte del sistema.
+
+---
+
+## 6. El flujo operativo propuesto
+
+<img src={`${B}images/blog/laya-autopistas/arquitectura-sistema.png`} alt="Cómo se conecta todo" />
+<p class="caption">Arquitectura propuesta: señales verificadas del canal, modelo local, umbral de confianza y revisión humana. Las correcciones podrían alimentar versiones posteriores. <a href={`${B}html/blog/laya-autopistas/arquitectura-sistema.html`} target="_blank" rel="noopener">Ver diagrama interactivo ↗</a></p>
+
+1. **Usar primero señales verificadas.** Si el canal registra de forma confiable un corte o una validación de titular fallida, las reglas pueden resolver esas salidas sin pedir al modelo que las infiera desde el texto.
+2. **Ejecutar el modelo localmente**, en dos rondas, dentro de la infraestructura y los controles de datos de la organización.
+3. **Aplicar una política acordada con el equipo.** Derivar directamente solo casos elegibles y de alta confianza; enviar los dudosos o sensibles a revisión humana.
+4. **Monitorear y reentrenar.** Registrar correcciones, revisar el desempeño por categoría y evaluar cada versión antes de cambiar el flujo.
+
+---
+
+## 7. El beneficio real: responder antes al usuario
+
+El escenario retrospectivo sugiere **hasta un 32 % menos de tiempo de revisión** bajo un supuesto de derivación. Con un umbral de 0,8, la simulación distribuye aproximadamente 15 % de cierres automáticos, 49 % de derivaciones directas y 37 % de revisiones humanas; las cifras están redondeadas y no son resultados observados en operación.
+
+El objetivo es **mejorar el servicio a los usuarios**. Una derivación más temprana podría permitir que el equipo correcto empiece antes, especialmente ante avisos operativos como obstáculos en la vía. Si eso reduce el tiempo de resolución o mejora la satisfacción todavía debe medirse.
+
+Dos advertencias:
+
+- La cifra de ahorro **depende de un supuesto que todavía no se ha medido**: cuántas instancias necesita un caso claro cuando el destino ya viene correcto. Si es una, el ahorro es del 32 %; si son dos, baja al 10 %.
+- Con umbral 0,8, cerca de un **8 % de los casos** terminaría mal derivado con confianza alta (buena parte por la ambigüedad de etiquetas descrita arriba).
+
+Por eso el siguiente paso no es entrenar más: es un **piloto en modo sombra**, donde el modelo clasifica en paralelo sin decidir y se miden los tiempos reales.
+
+---
+
+## 8. Lo que me llevo
+
+- **Revisa las etiquetas antes de afinar el modelo.** La mitad de mis errores venía de los datos.
+- **Mide con datos que no tocaste.** Y desconfía de cualquier diferencia menor que la variación entre dos corridas iguales.
+- **Dale al flujo una salida «no sé».** El umbral crea una vía de revisión humana, que aún debe validarse de extremo a extremo.
+- **Mide el sistema completo, no solo el modelo.** Reglas, modelo, umbral y personas.
+- **Un modelo compacto y local puede ser práctico.** Este prototipo corrió en un Mac; el despliegue y la privacidad deben validarse en el entorno de la organización.
+
+Hay además un paso siguiente para el análisis territorial: si las solicitudes operativas incluyen ubicaciones utilizables y se clasifican de forma consistente, se podrían **ubicar a lo largo de la ruta** para estudiar dónde se concentran obstáculos, congestión o problemas de señalización.
+
+---
+
+## 9. Si quieres conocer más sobre el método
+
+Este trabajo deja preguntas abiertas que vale la pena seguir explorando: cómo definir etiquetas consistentes, elegir un umbral de confianza y comprobar si una derivación más rápida mejora el servicio. Si quieres conocer con más detalle la evaluación, la implementación local o cómo obtener y ejecutar los modelos utilizados, <a href={`${B}#contact`}>puedes escribirme</a>.
+
+---
+
+*Nota: los resultados describen un prototipo evaluado con datos históricos de solicitudes de autopista. El video visualiza su evaluación; no demuestra desempeño en producción. El efecto en tiempos de respuesta y resolución requiere un piloto en sombra.*
+
+</section>

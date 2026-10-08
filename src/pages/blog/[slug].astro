@@ -161,6 +161,37 @@ const tagColors: Record<string, string> = {
     background: #FDFCF9;
     margin: 1.75rem 0;
   }
+  .prose-content :global(video) {
+    display: block;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: #1A1917;
+  }
+  .prose-content :global(.caption) {
+    color: #6B6865;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-top: -0.75rem;
+  }
+  .prose-content :global(table) {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+  }
+  .prose-content :global(th),
+  .prose-content :global(td) {
+    padding: 0.65rem 0.8rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  .prose-content :global(th) {
+    color: #1A1917;
+    font-weight: 700;
+  }
   .prose-content :global(hr) {
     border: none;
     border-top: 1px solid rgba(0,0,0,0.08);
@@ -200,6 +231,18 @@ const tagColors: Record<string, string> = {
   :global(html[data-theme="dark"]) .prose-content :global(img) {
     background: #161E2B;
     border-color: rgba(255,255,255,0.08);
+  }
+  :global(html[data-theme="dark"]) .prose-content :global(.caption),
+  :global(html[data-theme="dark"]) .prose-content :global(td) {
+    color: #AEB8C7;
+  }
+  :global(html[data-theme="dark"]) .prose-content :global(th) {
+    color: #E4E2DC;
+  }
+  :global(html[data-theme="dark"]) .prose-content :global(th),
+  :global(html[data-theme="dark"]) .prose-content :global(td),
+  :global(html[data-theme="dark"]) .prose-content :global(video) {
+    border-color: rgba(255,255,255,0.12);
   }
   :global(html[data-theme="dark"]) .prose-content :global(hr) {
     border-top-color: rgba(255,255,255,0.08);

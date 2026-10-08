@@ -2,7 +2,7 @@ export const en = {
   meta: {
     title: 'Denis Berroeta — AI Solutions Architect Applied to Territory',
     description:
-      'Architecting AI solutions that decode territory. Satellite imagery, geospatial data, and deep learning for actionable territorial intelligence.',
+      'Designing AI solutions that decode territory. Territorial data, models, and intelligent agents that turn complex information into decisions.',
   },
   nav: {
     about: 'About',
@@ -18,7 +18,7 @@ export const en = {
     tagline1: 'Decoding Territory',
     tagline2: 'with AI',
     description:
-      'Architecting agentic AI systems that transform satellite imagery and geospatial data into actionable territorial intelligence — from field sensors to policy decisions.',
+      'Designing AI systems that turn multi-source territorial data into actionable insight — from data integration to policy decisions.',
     cta1: 'Explore My Work',
     cta2: 'Get In Touch',
     scroll: 'Scroll to explore',
@@ -27,12 +27,12 @@ export const en = {
     sectionNum: '01 / About',
     title: 'Who I Am',
     subtitle: 'AI · Territory · Intelligence',
-    bio1: 'I architect AI solutions that decode territory. With a PhD candidate background in Data Science and 7+ years at CIT-UAI (Center for Territorial Intelligence), I bridge the gap between satellite sensors and policy decisions.',
-    bio2pre: "I'm not a data scientist who happens to work with maps — I'm a ",
-    bio2highlight: 'territorial intelligence architect',
+    bio1: 'I enjoy designing artificial intelligence solutions for territorial problems. I hold a Master in Data Science and a Master in Artificial Intelligence, I am a PhD student in Data Science, and I have spent 7+ years at CIT-UAI (Center for Territorial Intelligence), working where data, models, and decisions meet.',
+    bio2pre: 'I approach each problem the way an architect would: ',
+    bio2highlight: 'thinking about the whole system',
     bio2post:
-      ' who designs end-to-end AI systems that connect earth observation data to actionable insights for governments, organizations, and communities.',
-    bio3: 'Specializing in agentic AI for territorial problems, deep learning for change detection, geospatial data pipelines, and spatial analysis for public policy. Based in the beautiful coastal town of Isla Negra, Chile.',
+      ', from integrating diverse data to the models and agents that turn it into useful information for governments, organizations, and communities.',
+    bio3: 'I work with agentic AI, deep learning, geospatial data pipelines, and spatial analysis across fields as different as the environment, cities, industry, and public policy. I do all of this from the coast, in Isla Negra, Chile, close to the sea.',
     stats: [
       { value: 7, suffix: '+', label: 'Years\nExperience' },
       { value: 15, suffix: '+', label: 'Research' },
@@ -92,6 +92,12 @@ export const en = {
         subtitle: 'Multi-agent wind siting in Northern Chile',
         description:
           'A territorial decision-support pilot that combines AHP, agent profiles, deliberation rounds, scenario building, and future raster suitability outputs for wind energy planning in Antofagasta.',
+      },
+      {
+        title: 'Laya · Highway Requests',
+        subtitle: 'Local decision model with human review',
+        description:
+          'A prototype for routing highway user requests with a fine-tuned local model, an explicit decision flow, confidence thresholds, and evaluation on 1,000 held-out cases.',
       },
       {
         title: 'Geospatial Foundation Models',
